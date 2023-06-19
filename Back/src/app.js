@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 //Routes API
 app.use(require('./routes/auth.route'))
-app.use(require('./routes/user.route'))
+app.use(require('./routes/createUser.route'))
 app.use(require('./routes/solicitud.route'))
 
 
