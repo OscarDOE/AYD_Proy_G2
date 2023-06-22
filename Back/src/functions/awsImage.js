@@ -1,10 +1,12 @@
 const aws = require('aws-sdk')
 const awsConfig = require('../config/aws.config')
 
-const uploadImage = async (directory, photo, imageName, type) => {
-    const pathName = `${directory}/${imageName}.png`;
+const uploadImage = async (directory, data, imageName, type) => {
+    const pathName = `${directory}/${imageName}.${type}`;
 
-    const buff = Buffer.from(photo, 'base64');
+    const buff = Buffer.from(data, 'base64');
+
+    const content = type == 'pdf' ? 'application/pdf':`image/${type}`;
 
     aws.config.update(awsConfig.configS3)
 
@@ -12,10 +14,10 @@ const uploadImage = async (directory, photo, imageName, type) => {
     const s3 = new aws.S3()
 
     const paramsS3 = {
-        Bucket: 'semi1proyecto-g5',
+        Bucket: 'ayddata',
         Key: pathName,
         Body: buff,
-        ContentType: `image/${type}`
+        ContentType: content
     }
 
     return new Promise((resolve, reject) => {
@@ -25,7 +27,7 @@ const uploadImage = async (directory, photo, imageName, type) => {
                 return reject(err);
             }
 
-            const imageURL = `https://semi1proyecto-g5.s3.amazonaws.com/${pathName}`
+            const imageURL = `https://ayddata.s3.amazonaws.com/${pathName}`
             resolve(imageURL);
         });
     })
