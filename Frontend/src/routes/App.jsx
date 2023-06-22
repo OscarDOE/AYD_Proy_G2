@@ -9,6 +9,8 @@ import LoginEmpresa from "../pages/LoginEmpresa";
 import LoginRepartidores from "../pages/LoginRepartidores";
 import LoginUsers from "../pages/LoginUser";
 import HomeAdmin from "../pages/HomeAdmin";
+import LoginAdmin from "../pages/LoginAdmion";
+import PerfilRepartidor from "../pages/MiPerfilR";
 // import LoginPage from "../pages/LoginPage";
 // import RegisterPage from "../pages/RegisterPage";
 // import PagesVuelos from "../pages/PagesVuelos";
@@ -18,7 +20,8 @@ export const App = () => {
     <BrowserRouter>
             <Layout>
                 <Routes>
-                <Route index element={<Home />} />
+                <Route path="/perfilrepartidor" element={<PerfilRepartidor/>} />
+                <Route path="/loginadmin" element={<LoginAdmin/>} />
                 <Route path="/regisrepartidor" element={<RegistroRepartidor />} />
                 <Route path="/regisempresa" element={<RegistroEmpresa />} />
                 <Route path="/regisusers" element={<RegistroUsers />} />

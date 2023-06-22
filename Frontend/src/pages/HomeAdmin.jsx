@@ -139,6 +139,7 @@ const HomeAdmin = () => {
 
         <div>
             <div class="pCuadradoR2">
+              <center><h1>Solicitudes</h1></center>
             <div class = "tablecontainer45">
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
@@ -166,6 +167,9 @@ const HomeAdmin = () => {
                 <h1>Bienvenido </h1>
                 {/* <h2>{usuario_logeado.usuario_logeado.usuario}</h2><br></br> */}
                 <img src={link_image} alt="" width="200" height="200"></img>
+            </div>
+            <div>
+              <center><h1>Informes</h1></center>
             </div>
         </div>
     )

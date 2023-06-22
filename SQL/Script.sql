@@ -94,6 +94,7 @@ CREATE TABLE combo (
      nombre VARCHAR(100) NOT NULL,
      descripcion VARCHAR(250) NOT NULL,
      menu_id INT NOT NULL,
+     precio FLOAT NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (menu_id) REFERENCES menu(id)
 );
@@ -104,6 +105,7 @@ CREATE TABLE producto (
      descripcion VARCHAR(150) NOT NULL,
      tipo_producto_id INT NOT NULL,
      menu_id INT NOT NULL,
+     precio FLOAT NOT NULL,
      imagen VARCHAR(500) NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (menu_id) REFERENCES menu(id),
