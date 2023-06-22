@@ -12,59 +12,56 @@ import { Alert } from '@mui/material';
 const RegistroEmpresa = () => {
 
     const navigate = useNavigate();
-    const ruta_AWS = ''
+    const ruta_AWS = 'http://localhost:4000'
 
     const handleNavigate = () => {
-        navigate("/login");
+        navigate("/loginempresa");
     };
 
 
     const [value, setValue] = useState(false);
     const [error, setError] = useState(null);
-    // const handleChangeSwitch = (event) =>{
-    //     console.log('----------')
-    //     console.log(value)
-        
-    //     //setValue(event.target.checked)
-        
-    //     //console.log(value)
-    // }
 
 
-
-    const [user, setUser] = useState({
+    const [empresa, setEmpresa] = useState({
         nombre: "",
-        usuario: "",
-        foto_perfil: null,
+        descripcion: "",
+        tipo: "",
         email: "",
         password: "",
-        pass_confirm:"",
-        user_type: null
+        departamento:"",
+        municipio:"",
+        zona:"",
+        imagenes:"texto de prueba",
     })
 
     const handleSubmit = async (e) => {
 
         e.preventDefault()
         const formData = new FormData();
-        formData.append("nombre",user.nombre);
-        formData.append("usuario",user.usuario);
-        formData.append("foto_perfil",user.foto_perfil);
-        formData.append("email",user.email);
-        formData.append("password",user.password);
-        formData.append("pass_confirm",user.pass_confirm);
-        //formData.append("user_type",user.user_type);
-        if(value){
-            console.log('entre true')
-            formData.append("user_type","0");
-        }else{
-            formData.append("user_type","2");
-        }
-        console.log(formData.get('user_type'));
+        formData.append("nombre",empresa.nombre);
+        formData.append("descripcion",empresa.descripcion);
+        formData.append("tipo",empresa.tipo);
+        formData.append("email",empresa.email);
+        formData.append("password",empresa.password);
+        formData.append("departamento",empresa.departamento);
+        formData.append("municipio",empresa.municipio);
+        formData.append("zona",empresa.zona);
+        formData.append("imagenes",empresa.imagenes);
 
-        const endpoint = await fetch(ruta_AWS+'/api/users/registro', {
+
+        const endpoint = await fetch(ruta_AWS+'/registroEmpresa', {
             method: "POST",
-            body:formData
+            body:empresa
         });
+
+        // const endpoint = await fetch(ruta_AWS+'/registroEmpresa', {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //       body: JSON.stringify(empresa)
+        // });
 
         const resp = await endpoint.json();
         if (endpoint.status === 400){
@@ -79,36 +76,6 @@ const RegistroEmpresa = () => {
     };
 
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     const displData = new FormData(displ.current)
-    //     const data = {
-    //         carnet: displData.get('carnet'),
-    //         dpi: displData.get('dpi'),
-    //         nombre: displData.get('nombre'),
-    //         carrera: displData.get('carrera'),
-    //         correo: displData.get('correo'),
-    //         password: displData.get('password'),
-    //         edad: displData.get('edad')
-    //     }
-
-        // const pointBack = await fetch('http://localhost:5000/registrarUsuario', {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         "carnet": data.carnet,
-        //         "dpi": data.dpi,
-        //         "nombre": data.nombre,
-        //         "carrera": data.carrera,
-        //         "correo": data.correo,
-        //         "password": data.password,
-        //         "edad": data.edad
-        //     }),
-        // });
-        
-    // }
 
     const Android12Switch = styled(Switch)(({ theme }) => ({
         padding: 8,
@@ -159,35 +126,39 @@ const RegistroEmpresa = () => {
                         </div>
                         <div class="element">
                             <label for="username">Nombre del negocio</label>
-                            <input onChange={(e) => setUser({ ...user, nombre:e.target.value })} type="text" name="nombre" id="Nombre"></input>
+                            <input onChange={(e) => setEmpresa({ ...empresa, nombre:e.target.value })} type="text" name="nombre" id="Nombre"></input>
                         </div>
                         <div class="element">
-                            <label for="password">Descripcion</label>
-                            <input onChange={(e) => setUser({ ...user, usuario:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
+                            <label for="label">Descripcion</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, descripcion:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
                         </div>
                         <div class="element">
-                            <label for="password">Categoria</label>
-                            <input onChange={(e) => setUser({ ...user, password:e.target.value })}  type="text" name="password" id="Password"></input>
+                            <label for="label">Categoria</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, tipo:e.target.value })}  type="text" name="categoria" id="Categoria"></input>
                         </div>
                         <div class="element">
-                            <label for="password">Email</label>
-                            <input onChange={(e) => setUser({ ...user, email:e.target.value })}  type="text" name="email" id="Email"></input>
+                            <label for="label">Email</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, email:e.target.value })}  type="text" name="email" id="Email"></input>
                         </div>
                         <div class="element">
-                            <label for="password">Departamento</label>
-                            <input onChange={(e) => setUser({ ...user, pass_confirm:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                            <label for="label">Password</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, password:e.target.value })}  type="password" name="password" id="Password"></input>
                         </div>
                         <div class="element">
-                            <label for="password">Municipio</label>
-                            <input onChange={(e) => setUser({ ...user, pass_confirm:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                            <label for="label">Departamento</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, departamento:e.target.value })}  type="text" name="depa" id="Depa"></input>
                         </div>
                         <div class="element">
-                            <label for="password">Zona</label>
-                            <input onChange={(e) => setUser({ ...user, pass_confirm:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                            <label for="label">Municipio</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, municipio:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                        </div>
+                        <div class="element">
+                            <label for="label">Zona</label>
+                            <input onChange={(e) => setEmpresa({ ...empresa, zona:e.target.value })}  type="text" name="c_password" id="C_password"></input>
                         </div>
                         <div class="element">
                             <label for="curriculum">Documentos</label>
-                            <input onChange={(e) => setUser({ ...user, foto_perfil:e.target.files[0] })}  type="file" name="f_Perfil" id="fo_Perfil"></input>
+                            <input onChange={(e) => setEmpresa({ ...empresa, imagenes:e.target.files[0] })}  type="file" name="f_Perfil" id="fo_Perfil"></input>
                         </div>
                         <div class="element">
                             {/* <button onClick={()=>console.log(value)} type="submit">Registrar</button> */}
