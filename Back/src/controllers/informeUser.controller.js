@@ -3,10 +3,10 @@ const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 
-const solicitudes = async (req, res) => {
-    const { id, rol} = req.token
-    
-    if (!id || !rol){
+const informeUser = async (req, res) => {
+    const { id, rol } = req.token
+
+    if (!id || !rol) {
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -18,7 +18,7 @@ const solicitudes = async (req, res) => {
                 "No trae Token",
         });
     }
-        
+
     if (rol != "admin") {
         return res.status(400).json({
             status: "FAILED",
@@ -31,15 +31,26 @@ const solicitudes = async (req, res) => {
                 "Token invalido",
         });
     }
-    // Obtener data repartidores  
-    const repartidor = await query("SELECT * FROM repartidor WHERE estado = 0;", []);
-    // Obtener data empresas
-    const empresa = await query("SELECT * FROM empresa WHERE estado = 0;", []);
+    try {
+        // Obtener data usuarios
+        const clientes = await query("SELECT * FROM clientes;", []);
 
-    const result = {repartidor, empresa}
-    res.status(200).json(result);
+        res.status(200).json(clientes);
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No hay clientes",
+            },
+            auth: false,
+            message:
+                "No hay clientes",
+        });
+    }
+
 }
 
 module.exports = {
-    solicitudes
+    informeUser
 }

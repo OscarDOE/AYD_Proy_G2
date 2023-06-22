@@ -55,20 +55,6 @@ const Home = () => {
 
 
 
-    useEffect(() => { getHumedadR() }, []);
-    useEffect(() => { getAguaR() }, []);
-    useEffect(() => { getTExternaR() }, []);
-    useEffect(() => { getTInternaR() }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            getHumedadR();
-            getAguaR();
-            getTExternaR();
-            getTInternaR();
-        }, 1000);
-        return () => clearInterval(interval);
-      }, []);
 
 
     const [datapie1, setDataPie1] = useState(0);

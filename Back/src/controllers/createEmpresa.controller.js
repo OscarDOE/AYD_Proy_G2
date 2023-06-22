@@ -10,15 +10,14 @@ const createEmpresa = async (req, res) => {
         email,
         departamento,
         municipio,
+        zona,
         imagenes,
         tipo,
         password
     } = req.body;
 
-    // falta direcciones y pago
-    console.log('----contra----')
-    console.log(req.body)
-    if (!password)
+    
+    if (!password || !email)
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -29,8 +28,21 @@ const createEmpresa = async (req, res) => {
                 "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'username', 'password'",
         });
 
-    try {
+    // validar correo
+    const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regexCorreo.test(correo)){
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "El correo no es valido",
+            },
+            message:
+                "El correo no es valido",
+        });
+    }
 
+    try {
         //
         const hashContra = crypto.createHash("md5").update(password).digest("hex");
 
@@ -51,7 +63,7 @@ const createEmpresa = async (req, res) => {
         const URL = await awsImage.uploadImage(
             "Empresas_image",
             imagenes,
-            idUser,
+            idUser[0].id,
             "pdf"
         );
         console.log("imageURL", URL);
@@ -64,6 +76,7 @@ const createEmpresa = async (req, res) => {
                 email,
                 departamento,
                 municipio,
+                zona,
                 imagenes: URL,
                 tipo_empresa_id: tipo,
                 estado: 0,
