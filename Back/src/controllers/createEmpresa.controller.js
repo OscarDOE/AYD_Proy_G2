@@ -34,15 +34,6 @@ const createEmpresa = async (req, res) => {
         //
         const hashContra = crypto.createHash("md5").update(password).digest("hex");
 
-        // Guarda hoja en S3
-        /*const URL = await awsImage.uploadImage(
-            "Empresas_image",
-            imagen,
-            username,
-            tipoDoc
-        );
-        console.log("imageURL", URL);*/
-
         // Guarda usuario en db
         const dataUsuario = [
             {
@@ -56,6 +47,15 @@ const createEmpresa = async (req, res) => {
         // Obtener id de Usuario
         const idUser = await query("SELECT MAX(id) as id FROM usuario;", []);
 
+        // Guarda hoja en S3
+        const URL = await awsImage.uploadImage(
+            "Empresas_image",
+            imagenes,
+            idUser,
+            "pdf"
+        );
+        console.log("imageURL", URL);
+
         // Guarda Empresa en db
         const dataEmpresa = [
             {
@@ -64,7 +64,7 @@ const createEmpresa = async (req, res) => {
                 email,
                 departamento,
                 municipio,
-                imagenes,
+                imagenes: URL,
                 tipo_empresa_id: tipo,
                 estado: 0,
                 usuario_id: idUser[0].id
