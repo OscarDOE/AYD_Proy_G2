@@ -2,6 +2,7 @@ const mysqlConnection = require('../database/db')
 const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
 const loginEmpresa = async (req, res) => {
     const { username, password } = req.body

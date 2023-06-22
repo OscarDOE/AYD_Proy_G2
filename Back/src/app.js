@@ -30,6 +30,8 @@ app.use(require('./routes/loginAdmin.route'))
 app.use(require('./routes/solicitudRepar.route'))
 app.use(require('./routes/solicitudEmp.route'))
 
+app.use(require('./routes/informeUser.route'))
+
 //Route Initial API
 app.get('/', (req, res) => {
     res.send('AYD1 - FASE 1')
