@@ -12,12 +12,13 @@ const createEmpresa = async (req, res) => {
         municipio,
         imagenes,
         tipo,
-        password,
-        username
+        password
     } = req.body;
 
     // falta direcciones y pago
-    if (!username || !password)
+    console.log('----contra----')
+    console.log(req.body)
+    if (!password)
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -45,7 +46,7 @@ const createEmpresa = async (req, res) => {
         // Guarda usuario en db
         const dataUsuario = [
             {
-                usuario: username,
+                usuario: email,
                 password: hashContra
             },
         ];
