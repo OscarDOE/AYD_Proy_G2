@@ -17,10 +17,17 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
 //Routes API
-app.use(require('./routes/auth.route'))
 app.use(require('./routes/createUser.route'))
-app.use(require('./routes/solicitud.route'))
+app.use(require('./routes/loginUser.route'))
 
+app.use(require('./routes/createRepar.route'))
+app.use(require('./routes/loginRepar.route'))
+
+app.use(require('./routes/createEmpresa.route'))
+app.use(require('./routes/loginEmpresa.route'))
+
+app.use(require('./routes/loginAdmin.route'))
+app.use(require('./routes/solicitudes.route'))
 
 //Route Initial API
 app.get('/', (req, res) => {
