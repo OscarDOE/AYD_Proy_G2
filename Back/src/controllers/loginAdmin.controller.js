@@ -57,6 +57,7 @@ const loginAdmin = async (req, res) => {
                 "ayd1p1"
             );
             result[0].token = token;
+            result[0].rol = "1";
 
             res.status(200).json(result[0]);
         }

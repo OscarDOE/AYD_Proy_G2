@@ -24,8 +24,18 @@ const loginEmpresa = async (req, res) => {
     // id de usuario
     const idUser = await query("SELECT * FROM usuario WHERE usuario = ?;", [username]);
 
-     // verifica que exista el usuario
-     if (idUser[0].password != hashContra) {
+    try {
+        // verifica que exista el usuario
+        if (idUser[0].password != hashContra) {
+            return res
+                .status(401)
+                .json({
+                    status: "FAILED",
+                    auth: false,
+                    message: "Credenciales inválidas",
+                });
+        }
+    } catch (error) {
         return res
             .status(401)
             .json({
@@ -35,39 +45,51 @@ const loginEmpresa = async (req, res) => {
             });
     }
 
+
     // busco empresa
     const dataEmp = await query("SELECT * FROM empresa WHERE usuario_id = ?;", [idUser[0].id]);
 
-    // verificar estado de solicitud
-    if (dataEmp[0].estado == 0) { // pendiente
-        return res
-            .status(401)
-            .json({
-                status: "FAILED",
-                auth: false,
-                message: "Solicitud pendiente de revisar",
-            });
-    }else if (dataEmp[0].estado == 0){ //rechazada
-        return res
-            .status(401)
-            .json({
-                status: "FAILED",
-                auth: false,
-                message: "Solicitud Rechazada",
-            });
-    }else{ // aprobada
+    try {
+        // verificar estado de solicitud
+        if (dataEmp[0].estado == 0) { // pendiente
+            return res
+                .status(401)
+                .json({
+                    status: "FAILED",
+                    auth: false,
+                    message: "Solicitud pendiente de revisar",
+                });
+        } else if (dataEmp[0].estado == 2) { //rechazada
+            return res
+                .status(401)
+                .json({
+                    status: "FAILED",
+                    auth: false,
+                    message: "Solicitud Rechazada",
+                });
+        } else { // aprobada
 
-        //Si los datos son correctos se genera el token
-        const token = jwt.sign(
-            {  
-               id: idUser[0].id,
-               rol: "empresa"
-            },
-            "ayd1p1"
-        );
-        dataEmp[0].token = token;
-        return res.status(200).json(dataEmp[0]);
-       
+            //Si los datos son correctos se genera el token
+            const token = jwt.sign(
+                {
+                    id: idUser[0].id,
+                    rol: "empresa"
+                },
+                "ayd1p1"
+            );
+            dataEmp[0].token = token;
+            dataEmp[0].rol = "4"
+            return res.status(200).json(dataEmp[0]);
+
+        }
+    } catch (error) {
+        return res
+            .status(401)
+            .json({
+                status: "FAILED",
+                auth: false,
+                message: "Credenciales inválidas",
+            });
     }
 }
 
