@@ -29,8 +29,6 @@ app.use(require('./routes/loginEmpresa.route'))
 app.use(require('./routes/loginAdmin.route'))
 app.use(require('./routes/solicitudRepar.route'))
 app.use(require('./routes/solicitudEmp.route'))
-app.use(require('./routes/respuestaRepar.route'))
-app.use(require('./routes/respuestaEmp.route'))
 
 //Route Initial API
 app.get('/', (req, res) => {

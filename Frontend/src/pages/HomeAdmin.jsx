@@ -8,13 +8,14 @@ import { TrendingUpOutlined } from '@mui/icons-material';
 
 const HomeAdmin = () => {
     //const { logIn, getNombre } = useContext(AppEnvr)
-    const ruta_AWS = ''
+    const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
     const link_image = usuario_logeado?.usuario_logeado.foto_perfil
 
     const [clickedRow, setClickedRow] = useState();
     const [rows,setRows] = useState([]);
+    const [rows_repartis,setRowsRepartis] = useState([]);
 
 
     const [servicio, setServicio] = useState({
@@ -25,17 +26,20 @@ const HomeAdmin = () => {
         estado_solicitud: false
     })
 
-    useEffect(() => {getSolis()}, [] );
+    useEffect(() => {getDatosEmpresas()}, [] );
+    useEffect(() => {getDatosRepartis()}, [] );
 
 
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'id_servicio_solicitado', headerName: 'ID servicio sol.', width: 130 },
-        { field: 'id_turista', headerName: 'ID turista', width: 130 },
-        { field: 'tipo_servicio', headerName: 'Tpo. servicio', width: 130, sortable: true },
-        { field: 'solicitante', headerName: 'Usr. Solocitante', width: 130 },
-        { field: 'estado_solicitud', headerName: 'Estado soli', width: 130 },
+        { field: 'usuario_id', headerName: 'ID', width: 70 },
+        { field: 'nombre', headerName: 'Nombre', width: 130 },
+        { field: 'descripcion', headerName: 'Descripcion', width: 180 },
+        { field: 'email', headerName: 'Email', width: 130, sortable: true },
+        { field: 'departamento', headerName: 'Departamento', width: 130 },
+        { field: 'municipio', headerName: 'Municipio', width: 130 },
+        { field: 'tipo_empresa_id', headerName: 'Tipo', width: 130 },
+        { field: 'estado', headerName: 'Estado soli', width: 130 },
         {
             field: "acceptButton",
             headerName: "Actions",
@@ -46,7 +50,7 @@ const HomeAdmin = () => {
               return (
                 <Button
                   color="success"
-                  onClick={(e) => onAcceptClick(e, params.row)}
+                  onClick={(e) => onAcceptClickEmp(e, params.row)}
                   //onClick={deleteVuelos}
                   variant="contained"
                 >
@@ -65,7 +69,59 @@ const HomeAdmin = () => {
               return (
                 <Button
                   color="error"
-                  onClick={(e) => onDenyClick(e, params.row)}
+                  onClick={(e) => onDenyClickEmp(e, params.row)}
+                  //onClick={deleteVuelos}
+                  variant="contained"
+                >
+                  Rechazar
+                </Button>
+              );
+            }
+          },
+      ];
+
+      const columns_repartidor = [
+        { field: 'usuario_id', headerName: 'ID', width: 70 },
+        { field: 'nombres', headerName: 'Nombres', width: 130 },
+        { field: 'apellidos', headerName: 'Apellidos', width: 130 },
+        { field: 'email', headerName: 'Email', width: 130, sortable: true },
+        { field: 'departamento', headerName: 'Departamento', width: 130 },
+        { field: 'municipio', headerName: 'Municipio', width: 130 },
+        { field: 'transporte', headerName: 'Transporte', width: 130 },
+        { field: 'telefono', headerName: 'Telefono', width: 130 },
+        { field: 'nit', headerName: 'Nit', width: 130 },
+        { field: 'calificacion', headerName: 'Calificacion', width: 130 },
+        { field: 'estado', headerName: 'Estado soli', width: 130 },
+        {
+            field: "acceptButton",
+            headerName: "Actions",
+            description: "Actions column.",
+            sortable: false,
+            width: 160,
+            renderCell: (params) => {
+              return (
+                <Button
+                  color="success"
+                  onClick={(e) => onAcceptClickRep(e, params.row)}
+                  //onClick={deleteVuelos}
+                  variant="contained"
+                >
+                  Aceptar
+                </Button>
+              );
+            }
+          },
+          {
+            field: "denyButton",
+            headerName: "Actions",
+            description: "Actions column.",
+            sortable: false,
+            width: 160,
+            renderCell: (params) => {
+              return (
+                <Button
+                  color="error"
+                  onClick={(e) => onDenyClickRep(e, params.row)}
                   //onClick={deleteVuelos}
                   variant="contained"
                 >
@@ -77,57 +133,123 @@ const HomeAdmin = () => {
       ];
 
 
-      const getSolis = async () =>{
-        const endpoint_get = await fetch(ruta_AWS+'/api/solicitudes', {
-            method: "GET"
+      
+
+
+      const getDatosEmpresas = async () =>{
+        const endpoint = await fetch(ruta_AWS+'/solicitudEmp', {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"token":usuario_logeado.token})
         });
-        const resp_get = await endpoint_get.json();
+        const resp_get = await endpoint.json();
         setRows(resp_get)
+
+        // const endpoint_get = await fetch(ruta_AWS+'/solicitudEmp', {
+        //     method: "GET"
+        // });
+  
       }
 
 
-      const onAcceptClick = async (e,row) =>{ //SOLICITUD DE VUELOS-----------------------------
-        e.preventDefault();
-        setClickedRow(row);
-        const formdata = new FormData();
-        // formdata.append("id_servicio_solicitado",row.id);
-        // formdata.append("id_turista",servicio.id_turista);
-        // formdata.append("tipo_servicio","vuelo");
-        // formdata.append("solicitante",servicio.solicitante);
-        formdata.append("estado_solicitud",true);
-        
-        const endpoint = await fetch(ruta_AWS+`/api/solicitudes/${row.id}`, {
-            method: "PATCH",
-            body:formdata
+
+      const getDatosRepartis = async () =>{
+        const endpoint = await fetch(ruta_AWS+'/solicitudRepar', {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"token":usuario_logeado.token})
         });
-        getSolis()
-        // e.preventDefault()
-        // setClickedRow(row);
-        // console.log('.........................')
-        // console.log(row)
-        // const endpoint_delete = await fetch(`http://localhost:5000/api/viajes/${row.id}`, {
-        //     method: "DELETE"
+        const resp_get = await endpoint.json();
+        setRowsRepartis(resp_get)
+
+        // const endpoint_get = await fetch(ruta_AWS+'/solicitudRepar', {
+        //     method: "GET"
         // });
         
-        //getVuelos();
-      };
+      }
 
-      const onDenyClick = async (e,row) =>{ //SOLICITUD DE VUELOS-----------------------------
+
+      const onAcceptClickEmp = async (e,row) =>{ //CAMBIO ESTADO DE EMPRESAS-----------------------------
         e.preventDefault();
         setClickedRow(row);
         const formdata = new FormData();
-        // formdata.append("id_servicio_solicitado",row.id);
-        // formdata.append("id_turista",servicio.id_turista);
-        // formdata.append("tipo_servicio","vuelo");
-        // formdata.append("solicitante",servicio.solicitante);
-        formdata.append("estado_solicitud",false);
-        
-        const endpoint = await fetch(ruta_AWS+`/api/solicitudes/${row.id}`, {
-            method: "PATCH",
-            body:formdata
+        formdata.append("estado_solicitud",true);
+
+
+        // const endpoint = await fetch(ruta_AWS+`/api/solicitudes/${row.id}`, {
+        //     method: "PATCH",
+        //     body:formdata
+        // });
+
+
+        const endpoint = await fetch(ruta_AWS+`/respuestaEmp/${row.id}`, {
+          method: "PATCH",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"estado":"1"})
         });
-        getSolis()
+        getDatosEmpresas()
+
       };
+
+      const onDenyClickEmp = async (e,row) =>{ //CAMBIO ESTADO DE EMPRESAS-----------------------------
+        e.preventDefault();
+        setClickedRow(row);
+        const formdata = new FormData();
+        formdata.append("estado_solicitud",false);
+      
+
+        const endpoint = await fetch(ruta_AWS+`/respuestaEmp/${row.id}`, {
+          method: "PATCH",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"estado":"0"})
+        });
+
+        getDatosEmpresas()
+      };
+
+
+
+      //-------------------------------- CAMBIOS ESTADO REPARTIDORES ------------
+
+      const onAcceptClickRep = async (e,row) =>{ //CAMBIO ESTADO DE REPARTIDORES-----------------------------
+        e.preventDefault();
+        setClickedRow(row);
+        const formdata = new FormData();
+        formdata.append("estado_solicitud",true);
+
+
+        const endpoint = await fetch(ruta_AWS+`/respuestaRepar/${row.id}`, {
+          method: "PATCH",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"estado":"1"})
+        });
+
+        getDatosRepartis()
+
+      };
+
+      const onDenyClickRep = async (e,row) =>{ //CAMBIO ESTADO DE REPARTIDORES-----------------------------
+        e.preventDefault();
+        setClickedRow(row);
+        const formdata = new FormData();
+        formdata.append("estado_solicitud",false);
+      
+
+        const endpoint = await fetch(ruta_AWS+`/respuestaRepar/${row.id}`, {
+          method: "PATCH",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"estado":"0"})
+        });
+        getDatosRepartis()
+      };
+
+
 
 
 
@@ -139,10 +261,11 @@ const HomeAdmin = () => {
 
         <div>
             <div class="pCuadradoR2">
-              <center><h1>Solicitudes</h1></center>
+              <center><h2>Solicitudes empresas</h2></center>
             <div class = "tablecontainer45">
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
+                        getRowId={(row) => row.usuario_id}
                         rows={rows}
                         columns={columns}
                         pageSize={5}
@@ -151,10 +274,12 @@ const HomeAdmin = () => {
                     {/* clickedRow: {clickedRow ? `${clickedRow.id}` : null} */}
                 </div>
             </div>
+              <center><h2>Solicitudes repartidores</h2></center>
             <div class = "tablecontainer46">
                 <div style={{ height: 400, width: '100%' }}>
                     <DataGrid
-                        rows={rows}
+                        getRowId={(row) => row.usuario_id}
+                        rows={rows_repartis}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}

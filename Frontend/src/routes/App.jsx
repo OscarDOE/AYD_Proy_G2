@@ -20,6 +20,7 @@ export const App = () => {
     <BrowserRouter>
             <Layout>
                 <Routes>
+                <Route index element={<Home />} />
                 <Route path="/perfilrepartidor" element={<PerfilRepartidor/>} />
                 <Route path="/loginadmin" element={<LoginAdmin/>} />
                 <Route path="/regisrepartidor" element={<RegistroRepartidor />} />

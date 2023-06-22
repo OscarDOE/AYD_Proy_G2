@@ -41,7 +41,7 @@ const RegistroRepartidor = () => {
         municipio:"",
         transporte: "",
         hoja_vida: "",
-        tipoDoc: "",
+        licencia: "",
         nit: "",
         password:""
     })
@@ -185,8 +185,16 @@ const RegistroRepartidor = () => {
                             <input onChange={(e) => setRepartidor({ ...repartidor, municipio:e.target.value })}  type="text" name="c_password" id="C_password"></input>
                         </div>
                         <div class="element">
+                            <label for="password">Telefono</label>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, telefono:e.target.value })}  type="text" name="c_password" id="Telefono"></input>
+                        </div>
+                        <div class="element">
+                            <label for="password">NIT</label>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, nit:e.target.value })}  type="text" name="c_password" id="Nit"></input>
+                        </div>
+                        <div class="element">
                         <label for="lang">Tipo de licencia</label>
-                        <select  name="lenguajes" id="lang">
+                        <select onChange={(e) => setRepartidor({ ...repartidor, licencia:e.target.value })}  name="lenguajes" id="lang">
                             <option value="S">--Seleccione--</option>
                             <option value="A">A</option>
                             <option value="B">B</option>

@@ -37,7 +37,7 @@ const LoginAdmin = () => {
     // }
 
     const [user, setUser] = useState({
-        usuario: "",
+        username: "",
         password: ""
     })
 
@@ -45,12 +45,14 @@ const LoginAdmin = () => {
 
     const handleNavigate = () => {
         const usuario_logeado = cookies.get('session');
-        if(usuario_logeado.usuario_logeado.user_type === "0"){
-            navigate("/inicioAdmin");
-        }else if(usuario_logeado.usuario_logeado.user_type === "1"){
-            navigate("/inicioRecep");
-        }else if(usuario_logeado.usuario_logeado.user_type === "2"){
-            navigate("/inicio");
+        if(usuario_logeado.rol === "1"){
+            navigate("/homeadmin");
+        }else if(usuario_logeado.rol === "2"){
+            navigate("/");
+        }else if(usuario_logeado.rol === "3"){
+            navigate("/perfilrepartidor");
+        }else if(usuario_logeado.rol === "4"){
+            navigate("/");
         }
         
     };
@@ -102,14 +104,14 @@ const LoginAdmin = () => {
                 <form action="/" class="form1" ref={form} onSubmit={handleSubmit}>
                     <div class="form">
                         <div class="avatar">
-                            <img src="https://yt3.ggpht.com/ytc/AKedOLTOxCzheuyu7Cw8Hsm1TvLlbekMeVVrE1c5zL6h=s900-c-k-c0x00ffffff-no-rj" alt="" />
+                            <img src="https://blogs.ucontinental.edu.pe/wp-content/uploads/2022/09/funciones-de-un-administrador-scaled.jpg" alt="" />
                         </div>
                         <div class="header">
                             Ingresa tus datos
                         </div>
                         <div class="element">
                             <label for="username">Username</label>
-                            <input onChange={(e) => setUser({ ...user, usuario:e.target.value })} type="text" name="username"></input>
+                            <input onChange={(e) => setUser({ ...user, username:e.target.value })} type="text" name="username"></input>
                         </div>
                         <div class="element">
                             <label for="password">Password</label>
