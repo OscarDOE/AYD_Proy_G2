@@ -12,10 +12,10 @@ import { Alert } from '@mui/material';
 const RegistroUsers = () => {
 
     const navigate = useNavigate();
-    const ruta_AWS = ''
+    const ruta_AWS = 'http://localhost:4000'
 
     const handleNavigate = () => {
-        navigate("/login");
+        navigate("/loginusers");
     };
 
 
@@ -33,38 +33,29 @@ const RegistroUsers = () => {
 
 
     const [user, setUser] = useState({
-        nombre: "",
-        usuario: "",
-        foto_perfil: null,
-        email: "",
-        password: "",
-        pass_confirm:"",
-        user_type: null
+        username: "",
+        password: ""
     })
 
     const handleSubmit = async (e) => {
 
         e.preventDefault()
-        const formData = new FormData();
-        formData.append("nombre",user.nombre);
-        formData.append("usuario",user.usuario);
-        formData.append("foto_perfil",user.foto_perfil);
-        formData.append("email",user.email);
-        formData.append("password",user.password);
-        formData.append("pass_confirm",user.pass_confirm);
+        // const formData = new FormData();
+        // formData.append("nombre",user.nombre);
+        // formData.append("usuario",user.usuario);
+        // formData.append("foto_perfil",user.foto_perfil);
+        // formData.append("email",user.email);
+        // formData.append("password",user.password);
+        // formData.append("pass_confirm",user.pass_confirm);
         //formData.append("user_type",user.user_type);
-        if(value){
-            console.log('entre true')
-            formData.append("user_type","0");
-        }else{
-            formData.append("user_type","2");
-        }
-        console.log(formData.get('user_type'));
 
-        const endpoint = await fetch(ruta_AWS+'/api/users/registro', {
+        const endpoint = await fetch(ruta_AWS+'/registroUser', {
             method: "POST",
-            body:formData
+            headers: {
+                'Content-Type': 'application/json'
+            },body: JSON.stringify(user)
         });
+
 
         const resp = await endpoint.json();
         if (endpoint.status === 400){
@@ -158,29 +149,18 @@ const RegistroUsers = () => {
                             Completa tu informacion
                         </div>
                         <div class="element">
-                            <label for="username">Nombre</label>
-                            <input onChange={(e) => setUser({ ...user, nombre:e.target.value })} type="text" name="nombre" id="Nombre"></input>
-                        </div>
-                        <div class="element">
                             <label for="password">Usuario</label>
-                            <input onChange={(e) => setUser({ ...user, usuario:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
+                            <input onChange={(e) => setUser({ ...user, username:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
                         </div>
-                        <div class="element">
-                            <label for="password">Foto perfil</label>
-                            <input onChange={(e) => setUser({ ...user, foto_perfil:e.target.files[0] })}  type="file" name="f_Perfil" id="fo_Perfil"></input>
-                        </div>
-                        <div class="element">
+                        {/* <div class="element">
                             <label for="password">Email</label>
                             <input onChange={(e) => setUser({ ...user, email:e.target.value })}  type="text" name="email" id="Email"></input>
-                        </div>
+                        </div> */}
                         <div class="element">
                             <label for="password">Password</label>
                             <input onChange={(e) => setUser({ ...user, password:e.target.value })}  type="password" name="password" id="Password"></input>
                         </div>
-                        <div class="element">
-                            <label for="password">Confirmar Password</label>
-                            <input onChange={(e) => setUser({ ...user, pass_confirm:e.target.value })}  type="password" name="c_password" id="C_password"></input>
-                        </div>
+    
                         {/* <div class="element">
                             
                             <FormControlLabel control={<Checkbox  onChange={(event)=>setValue(event.target.checked)} />} label="Usuario admin" />

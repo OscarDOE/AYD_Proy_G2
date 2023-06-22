@@ -32,8 +32,25 @@ const RegistroEmpresa = () => {
         departamento:"",
         municipio:"",
         zona:"",
-        imagenes:"texto de prueba",
+        imagenes:null,
     })
+
+
+    // const enviarDocumento = () => {
+    //     console.log('entre enviar documento')
+    //     if (empresa.imagenes) {
+    //       const reader = new FileReader();
+    //       reader.onload = (event) => {
+    //         console.log('entre a onload')
+    //         const base64String = event.target.result;
+    //         console.log(base64String)
+    //         setEmpresa({ ...empresa, imagenes:base64String })
+
+    //       };
+    //       reader.readAsDataURL(empresa.imagenes);
+    //     }
+    //   };
+    
 
     const handleSubmit = async (e) => {
 
@@ -48,26 +65,46 @@ const RegistroEmpresa = () => {
         formData.append("municipio",empresa.municipio);
         formData.append("zona",empresa.zona);
         formData.append("imagenes",empresa.imagenes);
+        console.log('---base64---')
+        console.log(empresa.imagenes)
+        
 
+        
 
         const endpoint = await fetch(ruta_AWS+'/registroEmpresa', {
             method: "POST",
-            body:empresa
+            body:formData
         });
 
         // const endpoint = await fetch(ruta_AWS+'/registroEmpresa', {
         //     method: "POST",
         //     headers: {
         //         'Content-Type': 'application/json'
-        //       },
-        //       body: JSON.stringify(empresa)
+        //       },body: JSON.stringify({
+        //                 "nombre": empresa.nombre,
+        //                 "descripcion": empresa.descripcion,
+        //                 "email": empresa.email,
+        //                 "departamento": empresa.departamento,
+        //                 "municipio": empresa.municipio,
+        //                 "imagenes": base64String,
+        //                 "tipo": empresa.tipo,
+        //                 "password": empresa.password,
+        //         })
+              
+        //     //   body: JSON.stringify(empresa)
         // });
+
+
+
+        
 
         const resp = await endpoint.json();
         if (endpoint.status === 400){
             setError(resp.message);
         }
         else{ 
+            console.log('---base64---')
+            console.log(empresa.imagenes)
             setError(null);
             alert("¡Registrado correctamente!")
             handleNavigate()
@@ -132,9 +169,15 @@ const RegistroEmpresa = () => {
                             <label for="label">Descripcion</label>
                             <input onChange={(e) => setEmpresa({ ...empresa, descripcion:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
                         </div>
+
                         <div class="element">
-                            <label for="label">Categoria</label>
-                            <input onChange={(e) => setEmpresa({ ...empresa, tipo:e.target.value })}  type="text" name="categoria" id="Categoria"></input>
+                        <label for="lang">Categoria</label>
+                        <select onChange={(e) => setEmpresa({ ...empresa, tipo:e.target.value })} name="categoria" id="lang">
+                            <option value="0">--Seleccione--</option>
+                            <option value="1">Restaurante</option>
+                            <option value="2">Tienda de convivencia</option>
+                            <option value="3">Supermercado</option>
+                        </select>
                         </div>
                         <div class="element">
                             <label for="label">Email</label>
@@ -150,15 +193,15 @@ const RegistroEmpresa = () => {
                         </div>
                         <div class="element">
                             <label for="label">Municipio</label>
-                            <input onChange={(e) => setEmpresa({ ...empresa, municipio:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                            <input onChange={(e) => setEmpresa({ ...empresa, municipio:e.target.value })}  type="text" name="c_password" id="Muni"></input>
                         </div>
                         <div class="element">
                             <label for="label">Zona</label>
-                            <input onChange={(e) => setEmpresa({ ...empresa, zona:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                            <input onChange={(e) => setEmpresa({ ...empresa, zona:e.target.value })}  type="text" name="c_password" id="Zona"></input>
                         </div>
                         <div class="element">
                             <label for="curriculum">Documentos</label>
-                            <input onChange={(e) => setEmpresa({ ...empresa, imagenes:e.target.files[0] })}  type="file" name="f_Perfil" id="fo_Perfil"></input>
+                            <input onChange={(e) => setEmpresa({ ...empresa, imagenes:e.target.files[0] }) }  type="file" name="f_Perfil" id="fo_Perfil"></input>
                         </div>
                         <div class="element">
                             {/* <button onClick={()=>console.log(value)} type="submit">Registrar</button> */}
@@ -173,3 +216,6 @@ const RegistroEmpresa = () => {
 }
 
 export default RegistroEmpresa
+
+
+
