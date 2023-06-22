@@ -9,7 +9,7 @@ const LoginRepartidores = () => {
 
     // const displ = useRef(null);
     // const [userV, setUserV] = useState(true)
-    const ruta_AWS = ''
+    const ruta_AWS = 'http://localhost:4000'
 
     const [error, setError] = useState(null);
     const form = useRef();
@@ -37,7 +37,7 @@ const LoginRepartidores = () => {
     // }
 
     const [user, setUser] = useState({
-        usuario: "",
+        username: "",
         password: ""
     })
 
@@ -59,28 +59,24 @@ const LoginRepartidores = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formdata = new FormData();
-        formdata.append("usuario",user.usuario);
-        formdata.append("password",user.password);
+        // const formdata = new FormData();
+        // formdata.append("usuario",user.usuario);
+        // formdata.append("password",user.password);
         // const user = {
         //   usuario: formdata.get("usuario"),
         //   password: formdata.get("password"),
         // };
-    
-        const endpoint = await fetch(ruta_AWS+'/api/users/login', {
+
+
+        const endpoint = await fetch(ruta_AWS+'/loginRepar', {
             method: "POST",
-            body:formdata
-            // headers: {
-            //     "Content-Type": "application/json",
-            // },
-            // body: JSON.stringify({
-            //     "usuario": user.usuario,
-            //     "password": user.password
-            // }),
+            headers: {
+                'Content-Type': 'application/json'
+            },body: JSON.stringify(user)
         });
 
         const resp = await endpoint.json();
-        if (endpoint.status === 400){
+        if (endpoint.status === 401 || endpoint.status === 400 ){
             setError(resp.message);
         }
         else{ 
@@ -109,7 +105,7 @@ const LoginRepartidores = () => {
                         </div>
                         <div class="element">
                             <label for="username">Username</label>
-                            <input onChange={(e) => setUser({ ...user, usuario:e.target.value })} type="text" name="username"></input>
+                            <input onChange={(e) => setUser({ ...user, username:e.target.value })} type="text" name="username"></input>
                         </div>
                         <div class="element">
                             <label for="password">Password</label>
