@@ -7,3 +7,5 @@ const verifyToken = require('../middlewares/verifyToken')
 router.post('/registroEmpresa', userController.createEmpresa)
 
 module.exports = router
+
+
