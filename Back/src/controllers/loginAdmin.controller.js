@@ -2,8 +2,9 @@ const mysqlConnection = require('../database/db')
 const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
-const loginUser = async (req, res) => {
+const loginAdmin = async (req, res) => {
     const { username, password } = req.body
 
     if (!username || !password)
@@ -22,12 +23,12 @@ const loginUser = async (req, res) => {
 
     // Iniciar sesión del usuario
     mysqlConnection.query(
-        "SELECT * FROM cliente WHERE username = ?",
+        "SELECT * FROM administrador WHERE username = ?",
         [username],
         async (err, result) => {
             if (err) {
                 console.log(err);
-                return res.status(500).json({ message: "Error SQL - LoginUser" });
+                return res.status(500).json({ message: "Error SQL - LoginAdmin" });
             }
 
             if (!result[0])
@@ -49,9 +50,9 @@ const loginUser = async (req, res) => {
 
             //Si los datos son correctos se genera el token
             const token = jwt.sign(
-                {
-                    id: result[0].usuario_id,
-                    rol: "usuario"
+                {  
+                   id: result[0].usuario_id,
+                   rol: "admin"
                 },
                 "ayd1p1"
             );
@@ -66,5 +67,5 @@ const loginUser = async (req, res) => {
 }
 
 module.exports = {
-    loginUser
+    loginAdmin
 }
