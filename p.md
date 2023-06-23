@@ -13,7 +13,7 @@
 
 
  # <center>SCRUM </center>
-   ![Imagen](IMAGENES/scrum.jpeg)
+   ![Imagen](img/srum.png)
 
  - *Esta metodología es un marco de trabajo ágil que ayuda al equipo a trabajar en conjunto para el desarrollo de un proyecto.*
 
