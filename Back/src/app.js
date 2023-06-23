@@ -2,6 +2,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const bodyParser = require('body-parser');
+const  fileUpload  = require('express-fileupload');
 
 const app = express()
 const PORT = process.env.PORT || 4000; 
@@ -12,8 +13,13 @@ const PORT = process.env.PORT || 4000;
 app.use(express.urlencoded({extended: false}))*/
 app.use(morgan('dev'))
 app.use(cors())
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+// app.use(fileUpload())
+// app.use(fileUpload({
+//     useTempFiles: true,
+//     tempFileDir: './uploads'
+//   }))
 
 
 //Routes API
@@ -31,6 +37,9 @@ app.use(require('./routes/solicitudRepar.route'))
 app.use(require('./routes/solicitudEmp.route'))
 app.use(require('./routes/informeUser.route'))
 app.use(require('./routes/miPerfil.route'))
+
+
+
 
 //Route Initial API
 app.get('/', (req, res) => {

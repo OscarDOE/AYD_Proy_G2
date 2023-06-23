@@ -3,6 +3,7 @@ const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 const awsImage = require("../functions/awsImage");
+const fs = require('fs/promises')
 
 const createEmpresa = async (req, res) => {
     const {
@@ -17,7 +18,10 @@ const createEmpresa = async (req, res) => {
         password
     } = req.body;
 
-    
+    const filePath = req.file.path
+    const fileBase64 = (await fs.readFile(filePath)).toString('base64')
+
+
     if (!password || !email)
         return res.status(400).json({
             status: "FAILED",
@@ -63,7 +67,7 @@ const createEmpresa = async (req, res) => {
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
             "Empresa_image",
-            imagenes,
+            fileBase64,
             idUser[0].id,
             "pdf"
         );
