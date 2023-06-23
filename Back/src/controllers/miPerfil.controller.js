@@ -33,18 +33,18 @@ const miPerfil = async (req, res) => {
     }
     try {
         // Obtener data empresas
-        const repartidor = await query("SELECT * FROM administrador;", []);
+        const repartidor = await query("SELECT * FROM repartidor WHERE usuario_id = ?;", [id]);
         res.status(200).json(repartidor);
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No se encontro el admin",
+                    "No se encontro el repartidor",
             },
             auth: false,
             message:
-                "No se encontro el admin",
+                "No se encontro el repartidor",
         });
     }
 
