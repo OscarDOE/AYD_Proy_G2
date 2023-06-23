@@ -118,14 +118,12 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
   - **Antecedentes del proyecto**
     <br>
-    Actualmente existen empresas que se puden dividir en 3 tipos: Restaurante, Tienda de conveniencia y Supermercados. A falta de una pagina que proporcione los servicios de pedidos a domicilio, nace el sistema ***AlChilazo 🔥*** 
-
-    Actualmente existen hoteles que ofresen su servicios a nivel global. A falta de una página que proporcione los servicios de viaje, estadía y transporte, nace el sistema ***Full trip***. Con la finalidad de poder ofrerle al turista diferentes opciones para que puedan adquirir el servicio y puedan calificarlo.
+    Actualmente existen empresas que se puden dividir en 3 tipos: Restaurante, Tienda de conveniencia y Supermercados. A falta de una pagina que proporcione los servicios de pedidos a domicilio, nace el sistema ***AlChilazo 🔥***. Que tiene la finalidad de poder ofrecerle al cliente diferentes productos y poder adquirirlos.
     <br>
 
   - **Necesidades**
     <br>
-    Se require una página intuitiva y amigable para el usuario, el cual tiene que ser capaz de registrar usuarios y las empresas que desean registrar los servicios que se prestan a nivel goblal.
+    Se require una página intuitiva y amigable para el usuario, el cual tiene que ser capaz de registrar usuarios y las empresas que desean registrar los servicios que se prestan a nivel goblal, tambien se requiere registrar repartidores para poder entregar pedidos.
     <br>
 
   - **Funcionales**
@@ -133,8 +131,8 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
        |Nombre|Requerimiento   |Descripcion|Nivel de prioridad|
        |------|----------------|-----------|------------------|
-       |RF01  |Inicio de sesion|La pagina contara con un *login* para acceder al usuaro por medio de correo o nombre usuario, al igual que la contraseña.|5|
-       |RF01  |Registro de Usuario|Si el usuario no cuenta con registros en la pagina, se debera registrar ingresando la informacion que se le solicita (Nombre Completo, Usuario, Fecha de Nacimiento, Correo Electrónico,  Contraseña) y seleccionar que tipo de usuario desea ser.|5|
+       |RF01  |Inicio de sesion|La pagina contara con un *login* para usar el servicio por medio de username al igual que la contraseña.|5|
+       |RF01  |Registro de Usuario|Si el usuario no cuenta con registros en la pagina, se debera registrar ingresando la informacion que se le solicita (Usuario, Fecha de Nacimiento, Correo Electrónico,  Contraseña) y seleccionar que tipo de usuario desea ser.|5|
 
    <br>
 
