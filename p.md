@@ -75,7 +75,7 @@
 
 ---
 
-![alt text](IMAGENES/Gitflow.png "Diagrama")
+![alt text](img/Branch.png "Diagrama")
 
 ---
 
@@ -118,7 +118,7 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
   - **Antecedentes del proyecto**
     <br>
-    Actualmente existen empresas que se puden dividir en 3 tipos: Restaurante
+    Actualmente existen empresas que se puden dividir en 3 tipos: Restaurante, Tienda de conveniencia y Supermercados. A falta de una pagina que proporcione los servicios de pedidos a domicilio, nace el sistema ***AlChilazo 🔥*** 
 
     Actualmente existen hoteles que ofresen su servicios a nivel global. A falta de una página que proporcione los servicios de viaje, estadía y transporte, nace el sistema ***Full trip***. Con la finalidad de poder ofrerle al turista diferentes opciones para que puedan adquirir el servicio y puedan calificarlo.
     <br>

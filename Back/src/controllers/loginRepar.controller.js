@@ -71,7 +71,7 @@ const loginRepar = async (req, res) => {
             const token = jwt.sign(
                 {
                     id: idUser[0].id,
-                    rol: "empresa"
+                    rol: "repartidor"
                 },
                 "ayd1p1"
             );
