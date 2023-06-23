@@ -33,8 +33,7 @@ const informeUser = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        const clientes = await query("SELECT * FROM clientes;", []);
-
+        const clientes = await query("SELECT * FROM cliente;", []);
         res.status(200).json(clientes);
     } catch (error) {
         return res.status(400).json({

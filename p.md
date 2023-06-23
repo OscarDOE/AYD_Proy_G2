@@ -132,32 +132,24 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
        |Nombre|Requerimiento   |Descripcion|Nivel de prioridad|
        |------|----------------|-----------|------------------|
        |RF01  |Inicio de sesion|La pagina contara con un *login* para usar el servicio por medio de username al igual que la contraseña.|5|
-       |RF01  |Registro de Usuario|Si el usuario no cuenta con registros en la pagina, se debera registrar ingresando la informacion que se le solicita (Usuario, Fecha de Nacimiento, Correo Electrónico,  Contraseña) y seleccionar que tipo de usuario desea ser.|5|
+       |RF01  |Registro de Usuario|Si el usuario no cuenta con registros en la pagina, se debera registrar ingresando la informacion que se le solicita (Usuario, Contraseña)|5|
+       |RF02  |Registro de repartidor|Si el repartidor desea ser parte del equipo debe registrarse en la pagina,ingresando la informacion que se le solicita, y esperar a ser revisado por un admin|5|
+       |RF03  |Registro de empresa|Si la empresa desea ser parte del equipo debe registrarse en la pagina,ingresando la informacion que se le solicita, y esperar a ser revisado por un admin|5|
 
    <br>
 
    ## Funcionales
 
-- Proporcionar a los usuarios un sistema funcional para realizar viajes
-- Proveer a los usuarios una forma sencilla de entender y de utilizar para realizar viajes
-- Registro de usuarios turista
-- Registro de hoteles
-- Registro de autos
-- Registro de aerolineas
-- Inicio de sesión de usuarios por rol
-- Registro de servicios adicionales al sistema
-- Buscador de hoteles
-- Filtrar busqueda de hoteles por campos especificos
-- Creación de habitaciones disponibles adicionales
-- Ingreso de carros para renta para usuaio tipo renta autos
-- Reserva de autos para turista
-- Busqueda de autos para el usuario
-- Filtro para busqueda de autos
-- Crear vuelo por tipo
-- Busqueda de vuelo
-- Filtro para busqueda de vuelo
-- Valorar y esribir reseña para vuelo, reservación hotel, auto y servicios adicionales
-- Visualizar reseñas
+- Proporcionar a los usuarios un sistema funcional para realizar pedidos.
+- Proveer a los usuarios una forma sencilla de entender y de utilizar el servicio
+- Registro de usuarios
+- Registro de repartidores
+- Registro de emprpesas
+- Inicio de sesión de usuarios
+- Ingreso de productos para la venta
+- Vista de informe de usuarios
+- Aprobar o rechazar usuarios
+- Vista de perfil de repartidor
 
 ## No Funcionales
 
