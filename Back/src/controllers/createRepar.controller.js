@@ -49,7 +49,7 @@ const createRepar = async (req, res) => {
     
     // validar telefono
     const regexNum = /^\d{8}$/;
-    if (!regexNum.test(correo)){
+    if (!regexNum.test(telefono)){
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -63,7 +63,7 @@ const createRepar = async (req, res) => {
 
     // validar Nit
     const regexNit = /^\d{9}$/;
-    if (!regexNit.test(correo)){
+    if (!regexNit.test(nit)){
         return res.status(400).json({
             status: "FAILED",
             data: {
