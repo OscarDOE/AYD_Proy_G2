@@ -277,23 +277,12 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
    <br>
 
-# Diagrama de despliegue
-El siguiente diagrama es una representacion de la arquitectura de ejecución del sistema, tanto del ambito del software como del hardware y sus relaciones entre los distintos componentes del sistema.
-
-![Diagrama Despliegue](./IMAGENES/Diagarama_Despliegue.png)
-# Diagrama de componentes
-El siguiente diagrama es una representacion de las relaciones entre los distintos componentes individuales del sistema tanto del apartado logico como fisico.
-
-![Diagrama de Componentes](./IMAGENES/Diagrama_Componentes.jpg)
 
 # Diagrama de Entidad Relacion
 El siguiente diagrama es una representacion de la entidad relacion que se utilizara para la base de datos que se empleara en el proyecto.
 
 ![ER](./IMAGENES/ER.png)
 
-
-# Descripción de la seguridad de la aplicación. Toma en cuenta el proceso de inicio de sesión y que garantice que la persona que inicia sesión es realmente quien dice  ser.
-```Cuando el administrador crea un nuevo usuario se le envía un correo al propietario para realizar la confirmación de la cuenta, la contraseña se almacena de forma encriptada para mayor seguridad.```
 
 # Mockups de las principales vistas para la página web.
 * Login
@@ -334,12 +323,4 @@ El siguiente diagrama es una representacion de la entidad relacion que se utiliz
 ![15](./IMAGENES/Mockups/useradministrador1.JPG)
 ```Formularios utilizados para la creacion de cada uno de los usuarios```
 
-# Diagrama de clases
-El siguiente diagrama es una representacion de las clases que se utilizaran para representar el sistema.
 
-![Diagrama de Clases](./IMAGENES/Diagrama%20de%20clases.jpeg)
-
-# Diagrama de casos de Uso
-El siguiente diagrama es una representacion de los casos de uso que realizara cada usuario del sistema.
-
-![Diagrama de casos de uso](./IMAGENES/Diagrama%20de%20caso%20de%20uso.jpeg)
