@@ -3,6 +3,7 @@ const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 const awsImage = require("../functions/awsImage");
+const fs = require('fs/promises')
 
 const createRepar = async (req, res) => {
     const {
@@ -18,6 +19,9 @@ const createRepar = async (req, res) => {
         nit,
         password
     } = req.body;
+
+    const filePath = req.file.path
+    const fileBase64 = (await fs.readFile(filePath)).toString('base64')
 
     // falta direcciones y pago
     if (!correo || !password)
@@ -97,7 +101,7 @@ const createRepar = async (req, res) => {
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
             "Repartidores",
-            hoja_vida,
+            fileBase64,
             idUser[0].id,
             "pdf"
         );
