@@ -89,6 +89,7 @@ const Header = () => {
                                 {usuario_logeado?.rol === "1" ? 
                                 <>
                                 <Link to='/homeadmin'><Button color="inherit">Solicitudes pendientes</Button></Link>
+                                <Link to='/informeusers'><Button color="inherit">Informe</Button></Link>
                                 </> 
                                 : 
                                 <></>}
@@ -117,6 +118,7 @@ const Header = () => {
                             <><Button onClick={handleLogOut} color="inherit">Log out</Button></> 
                             : 
                             <>
+                            <Link to='/loginadmin'><Button color="inherit">Admin</Button></Link>
                             <Link to='/loginusers'><Button color="inherit">Login</Button></Link>
                             <Link to='/regisusers'><Button color="inherit">Registro</Button></Link>
                             </>}

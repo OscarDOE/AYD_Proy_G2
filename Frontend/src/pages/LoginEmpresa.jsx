@@ -25,13 +25,14 @@ const LoginEmpresa = () => {
     const handleNavigate = () => {
         
         const usuario_logeado = cookies.get('session');
-        console.log(usuario_logeado)
-        if(usuario_logeado.usuario_logeado.user_type === "0"){
-            navigate("/inicioAdmin");
-        }else if(usuario_logeado.usuario_logeado.user_type === "1"){
-            navigate("/inicioRecep");
-        }else if(usuario_logeado.usuario_logeado.user_type === "2"){
-            navigate("/inicio");
+        if(usuario_logeado.rol === "1"){
+            navigate("/homeadmin");
+        }else if(usuario_logeado.rol === "2"){
+            navigate("/");
+        }else if(usuario_logeado.rol === "3"){
+            navigate("/perfilrepartidor");
+        }else if(usuario_logeado.rol === "4"){
+            navigate("/");
         }
         
     };

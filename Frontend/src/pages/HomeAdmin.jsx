@@ -11,7 +11,7 @@ const HomeAdmin = () => {
     const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
-    const link_image = usuario_logeado?.usuario_logeado.foto_perfil
+    // const link_image = usuario_logeado?.usuario_logeado.foto_perfil
 
     const [clickedRow, setClickedRow] = useState();
     const [rows,setRows] = useState([]);
@@ -184,12 +184,15 @@ const HomeAdmin = () => {
         // });
 
 
-        const endpoint = await fetch(ruta_AWS+`/respuestaEmp/${row.id}`, {
-          method: "PATCH",
+        const endpoint = await fetch(ruta_AWS+`/respuestaEmp`, {
+          method: "POST",
           headers: {
               'Content-Type': 'application/json'
-          },body: JSON.stringify({"estado":"1"})
+          },body: JSON.stringify({"resp":"1","token":usuario_logeado.token,"idUser":row.usuario_id})
         });
+        if (endpoint.status != 400){
+          alert("¡Empresa " + row.usuario_id + " | " + row.nombre + " aceptado!")
+        }
         getDatosEmpresas()
 
       };
@@ -201,12 +204,15 @@ const HomeAdmin = () => {
         formdata.append("estado_solicitud",false);
       
 
-        const endpoint = await fetch(ruta_AWS+`/respuestaEmp/${row.id}`, {
-          method: "PATCH",
+        const endpoint = await fetch(ruta_AWS+`/respuestaEmp`, {
+          method: "POST",
           headers: {
               'Content-Type': 'application/json'
-          },body: JSON.stringify({"estado":"0"})
+          },body: JSON.stringify({"resp":"0","token":usuario_logeado.token,"idUser":row.usuario_id})
         });
+        if (endpoint.status != 400){
+          alert("¡Empresa " + row.usuario_id + " | " + row.nombre + " denegado!")
+        }
 
         getDatosEmpresas()
       };
@@ -222,12 +228,16 @@ const HomeAdmin = () => {
         formdata.append("estado_solicitud",true);
 
 
-        const endpoint = await fetch(ruta_AWS+`/respuestaRepar/${row.id}`, {
-          method: "PATCH",
+        const endpoint = await fetch(ruta_AWS+`/respuestaRepar`, {
+          method: "POST",
           headers: {
               'Content-Type': 'application/json'
-          },body: JSON.stringify({"estado":"1"})
+          },body: JSON.stringify({"resp":"1","token":usuario_logeado.token,"idUser":row.usuario_id})
         });
+
+        if (endpoint.status != 400){
+          alert("¡Repartidor " + row.usuario_id + " | " + row.nombres + " aceptado!")
+        }
 
         getDatosRepartis()
 
@@ -240,12 +250,16 @@ const HomeAdmin = () => {
         formdata.append("estado_solicitud",false);
       
 
-        const endpoint = await fetch(ruta_AWS+`/respuestaRepar/${row.id}`, {
-          method: "PATCH",
+        const endpoint = await fetch(ruta_AWS+`/respuestaRepar`, {
+          method: "POST",
           headers: {
               'Content-Type': 'application/json'
-          },body: JSON.stringify({"estado":"0"})
+          },body: JSON.stringify({"resp":"0","token":usuario_logeado.token,"idUser":row.usuario_id})
         });
+
+        if (endpoint.status != 400){
+          alert("¡Repartidor " + row.usuario_id + " | " + row.nombres + " denegado!")
+        }
         getDatosRepartis()
       };
 
@@ -260,6 +274,10 @@ const HomeAdmin = () => {
 
 
         <div>
+          {usuario_logeado?.rol === "1" ? 
+          <>
+
+
             <div class="pCuadradoR2">
               <center><h2>Solicitudes empresas</h2></center>
             <div class = "tablecontainer45">
@@ -280,7 +298,7 @@ const HomeAdmin = () => {
                     <DataGrid
                         getRowId={(row) => row.usuario_id}
                         rows={rows_repartis}
-                        columns={columns}
+                        columns={columns_repartidor}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                     />
@@ -290,12 +308,16 @@ const HomeAdmin = () => {
             </div>
             <div class="sCuadradoR2">
                 <h1>Bienvenido </h1>
-                {/* <h2>{usuario_logeado.usuario_logeado.usuario}</h2><br></br> */}
-                <img src={link_image} alt="" width="200" height="200"></img>
+                <h2>{usuario_logeado.username}</h2>
             </div>
-            <div>
-              <center><h1>Informes</h1></center>
-            </div>
+
+            {/* -------------- termina ternario ------------------- */}
+            </>
+            :
+            <>
+             <center><h1>¡Cuidado! Aqui solo admins </h1></center>
+            </>}
+
         </div>
     )
 }

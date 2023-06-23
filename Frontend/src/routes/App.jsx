@@ -11,6 +11,7 @@ import LoginUsers from "../pages/LoginUser";
 import HomeAdmin from "../pages/HomeAdmin";
 import LoginAdmin from "../pages/LoginAdmion";
 import PerfilRepartidor from "../pages/MiPerfilR";
+import InformeUsers from "../pages/InformeUsers";
 // import LoginPage from "../pages/LoginPage";
 // import RegisterPage from "../pages/RegisterPage";
 // import PagesVuelos from "../pages/PagesVuelos";
@@ -30,6 +31,7 @@ export const App = () => {
                 <Route path="/loginrepartidor" element={<LoginRepartidores />} />
                 <Route path="/loginusers" element={<LoginUsers />} />
                 <Route path="/homeadmin" element={<HomeAdmin />} />
+                <Route path="/informeusers" element={<InformeUsers />} />
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />

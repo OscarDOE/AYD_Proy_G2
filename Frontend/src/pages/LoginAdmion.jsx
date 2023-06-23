@@ -9,7 +9,7 @@ const LoginAdmin = () => {
 
     // const displ = useRef(null);
     // const [userV, setUserV] = useState(true)
-    const ruta_AWS = ''
+    const ruta_AWS = 'http://localhost:4000'
 
     const [error, setError] = useState(null);
     const form = useRef();
@@ -69,17 +69,13 @@ const LoginAdmin = () => {
         //   password: formdata.get("password"),
         // };
     
-        const endpoint = await fetch(ruta_AWS+'/api/users/login', {
+        const endpoint = await fetch(ruta_AWS+'/loginAdmin', {
             method: "POST",
-            body:formdata
-            // headers: {
-            //     "Content-Type": "application/json",
-            // },
-            // body: JSON.stringify({
-            //     "usuario": user.usuario,
-            //     "password": user.password
-            // }),
+            headers: {
+                'Content-Type': 'application/json'
+            },body: JSON.stringify(user)
         });
+        
 
         const resp = await endpoint.json();
         if (endpoint.status === 400){
