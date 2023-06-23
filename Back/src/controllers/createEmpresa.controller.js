@@ -2,6 +2,7 @@ const mysqlConnection = require("../database/db");
 const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
+const awsImage = require("../functions/awsImage");
 
 const createEmpresa = async (req, res) => {
     const {
