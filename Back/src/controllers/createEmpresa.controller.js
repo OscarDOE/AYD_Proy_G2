@@ -61,7 +61,7 @@ const createEmpresa = async (req, res) => {
 
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
-            "Empresas_image",
+            "Empresa_image",
             imagenes,
             idUser[0].id,
             "pdf"
@@ -78,7 +78,7 @@ const createEmpresa = async (req, res) => {
                 municipio,
                 zona,
                 imagenes: URL,
-                tipo_empresa_id: tipo,
+                tipo_empresa_id: parseInt(tipo),
                 estado: 0,
                 usuario_id: idUser[0].id
             },
@@ -92,7 +92,6 @@ const createEmpresa = async (req, res) => {
             });
     } catch (error) {
         console.error("ERROR - createUser", error);
-
         if (error.code == "ER_DUP_ENTRY")
             return res.status(500).json({
                 status: "FAILED",
