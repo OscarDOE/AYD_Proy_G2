@@ -30,7 +30,7 @@ const createEmpresa = async (req, res) => {
 
     // validar correo
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexCorreo.test(correo)){
+    if (!regexCorreo.test(email)){
         return res.status(400).json({
             status: "FAILED",
             data: {
