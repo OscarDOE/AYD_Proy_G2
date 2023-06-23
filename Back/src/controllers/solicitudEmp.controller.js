@@ -52,33 +52,6 @@ const solicitudEmp = async (req, res) => {
 }
 
 const respuestaEmp = async (req, res) => {
-    const { id, rol } = req.token
-
-    if (!id || !rol) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No trae Token",
-            },
-            auth: false,
-            message:
-                "No trae Token",
-        });
-    }
-
-    if (rol != "admin") {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "Token invalido",
-            },
-            auth: false,
-            message:
-                "Token invalido",
-        });
-    }
 
     const { idUser,  resp} = req.body
 
@@ -97,14 +70,9 @@ const respuestaEmp = async (req, res) => {
 
     try {
         // Obtener data repartidores  
-        await query("UPDATE empresa SET estado = ? WHERE usuario_id = ?;", [idUser, resp]);
+        await query("UPDATE empresa SET estado = ? WHERE usuario_id = ?;", [resp, idUser]);
         return res.status(200).json({
-            status: "SUCCESS",
-            data: {
-                error:
-                    "Se actualizo el estado correctamente",
-            },
-            auth: false,
+            status: "OK",
             message:
                 "Se actualizo el estado correctamente",
         });
