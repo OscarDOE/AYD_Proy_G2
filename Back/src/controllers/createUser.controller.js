@@ -3,49 +3,42 @@ const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 
+const { configCognito } = require("../config/aws.config");
+
 const createUser = async (req, res) => {
   const {
       username,
       password
     } = req.body;
 
-    // falta direcciones y pago
-    if (!username || !password)
+    if (!nickname || !nombre || !contra)
     return res.status(400).json({
       status: "FAILED",
       data: {
         error:
-          "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'username', 'password'",
+          "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'nickname', 'nombre', 'contra', 'foto'",
       },
       message:
-        "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'username', 'password'",
+        "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'nickname', 'nombre', 'contra', 'foto'",
     });
 
     try {
       
-      //
       const hashContra = crypto.createHash("md5").update(password).digest("hex");
 
       // Guarda usuario en db
       const dataUsuario = [
-        { 
-          usuario: username, 
-          password: hashContra
-        },
+        { username, hashContra},
       ];
       // Creo el Usuario
       await query("INSERT INTO usuario SET ?", dataUsuario);
 
       // Obtener id de Usuario
-      const idUser = await query("SELECT MAX(id) as id FROM usuario;", []);
+      const idUser = await query("last_insert_id()", []);
 
       // Guarda cliente en db
       const dataCliente = [
-        { 
-          username, 
-          password: hashContra, 
-          usuario_id: idUser[0].id
-        },
+        { username, hashContra, idUser},
       ];
       // Crear el Cliente
       await query("INSERT INTO cliente SET ?", dataCliente);

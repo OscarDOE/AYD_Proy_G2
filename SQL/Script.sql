@@ -39,7 +39,6 @@ CREATE TABLE repartidor (
      email VARCHAR(50) NOT NULL,
      departamento VARCHAR(50) NOT NULL,
      municipio VARCHAR(50) NOT NULL,
-     zona INT NOT NULL,
      transporte INT NOT NULL,
      telefono VARCHAR(15) NOT NULL,
      hoja_vida VARCHAR(500) NOT NULL,
@@ -75,7 +74,6 @@ CREATE TABLE empresa (
      email VARCHAR(50) NOT NULL,
      departamento VARCHAR(50) NOT NULL,
      municipio VARCHAR(50) NOT NULL,
-     zona INT NOT NULL,
      imagenes VARCHAR(500) NOT NULL,
      tipo_empresa_id INT NOT NULL,
      estado INT NOT NULL,
@@ -96,7 +94,6 @@ CREATE TABLE combo (
      nombre VARCHAR(100) NOT NULL,
      descripcion VARCHAR(250) NOT NULL,
      menu_id INT NOT NULL,
-     precio FLOAT NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (menu_id) REFERENCES menu(id)
 );
@@ -107,7 +104,6 @@ CREATE TABLE producto (
      descripcion VARCHAR(150) NOT NULL,
      tipo_producto_id INT NOT NULL,
      menu_id INT NOT NULL,
-     precio FLOAT NOT NULL,
      imagen VARCHAR(500) NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (menu_id) REFERENCES menu(id),
@@ -158,31 +154,3 @@ CREATE TABLE detalle_pedido (
      FOREIGN KEY (pedido_id) REFERENCES pedido(id),
      FOREIGN KEY (producto_id) REFERENCES producto(id)
 );
-
-
-DROP TABLE detalle_pedido;
-DROP TABLE pedido;
-DROP TABLE estado_pedido,
-DROP TABLE detalle_licencia;
-DROP TABLE tipo_licencia;
-DROP TABLE repartidor;
-DROP TABLE cliente;
-DROP TABLE detal;
-
-
-
-
-INSERT INTO tipo_licencia (nombre) VALUES("A");
-INSERT INTO tipo_licencia (nombre) VALUES("B");
-INSERT INTO tipo_licencia (nombre) VALUES("C");
-INSERT INTO tipo_licencia (nombre) VALUES("M");
-
-INSERT INTO tipo_empresa  (descripcion) VALUES("Empresa");
-INSERT INTO tipo_empresa  (descripcion) VALUES("Tienda de Conveniencia");
-INSERT INTO tipo_empresa  (descripcion) VALUES("Supermercado");
-
-INSERT INTO tipo_producto  (descripcion) VALUES("Desayunos");
-INSERT INTO tipo_producto  (descripcion) VALUES("Almuerzos");
-INSERT INTO tipo_producto  (descripcion) VALUES("Cenas");
-INSERT INTO tipo_producto  (descripcion) VALUES("Bebidas");
-INSERT INTO tipo_producto  (descripcion) VALUES("Postres");

@@ -1,8 +1,6 @@
 const mysqlConnection = require('../database/db')
 const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
-const crypto = require("crypto");
-const jwt = require("jsonwebtoken");
 
 const loginUser = async (req, res) => {
     const { username, password } = req.body
@@ -12,11 +10,11 @@ const loginUser = async (req, res) => {
             status: "FAILED",
             data: {
                 error:
-                    "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'username', 'password'",
+                    "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'nickname', 'contra'",
             },
             auth: false,
             message:
-                "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'username', 'password'",
+                "Falta uno de los siguientes parámetros o está vacío en el cuerpo de la solicitud: 'nickname', 'contra'",
         });
 
     const hashContra = crypto.createHash("md5").update(password).digest("hex");
@@ -50,14 +48,13 @@ const loginUser = async (req, res) => {
 
             //Si los datos son correctos se genera el token
             const token = jwt.sign(
+                { idUsuario: result[0].idUsuario },
+                "semi1practica2",
                 {
-                    id: result[0].usuario_id,
-                    rol: "usuario"
-                },
-                "ayd1p1"
+                    expiresIn: 60 * 60 * 24, //1 dia ->60s*60*24
+                }
             );
             result[0].token = token;
-            result[0].rol = "2"
 
             res.status(200).json(result[0]);
         }
