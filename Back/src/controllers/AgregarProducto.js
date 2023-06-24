@@ -1,6 +1,7 @@
 const mysqlConnection = require("../database/db");
 const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
+const awsImage = require("../functions/awsImage");
 
 const AgregarProducto = async (req, res) => {
   const {
@@ -50,6 +51,14 @@ const AgregarProducto = async (req, res) => {
       categoria,
       menu_id,
     ]);
+
+    // Guarda hoja en S3
+    const URL = await awsImage.uploadImage(
+      "Empresa_proc",
+      foto,
+      menu_id + existingProduct[0].id,
+      "png"
+  );
 
     res.status(200).json({
       status: "OK",
