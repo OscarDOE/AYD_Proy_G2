@@ -1,4 +1,4 @@
-const mysqlConnection = require("../../database/db");
+const mysqlConnection = require("../database/db");
 const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
@@ -11,6 +11,7 @@ const AgregarProducto = async (req, res) => {
     categoria,//tipo numero
     menu_id,
   } = req.body;
+  console.log(req.body)
 
   if (!nombre || !precio || !categoria || !foto || !menu_id) {
     return res.status(400).json({
@@ -203,9 +204,12 @@ const RealizarPedido = async (req, res) => {
 };
 
 const ObtenerProductos = async (req, res) => {
+  const {
+    menu_id
+  } = req.body;
   try {
     // Obtener todos los productos de la base de datos
-    const productos = await query("SELECT * FROM producto");
+    const productos = await query(`SELECT * FROM producto, menu where menu_id = menu.id and menu.empresa_usuario_id = ${menu_id}`);
 
     res.status(200).json({
       status: "OK",
