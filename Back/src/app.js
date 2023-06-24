@@ -37,8 +37,7 @@ app.use(require('./routes/solicitudRepar.route'))
 app.use(require('./routes/solicitudEmp.route'))
 app.use(require('./routes/informeUser.route'))
 app.use(require('./routes/miPerfil.route'))
-
-
+app.use(require('./routes/agregarProducto.route'))
 
 
 //Route Initial API

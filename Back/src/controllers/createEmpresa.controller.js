@@ -90,6 +90,11 @@ const createEmpresa = async (req, res) => {
         ];
         // Crear Empresa
         await query("INSERT INTO empresa SET ?", dataEmpresa);
+
+        // Obtener id de Empresa
+        const idEmpresa = await query("SELECT MAX(id) as id FROM empresa;", []);
+        await query("INSERT INTO menu SET ?", idEmpresa);
+        
         +9 +
             res.status(200).json({
                 status: "OK",

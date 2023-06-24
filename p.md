@@ -171,8 +171,10 @@ En cuanto al backend de la aplicación, hemos utilizado Nodejs. Nodejs es un ent
 RDS (Relational Database Service) con MySQL es un servicio de bases de datos en la nube de Amazon Web Services (AWS). Proporciona una instancia de base de datos MySQL totalmente administrada, escalable y segura. RDS simplifica la administración de la base de datos al encargarse de tareas como la configuración, el escalado y las copias de seguridad. Ofrece alta disponibilidad, rendimiento y flexibilidad para almacenar y recuperar datos de manera eficiente en aplicaciones y servicios basados en MySQL.
 
 # Arquitectura
-![alt text](img/Arquitectura.png "Diagrama")
+![alt text](img/Arquitectura.png)
 
 # Herramienta de gestion de proyectos
 ## Azure DevOps
 Azure DevOps es una plataforma integral de desarrollo de software basada en la nube de Microsoft. Proporciona un conjunto de herramientas y servicios que permiten la planificación, desarrollo, pruebas, implementación y seguimiento de aplicaciones. Incluye capacidades de gestión de proyectos, control de versiones, compilación y entrega continua, pruebas automatizadas, seguimiento de problemas y más. Azure DevOps fomenta la colaboración entre equipos, mejora la productividad y ayuda a entregar software de alta calidad de manera eficiente.
+### ***Tablero***
+https://dev.azure.com/krenmoraleja/krenmoraleja/_backlogs/backlog/krenmoraleja%20Team/Epics
