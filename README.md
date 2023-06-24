@@ -75,7 +75,7 @@
 
 ---
 
-![alt text](IMAGENES/Gitflow.png "Diagrama")
+![alt text](img/Branch.png "Diagrama")
 
 ---
 
@@ -118,14 +118,12 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
   - **Antecedentes del proyecto**
     <br>
-    Actualmente existen empresas que se puden dividir en 3 tipos: Restaurante
-
-    Actualmente existen hoteles que ofresen su servicios a nivel global. A falta de una página que proporcione los servicios de viaje, estadía y transporte, nace el sistema ***Full trip***. Con la finalidad de poder ofrerle al turista diferentes opciones para que puedan adquirir el servicio y puedan calificarlo.
+    Actualmente existen empresas que se puden dividir en 3 tipos: Restaurante, Tienda de conveniencia y Supermercados. A falta de una pagina que proporcione los servicios de pedidos a domicilio, nace el sistema ***AlChilazo 🔥***. Que tiene la finalidad de poder ofrecerle al cliente diferentes productos y poder adquirirlos.
     <br>
 
   - **Necesidades**
     <br>
-    Se require una página intuitiva y amigable para el usuario, el cual tiene que ser capaz de registrar usuarios y las empresas que desean registrar los servicios que se prestan a nivel goblal.
+    Se require una página intuitiva y amigable para el usuario, el cual tiene que ser capaz de registrar usuarios y las empresas que desean registrar los servicios que se prestan a nivel goblal, tambien se requiere registrar repartidores para poder entregar pedidos.
     <br>
 
   - **Funcionales**
@@ -133,47 +131,35 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
        |Nombre|Requerimiento   |Descripcion|Nivel de prioridad|
        |------|----------------|-----------|------------------|
-       |RF01  |Inicio de sesion|La pagina contara con un *login* para acceder al usuaro por medio de correo o nombre usuario, al igual que la contraseña.|5|
-       |RF01  |Registro de Usuario|Si el usuario no cuenta con registros en la pagina, se debera registrar ingresando la informacion que se le solicita (Nombre Completo, Usuario, Fecha de Nacimiento, Correo Electrónico,  Contraseña) y seleccionar que tipo de usuario desea ser.|5|
+       |RF01  |Inicio de sesion|La pagina contara con un *login* para usar el servicio por medio de username al igual que la contraseña.|5|
+       |RF01  |Registro de Usuario|Si el usuario no cuenta con registros en la pagina, se debera registrar ingresando la informacion que se le solicita (Usuario, Contraseña)|5|
+       |RF02  |Registro de repartidor|Si el repartidor desea ser parte del equipo debe registrarse en la pagina,ingresando la informacion que se le solicita, y esperar a ser revisado por un admin|5|
+       |RF03  |Registro de empresa|Si la empresa desea ser parte del equipo debe registrarse en la pagina,ingresando la informacion que se le solicita, y esperar a ser revisado por un admin|5|
 
    <br>
 
    ## Funcionales
 
-- Proporcionar a los usuarios un sistema funcional para realizar viajes
-- Proveer a los usuarios una forma sencilla de entender y de utilizar para realizar viajes
-- Registro de usuarios turista
-- Registro de hoteles
-- Registro de autos
-- Registro de aerolineas
-- Inicio de sesión de usuarios por rol
-- Registro de servicios adicionales al sistema
-- Buscador de hoteles
-- Filtrar busqueda de hoteles por campos especificos
-- Creación de habitaciones disponibles adicionales
-- Ingreso de carros para renta para usuaio tipo renta autos
-- Reserva de autos para turista
-- Busqueda de autos para el usuario
-- Filtro para busqueda de autos
-- Crear vuelo por tipo
-- Busqueda de vuelo
-- Filtro para busqueda de vuelo
-- Valorar y esribir reseña para vuelo, reservación hotel, auto y servicios adicionales
-- Visualizar reseñas
+- Proporcionar a los usuarios un sistema funcional para realizar pedidos.
+- Proveer a los usuarios una forma sencilla de entender y de utilizar el servicio
+- Registro de usuarios
+- Registro de repartidores
+- Registro de emprpesas
+- Inicio de sesión de usuarios
+- Ingreso de productos para la venta
+- Vista de informe de usuarios
+- Aprobar o rechazar usuarios
+- Vista de perfil de repartidor
 
 ## No Funcionales
 
-- Centralización de datos para el cliente
-- Minimización de validaciones para el cliente al momento de programar viaje
 - Categorizar usuarios por roles
-- Orden en el alquiler de habitaciones
 - Solicitar campos necesarios por cada operación
-- Diseño sensible de la aplicación y sus funcionalidades
+- Diseño amigable de la aplicación y sus funcionalidades
 - Seguridad para datos del usuario
-- Soporte para multiple usuarios
-- Correcto manejo de transacciones simultaneas
-- Correcto acceso a reseñas de servicios utilizados
-- Correcta confirmación de servicios seleccionados
+- Correcto manejo de transacciones
+- Correcto acceso a informes de usuarios
+- Utilizacion de tokens de seguridad
 
 
 
@@ -201,8 +187,12 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
    - **Como administrador necesito poder ver los informes de los usuarios globales.**
        - *Se necesita crear una tabla con los datos generales de los usuarios, saber cuántos hay etc....*
    
-   - **Como empresa necesito poder ver el catalogo de los.**
-       - *Se necesita crear una tabla con los datos generales de los usuarios, saber cuántos hay etc....*
+   - **Como empresa necesito poder ver el catalogo con mis productos.**
+       - *Se necesita crear una tabla que muestre los productos existentes de la empresa*
+   - **Como empresa necesito poder agregar productos al catalogo.**
+       - *Se necesita crear un formulario para agregar nuevos productos al catalogo*
+   - **Como empresa necesito poder editar/eliminar productos del catalogo.**
+       - *Se necesita agregar un botón para editar/eliminar para cada producto, en caso de editar, solo se editará el precio y la disponibilidad.*
 
 
 
@@ -238,3 +228,19 @@ El siguiente diagrama es una representacion de la entidad relacion que se utiliz
 
 
 
+# Tecnologias Usadas
+## Frontend
+Para el desarrollo del frontend de la aplicación web, hemos utilizado React. React es una biblioteca de JavaScript para construir interfaces de usuario interactivas. Utiliza un enfoque basado en componentes, donde cada componente representa una parte de la interfaz. React utiliza un modelo de programación declarativo y eficiente gracias a su Virtual DOM. Es ampliamente utilizado en el desarrollo web moderno y proporciona herramientas para gestionar el estado de la aplicación y el enrutamiento.
+## Backend
+En cuanto al backend de la aplicación, hemos utilizado Nodejs. Nodejs es un entorno de ejecución de JavaScript del lado del servidor, basado en el motor V8 de Google Chrome. Permite construir aplicaciones escalables y de alto rendimiento. Node.js utiliza un modelo de E/S sin bloqueo y basado en eventos, lo que lo hace ideal para aplicaciones en tiempo real y con una gran cantidad de conexiones simultáneas. Además, cuenta con un amplio ecosistema de módulos y bibliotecas que facilitan el desarrollo de aplicaciones web y servicios backend.
+## Base de Datos
+RDS (Relational Database Service) con MySQL es un servicio de bases de datos en la nube de Amazon Web Services (AWS). Proporciona una instancia de base de datos MySQL totalmente administrada, escalable y segura. RDS simplifica la administración de la base de datos al encargarse de tareas como la configuración, el escalado y las copias de seguridad. Ofrece alta disponibilidad, rendimiento y flexibilidad para almacenar y recuperar datos de manera eficiente en aplicaciones y servicios basados en MySQL.
+
+# Arquitectura
+![alt text](img/Arquitectura.png)
+
+# Herramienta de gestion de proyectos
+## Azure DevOps
+Azure DevOps es una plataforma integral de desarrollo de software basada en la nube de Microsoft. Proporciona un conjunto de herramientas y servicios que permiten la planificación, desarrollo, pruebas, implementación y seguimiento de aplicaciones. Incluye capacidades de gestión de proyectos, control de versiones, compilación y entrega continua, pruebas automatizadas, seguimiento de problemas y más. Azure DevOps fomenta la colaboración entre equipos, mejora la productividad y ayuda a entregar software de alta calidad de manera eficiente.
+### ***Tablero***
+https://dev.azure.com/krenmoraleja/krenmoraleja/_backlogs/backlog/krenmoraleja%20Team/Epics

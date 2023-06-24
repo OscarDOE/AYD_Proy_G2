@@ -3,15 +3,17 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Home from "../pages/Home";
 import Layout from "../containers/Layout";
 import RegistroRepartidor from "../pages/RegistroRepartidor";
-import RegistroEmpresa from "../pages/RegistroEmpresa";
-import RegistroUsers from "../pages/RegistroUsers";
-import LoginEmpresa from "../pages/LoginEmpresa";
-import LoginRepartidores from "../pages/LoginRepartidores";
-import LoginUsers from "../pages/LoginUser";
-import HomeAdmin from "../pages/HomeAdmin";
-import LoginAdmin from "../pages/LoginAdmion";
-import PerfilRepartidor from "../pages/MiPerfilR";
-import InformeUsers from "../pages/InformeUsers";
+import RegistroEmpresa    from "../pages/RegistroEmpresa";
+import RegistroUsers      from "../pages/RegistroUsers";
+import LoginEmpresa       from "../pages/LoginEmpresa";
+import LoginRepartidores  from "../pages/LoginRepartidores";
+import LoginUsers         from "../pages/LoginUser";
+import HomeAdmin          from "../pages/HomeAdmin";
+import LoginAdmin         from "../pages/LoginAdmion";
+import PerfilRepartidor   from "../pages/MiPerfilR";
+import InformeUsers       from "../pages/InformeUsers";
+import PanelEmpresa       from "../pages/panel";
+import CombosEmpresa      from "../pages/combos";
 // import LoginPage from "../pages/LoginPage";
 // import RegisterPage from "../pages/RegisterPage";
 // import PagesVuelos from "../pages/PagesVuelos";
@@ -22,6 +24,8 @@ export const App = () => {
             <Layout>
                 <Routes>
                 <Route index element={<Home />} />
+                <Route path="/combosempresa" element={<CombosEmpresa/>} />
+                <Route path="/panelempresa" element={<PanelEmpresa/>} />
                 <Route path="/perfilrepartidor" element={<PerfilRepartidor/>} />
                 <Route path="/loginadmin" element={<LoginAdmin/>} />
                 <Route path="/regisrepartidor" element={<RegistroRepartidor />} />
