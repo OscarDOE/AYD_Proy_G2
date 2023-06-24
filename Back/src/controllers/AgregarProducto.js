@@ -4,15 +4,15 @@ const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 
 const AgregarProducto = async (req, res) => {
   const {
-    nombre,
-    precio,
-    foto,
-    descripcion,
-    espesificaciones,
-    categoria
+    nombre,//
+    precio,//
+    foto,//
+    descripcion,//
+    categoria,//tipo numero
+    menu_id,
   } = req.body;
 
-  if (!nombre || !precio || !categoria) {
+  if (!nombre || !precio || !categoria || !foto || !menu_id) {
     return res.status(400).json({
       status: "FAILED",
       data: {
@@ -38,7 +38,7 @@ const AgregarProducto = async (req, res) => {
 
     // Insertar el nuevo producto en la base de datos
     const insertQuery = `
-      INSERT INTO producto(nombre, precio, foto, descripcion, espesificaciones, categoria)
+      INSERT INTO producto(nombre, precio, imagen, descripcion, tipo_producto_id,menu_id)
       VALUES (?, ?, ?, ?, ?, ?)
     `;
     await query(insertQuery, [
@@ -46,8 +46,8 @@ const AgregarProducto = async (req, res) => {
       precio,
       foto,
       descripcion,
-      espesificaciones,
       categoria,
+      menu_id,
     ]);
 
     res.status(200).json({
@@ -202,7 +202,27 @@ const RealizarPedido = async (req, res) => {
   }
 };
 
+const ObtenerProductos = async (req, res) => {
+  try {
+    // Obtener todos los productos de la base de datos
+    const productos = await query("SELECT * FROM producto");
+
+    res.status(200).json({
+      status: "OK",
+      data: productos,
+    });
+  } catch (error) {
+    console.error("ERROR - ObtenerProductos", error);
+
+    res.status(500).json({
+      status: "FAILED",
+      message: "Error al obtener los productos",
+    });
+  }
+};
+
 module.exports = {
+  ObtenerProductos,
   AgregarProducto,
   EditarProducto,
   EliminarProducto,
