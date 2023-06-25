@@ -163,8 +163,7 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
 
 
-# <center>Mapeo de Historias de usuario </center>
-   ![Imagen|50](./img1/diagramas/scrum.web)
+
 
 
   # <center> Historias de usuario / criterios de aceptación. </center>
@@ -193,6 +192,9 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
        - *Se necesita crear un formulario para agregar nuevos productos al catalogo*
    - **Como empresa necesito poder editar/eliminar productos del catalogo.**
        - *Se necesita agregar un botón para editar/eliminar para cada producto, en caso de editar, solo se editará el precio y la disponibilidad.*
+  - **Como empresa necesito poder agregar combos en base a mis productos previamente añadidos.**
+       - *Se necesita agregar una página para poder agregar y visualizar los combos de la empresa.*
+       - *Para agregar productos al combo se deberán de mostrar un choice con la lista de productos.*
 
 
 
