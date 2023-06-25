@@ -80,7 +80,7 @@ const Header = () => {
                             {usuario_logeado?.rol === "1" ? <Link to='/homeadmin'>AlChilazo</Link> : ""}
                             {usuario_logeado?.rol === "2" ? <Link to='/'>AlChilazo</Link> : ""}
                             {usuario_logeado?.rol === "3" ? <Link to='/perfilrepartidor'>AlChilazo</Link> : ""}
-                            {usuario_logeado?.rol === "4" ? <Link to='/'>AlChilazo</Link> : ""}
+                            {usuario_logeado?.rol === "4" ? <Link to='/panelempresa'>AlChilazo</Link> : ""}
                             {usuario_logeado ? "" : <Link to='/'>AlChilazo</Link> }
                             </Typography>
                             
@@ -108,7 +108,7 @@ const Header = () => {
                                 <></>}
                                 {usuario_logeado?.rol === "4" ? 
                                 <>
-                                <Link to='/'><Button color="inherit">Panel de control</Button></Link>
+                                <Link to='/panelempresa'><Button color="inherit">Panel de control</Button></Link>
                                 </> 
                                 : 
                                 <></>}

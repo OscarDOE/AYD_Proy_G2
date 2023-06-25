@@ -18,6 +18,8 @@ const createEmpresa = async (req, res) => {
         password
     } = req.body;
 
+    console.log('------- body --------')
+    console.log(req.body)
     const filePath = req.file.path
     const fileBase64 = (await fs.readFile(filePath)).toString('base64')
 
@@ -92,7 +94,7 @@ const createEmpresa = async (req, res) => {
         await query("INSERT INTO empresa SET ?", dataEmpresa);
 
         // Obtener id de Empresa
-        const idEmpresa = await query("SELECT MAX(id) as id FROM empresa;", []);
+        const idEmpresa = await query("SELECT MAX(usuario_id) as empresa_usuario_id FROM empresa;", []);
         await query("INSERT INTO menu SET ?", idEmpresa);
         
         +9 +

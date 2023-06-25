@@ -32,7 +32,7 @@ const LoginEmpresa = () => {
         }else if(usuario_logeado.rol === "3"){
             navigate("/perfilrepartidor");
         }else if(usuario_logeado.rol === "4"){
-            navigate("/");
+            navigate("/panelempresa");
         }
         
     };

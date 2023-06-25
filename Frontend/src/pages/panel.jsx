@@ -1,5 +1,4 @@
 import React,{useContext,useState,useEffect} from 'react'
-import '../styles/sHomeAdmin.css'
 import Cookies from "universal-cookie"
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Grid } from "@mui/material";
@@ -8,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 //import AppEnvr from '../enviroment/AppEnvr';
 
 
@@ -26,28 +26,45 @@ const PanelEmpresa = () => {
     const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
+    console.log(usuario_logeado)
 
     const [rows,setRows] = useState([]);
     const [rows_repartis,setRowsRepartis] = useState([]);
     const [datosperfil, setDatosperfil] = useState([]);
     const [productos, setProductos] = useState([]);
+    const [error, setError] = useState(null);
     const [productosNuevos, setProductosNuevos] = useState({
         nombre: "",
         descripcion: "",
-        tipo: "",
+        categoria: "",
         precio: "",
-        imagen: "",
+        foto: "",
+        menu_id:null
     });
 
 
 
 
     const columns = [
+        // { field: 'id', headerName: 'ID', width: 130 },
         { field: 'nombre', headerName: 'Nombre', width: 130 },
         { field: 'descripcion', headerName: 'Descripcion', width: 180 },
-        { field: 'tipoProducto', headerName: 'Tipo de Producto', width: 130, sortable: true },
+        { field: 'tipo_producto_id', headerName: 'Tipo de Producto', width: 130, sortable: true },
         { field: 'precio', headerName: 'Precio', width: 130 },
-        { field: 'imagen', headerName: 'Imagen', width: 130 },
+        { 
+          field: 'foto_perfil', 
+          headerName: 'Imagen', 
+          width: 130,
+          renderCell: (params) => {
+              console.log(params)
+              return (
+                <>
+                  <Avatar src={params.row.imagen} />  
+                  {/* .imagen hace referencia a lo que viene de la respuesta del json cuando se obtienen todos los productos */}
+                </>
+              );
+            }
+      },
         {
             field: "acceptButton",
             headerName: "Editar",
@@ -125,119 +142,175 @@ const PanelEmpresa = () => {
         // })
     }
 
-    const enviarDatos = (event) => {
-        // console.log("---------")
-        // event.preventDefault()
-        
-        // console.log('enviando datos...' + datos.name + ' ' + datos.usuario+ ' ' + datos.email + ' ' + datos.image + ' ' + datos.password + ' ' + datos.confirmP)
-        // fetch(`http://${process.env.REACT_APP_PUERTO}:5000/autos`,{
-        //     method: 'POST',
-        //     headers: {
-        //         "Content-Type":"application/json"
-        //     },
-        //     body:JSON.stringify(datos)
-        // })
-        // alert("Auto Registrado Correctamente")
-        // cambiarpagina()
+    useEffect(() => {getProductos()}, [] );
+
+    const getProductos = async () =>{
+      const endpoint = await fetch(ruta_AWS+'/ObtenerProductos', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },body: JSON.stringify({"menu_id":usuario_logeado.usuario_id})
+      });
+      const resp_get = await endpoint.json();
+      setRows(resp_get.data)
+
+    }
+
+    const enviarDatos = async (e) => {
+
+      e.preventDefault()
+      const formData = new FormData();
+      formData.append("nombre",productosNuevos.nombre);
+      formData.append("descripcion",productosNuevos.descripcion);
+      formData.append("categoria",productosNuevos.categoria);
+      formData.append("precio",productosNuevos.precio);
+      formData.append("foto",productosNuevos.foto);
+      formData.append("menu_id",usuario_logeado.usuario_id);
+
+
+      
+      const endpoint = await fetch(ruta_AWS+'/AgregarProducto', {
+          method: "POST",
+          body:formData
+      });
+
+      const resp = await endpoint.json();
+      if (endpoint.status === 400 || endpoint.status === 500){
+          setError(resp.message);
+      }
+      else{ 
+          setError(null);
+          alert("¡Producto registrado correctamente!")
+          getProductos()
+      }
     }
 
 
-    return (
-        
+  return (
 
-      <Box sx={{ flexGrow: 1 }}> 
-        <div>       
 
+    <Box sx={{ flexGrow: 1 }}>
+        {usuario_logeado?.rol === "4" ?
+          <>   {/* parte inicial del ternario */}
 
             <br></br>
-            <div class="pCuadradoR2">
-              <center><h1>Productos</h1></center>
 
-              <h3>Registrando un nuevo Producto</h3>
-            <div className='App-header'>
-                <div className='Cuadrado-central'>
+            <Grid container justifyContent="center" >
+              <Grid item xs={6} >
+                <Item>
+                  <center><h1>Bienvenido {usuario_logeado.nombre}</h1></center>
+                  <center><h1>Productos</h1></center>
 
+                </Item>
+              </Grid>
+            </Grid>
+
+              <br></br>
+
+              <Grid container justifyContent="center">
+                <Grid item xs={6} >
+                  <Item>
+                    <h3>Registrando un nuevo Producto</h3>
                     <form className="row" onSubmit={enviarDatos}>
-                        <div className="col-md-3">
-                            <input 
-                                type="text" 
-                                style={{'marginTop':'55px',
-                                'width': '100%','padding':'12px 20px', 'margin': '20px 0',  'box-sizing': 'border-box'}}
-                                placeholder="Nombre del Producto" 
-                                onChange={handleInputChange} 
-                                name="Agency" />
-                        </div>
-                        <div className="col-md-3">
-                            <input 
-                                type="text" 
-                                style={{'marginTop':'55px',
-                                'width': '100%','padding':'12px 20px', 'margin': '20px 0',  'box-sizing': 'border-box'}}
-                                placeholder="Descripcion del Producto" 
-                                onChange={handleInputChange} 
-                                name="Brand" />
-                        </div>
-                        <br/>
-                        <div className='row-md-3'>
-                            <div>
 
-                                <h3>Tipo de Producto</h3>
-                                    <select name="lenguajes" id="lang1">
-                                <option value="S">--Seleccione--</option>
-                                <option value="1">Desayuno</option>
-                                <option value="2">Almuerzo</option>
-                                <option value="3">Cena</option>
-                                <option value="4">Bebidas</option>
-                                <option value="5">Postres</option>
-                        </select>
-                                
-                            </div>
-                        </div>
-                        <div>
-                            <input 
-                                type="text" 
-                                style={{'marginTop':'55px',
-                                'width': '100%','padding':'12px 20px', 'margin': '20px 0',  'box-sizing': 'border-box'}}
-                                placeholder="Precio" 
-                                onChange={handleInputChange} 
-                                name="Badge" />
-                        </div>
-                        <div className="col-md-3">
-                            <input 
-                                type="file" 
-                                style={{'marginTop':'55px',
-                                'width': '100%','padding':'12px 20px', 'margin': '20px 0',  'box-sizing': 'border-box'}}
-                                placeholder="Imagen" 
-                                onChange={handleInputChange} 
-                                name="Price" />
-                        </div>
-                        <Button type="sumbit" variant="contained">Agregar Item</Button>
+                        <input
+                          type="text"
+                          style={{
+                            'marginTop': '55px',
+                            'width': '100%', 'padding': '12px 20px', 'margin': '20px 0', 'box-sizing': 'border-box'
+                          }}
+                          placeholder="Nombre del Producto"
+                          onChange={(e) => setProductosNuevos({ ...productosNuevos, nombre: e.target.value })}
+                          name="Agency" />
+
+                        <input
+                          type="text"
+                          style={{
+                            'marginTop': '55px',
+                            'width': '100%', 'padding': '12px 20px', 'margin': '20px 0', 'box-sizing': 'border-box'
+                          }}
+                          placeholder="Descripcion del Producto"
+                          onChange={(e) => setProductosNuevos({ ...productosNuevos, descripcion: e.target.value })}
+                          name="Brand" />
+
+                  
+                          <h3>Tipo de Producto</h3>
+                          <select
+                          style={{
+                            'width':'100%',
+                            'font-size':' 15px',
+                            'height': '30px',
+                            'padding': '5px'
+                          }} 
+                          onChange={(e) => setProductosNuevos({ ...productosNuevos, categoria: e.target.value })} name="lenguajes" id="lang1">
+                            <option value="S">--Seleccione--</option>
+                            <option value="1">Desayuno</option>
+                            <option value="2">Almuerzo</option>
+                            <option value="3">Cena</option>
+                            <option value="4">Bebidas</option>
+                            <option value="5">Postres</option>
+                          </select>
+
+
+                        <input
+                          type="text"
+                          style={{
+                            'marginTop': '55px',
+                            'width': '100%', 'padding': '12px 20px', 'margin': '20px 0', 'box-sizing': 'border-box'
+                          }}
+                          placeholder="Precio"
+                          onChange={(e) => setProductosNuevos({ ...productosNuevos, precio: e.target.value })}
+                          name="Badge" />
+
+                        <input
+                          type="file"
+                          style={{
+                            'marginTop': '55px',
+                            'width': '100%'
+                          }}
+                          placeholder="Imagen"
+                          onChange={(e) => setProductosNuevos({ ...productosNuevos, foto: e.target.files[0] })}
+                          name="Price" />
+
+                      <Button type="sumbit" variant="contained">Agregar Item</Button>
                     </form>
-                </div>
-            </div>
+                  </Item>
+                </Grid>
+              </Grid>
 
-              <center>  <Stack spacing={2} direction="row">
-            </Stack></center>
-            <div class = "tablecontainer45">
-                <div style={{ height: '100%', width: '100%' }}>
-                    <DataGrid
-                        getRowId={(row) => row.usuario_id}
+            <br></br>
+
+            <Grid container justifyContent="center" >
+              <Grid item xs={6} >
+                <Item>
+                  <div class="tablecontainer45">
+                    <div style={{ height: '100%', width: '100%' }}>
+                      <DataGrid
+                        // getRowId={(row) => row.nombre}
                         rows={rows}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
-                    />
-                    {/* clickedRow: {clickedRow ? `${clickedRow.id}` : null} */}
-                </div>
-            </div>
-            
+                      />
+                      {/* clickedRow: {clickedRow ? `${clickedRow.id}` : null} */}
+                    </div>
+                  </div>
+                </Item>
+              </Grid>
+            </Grid>
 
-            </div>
 
 
 
-        </div>
-        </Box>
-    )
+            {/* -------------- termina ternario ------------------- */}
+          </>
+          :
+          <>
+            <center><h1>¡Cuidado! Aqui solo empresas </h1></center>
+          </>}
+
+    </Box>
+  )
 }
 
 export default PanelEmpresa

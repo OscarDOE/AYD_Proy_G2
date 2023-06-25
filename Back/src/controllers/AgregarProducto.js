@@ -2,6 +2,7 @@ const mysqlConnection = require("../database/db");
 const util = require("util");
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const awsImage = require("../functions/awsImage");
+const fs = require('fs/promises')
 
 const AgregarProducto = async (req, res) => {
   const {
@@ -14,7 +15,13 @@ const AgregarProducto = async (req, res) => {
   } = req.body;
   console.log(req.body)
 
-  if (!nombre || !precio || !categoria || !foto || !menu_id) {
+  console.log(req.file.path)
+  const filePath = req.file.path
+  const fileBase64 = (await fs.readFile(filePath)).toString('base64')
+
+
+
+  if (!nombre || !precio || !categoria || !fileBase64 || !menu_id) {
     return res.status(400).json({
       status: "FAILED",
       data: {
@@ -25,6 +32,12 @@ const AgregarProducto = async (req, res) => {
   }
 
   try {
+
+    const newId = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${menu_id}`);
+    console.log(newId)
+
+
+
     // Verificar si el producto ya existe en la base de datos
     const existingProduct = await query(
       "SELECT * FROM producto WHERE nombre = ?",
@@ -38,6 +51,20 @@ const AgregarProducto = async (req, res) => {
       });
     }
 
+
+
+    // Guarda hoja en S3
+    const URL = await awsImage.uploadImage(
+      "Empresa_proc",
+      fileBase64,
+      menu_id + nombre,
+      "png"
+    );
+
+    
+
+    
+
     // Insertar el nuevo producto en la base de datos
     const insertQuery = `
       INSERT INTO producto(nombre, precio, imagen, descripcion, tipo_producto_id,menu_id)
@@ -46,19 +73,15 @@ const AgregarProducto = async (req, res) => {
     await query(insertQuery, [
       nombre,
       precio,
-      foto,
+      URL,
       descripcion,
       categoria,
-      menu_id,
+      newId[0].id
     ]);
 
-    // Guarda hoja en S3
-    const URL = await awsImage.uploadImage(
-      "Empresa_proc",
-      foto,
-      menu_id + existingProduct[0].id,
-      "png"
-  );
+
+    
+    
 
     res.status(200).json({
       status: "OK",
@@ -218,7 +241,7 @@ const ObtenerProductos = async (req, res) => {
   } = req.body;
   try {
     // Obtener todos los productos de la base de datos
-    const productos = await query(`SELECT * FROM producto, menu where menu_id = menu.id and menu.empresa_usuario_id = ${menu_id}`);
+    const productos = await query(`SELECT prod.id, prod.nombre, prod.descripcion, prod.tipo_producto_id, prod.imagen, prod.precio FROM producto as prod, menu where menu_id = menu.id and menu.empresa_usuario_id = ${menu_id}`);
 
     res.status(200).json({
       status: "OK",

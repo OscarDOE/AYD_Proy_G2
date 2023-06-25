@@ -31,6 +31,7 @@ const PerfilRepartidor = () => {
 
 
     useEffect(() => {getDatosRepartidor()}, [] );
+    
 
     const getDatosRepartidor = async () =>{
 

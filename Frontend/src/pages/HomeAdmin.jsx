@@ -144,7 +144,9 @@ const HomeAdmin = () => {
           },body: JSON.stringify({"token":usuario_logeado.token})
         });
         const resp_get = await endpoint.json();
+        console.log(JSON.stringify(resp_get))
         setRows(resp_get)
+        console.log(resp_get)
 
         // const endpoint_get = await fetch(ruta_AWS+'/solicitudEmp', {
         //     method: "GET"
