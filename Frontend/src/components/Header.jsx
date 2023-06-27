@@ -77,33 +77,38 @@ const Header = () => {
                             </IconButton>
                             
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                            {usuario_logeado?.usuario_logeado.user_type === "2" ? <Link to='/inicio'>AlChilazo</Link> : ""}
-                            {usuario_logeado?.usuario_logeado.user_type === "1" ? <Link to='/inicioRecep'>AlChilazo</Link> : ""}
-                            {usuario_logeado?.usuario_logeado.user_type === "0" ? <Link to='/inicioAdmin'>AlChilazo</Link> : ""}
+                            {usuario_logeado?.rol === "1" ? <Link to='/homeadmin'>AlChilazo</Link> : ""}
+                            {usuario_logeado?.rol === "2" ? <Link to='/'>AlChilazo</Link> : ""}
+                            {usuario_logeado?.rol === "3" ? <Link to='/perfilrepartidor'>AlChilazo</Link> : ""}
+                            {usuario_logeado?.rol === "4" ? <Link to='/panelempresa'>AlChilazo</Link> : ""}
                             {usuario_logeado ? "" : <Link to='/'>AlChilazo</Link> }
                             </Typography>
                             
 
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                {usuario_logeado?.usuario_logeado.user_type === "2" ? 
+                                {usuario_logeado?.rol === "1" ? 
                                 <>
-                                <Link to='/solispendientes'><Button color="inherit">Solicitudes pendientes</Button></Link>
+                                <Link to='/homeadmin'><Button color="inherit">Solicitudes pendientes</Button></Link>
+                                <Link to='/informeusers'><Button color="inherit">Informe</Button></Link>
                                 </> 
                                 : 
                                 <></>}
-                                {usuario_logeado?.usuario_logeado.user_type === "1" ? 
+                                {usuario_logeado?.rol === "2" ? 
                                 <>
-                                <Link to='/inicio'><Button color="inherit">Admis. vuelos</Button></Link>
-                                <Link to='/inicio'><Button color="inherit">Admis. autos</Button></Link>
+                                <Link to='/'><Button color="inherit">Nuevo pedido</Button></Link>
+                                <Link to='/'><Button color="inherit">Direcciones</Button></Link>
                                 </> 
                                 : 
                                 <></>}
-                                {usuario_logeado?.usuario_logeado.user_type === "0" ? 
+                                {usuario_logeado?.rol === "3" ? 
                                 <>
-                                <Link to='/admin/users'><Button color="inherit">Admis. usuarios</Button></Link>
-                                <Link to='/admin/vuelos'><Button color="inherit">Admis. vuelos</Button></Link>
-                                <Link to='/admin/autos'><Button color="inherit">Admis. autos</Button></Link>
-                                <Link to='/admin/historial'><Button color="inherit">Hist. vuelos</Button></Link>
+                                <Link to='/perfilrepartidor'><Button color="inherit">Mi perfil</Button></Link>
+                                </> 
+                                : 
+                                <></>}
+                                {usuario_logeado?.rol === "4" ? 
+                                <>
+                                <Link to='/panelempresa'><Button color="inherit">Panel de control</Button></Link>
                                 </> 
                                 : 
                                 <></>}
@@ -113,6 +118,7 @@ const Header = () => {
                             <><Button onClick={handleLogOut} color="inherit">Log out</Button></> 
                             : 
                             <>
+                            <Link to='/loginadmin'><Button color="inherit">Admin</Button></Link>
                             <Link to='/loginusers'><Button color="inherit">Login</Button></Link>
                             <Link to='/regisusers'><Button color="inherit">Registro</Button></Link>
                             </>}

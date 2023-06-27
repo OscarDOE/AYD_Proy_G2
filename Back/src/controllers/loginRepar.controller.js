@@ -2,6 +2,7 @@ const mysqlConnection = require('../database/db')
 const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 
 const loginRepar = async (req, res) => {
     const { username, password } = req.body
@@ -70,7 +71,7 @@ const loginRepar = async (req, res) => {
             const token = jwt.sign(
                 {
                     id: idUser[0].id,
-                    rol: "empresa"
+                    rol: "repartidor"
                 },
                 "ayd1p1"
             );

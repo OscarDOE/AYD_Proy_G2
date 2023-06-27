@@ -1,4 +1,4 @@
-import React, { useRef,useState } from 'react'
+import React, { repartidoref,useState } from 'react'
 import '../styles/sRegistroRepartidor.css'
 //import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -12,10 +12,10 @@ import { Alert } from '@mui/material';
 const RegistroRepartidor = () => {
 
     const navigate = useNavigate();
-    const ruta_AWS = ''
+    const ruta_AWS = 'http://localhost:4000'
 
     const handleNavigate = () => {
-        navigate("/login");
+        navigate("/loginrepartidor");
     };
 
 
@@ -32,42 +32,51 @@ const RegistroRepartidor = () => {
 
 
 
-    const [user, setUser] = useState({
-        nombre: "",
-        usuario: "",
-        foto_perfil: null,
-        email: "",
-        password: "",
-        pass_confirm:"",
-        user_type: null
+    const [repartidor, setRepartidor] = useState({
+        nombres: "",
+        apellidos: "",
+        correo: "",
+        telefono: "",
+        departamento: "",
+        municipio:"",
+        transporte: "",
+        licencia: "",
+        nit: "",
+        password:"",
+        hoja_vida: ""
     })
 
     const handleSubmit = async (e) => {
 
         e.preventDefault()
         const formData = new FormData();
-        formData.append("nombre",user.nombre);
-        formData.append("usuario",user.usuario);
-        formData.append("foto_perfil",user.foto_perfil);
-        formData.append("email",user.email);
-        formData.append("password",user.password);
-        formData.append("pass_confirm",user.pass_confirm);
-        //formData.append("user_type",user.user_type);
-        if(value){
-            console.log('entre true')
-            formData.append("user_type","0");
-        }else{
-            formData.append("user_type","2");
-        }
-        console.log(formData.get('user_type'));
+        formData.append("nombres",repartidor.nombres);
+        formData.append("apellidos",repartidor.apellidos);
+        formData.append("correo",repartidor.correo);
+        formData.append("telefono",repartidor.telefono);
+        formData.append("departamento",repartidor.departamento);
+        formData.append("municipio",repartidor.municipio);
+        formData.append("transporte",repartidor.transporte);
+        formData.append("licencia",repartidor.licencia);
+        formData.append("nit",repartidor.nit);
+        formData.append("password",repartidor.password);
+        formData.append("hoja_vida",repartidor.hoja_vida);
 
-        const endpoint = await fetch(ruta_AWS+'/api/users/registro', {
+
+        const endpoint = await fetch(ruta_AWS+'/registroRepar', {
             method: "POST",
             body:formData
         });
 
+        // const endpoint = await fetch(ruta_AWS+'/registroRepar', {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },body: JSON.stringify(repartidor)
+        // });
+
         const resp = await endpoint.json();
-        if (endpoint.status === 400){
+        if (endpoint.status === 400 || endpoint.status === 500){
             setError(resp.message);
         }
         else{ 
@@ -158,47 +167,64 @@ const RegistroRepartidor = () => {
                             Completa tu informacion
                         </div>
                         <div class="element">
-                            <label for="username">Nombre</label>
-                            <input onChange={(e) => setUser({ ...user, nombre:e.target.value })} type="text" name="nombre" id="Nombre"></input>
+                            <label for="repartidorname">Nombre</label>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, nombres:e.target.value })} type="text" name="nombre" id="Nombre"></input>
                         </div>
                         <div class="element">
                             <label for="password">Apellido</label>
-                            <input onChange={(e) => setUser({ ...user, usuario:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, apellidos:e.target.value })}  type="text" name="usuario" id="Usuario"></input>
                         </div>
                         <div class="element">
                             <label for="password">Email</label>
-                            <input onChange={(e) => setUser({ ...user, email:e.target.value })}  type="text" name="email" id="Email"></input>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, correo:e.target.value })}  type="text" name="email" id="Email"></input>
+                        </div>
+                        <div class="element">
+                            <label for="label">Password</label>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, password:e.target.value })}  type="password" name="password" id="Password"></input>
                         </div>
                         <div class="element">
                             <label for="password">Departamento</label>
-                            <input onChange={(e) => setUser({ ...user, password:e.target.value })}  type="text" name="password" id="Password"></input>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, departamento:e.target.value })}  type="text" name="password" id="Depas"></input>
                         </div>
                         <div class="element">
                             <label for="password">Municipio</label>
-                            <input onChange={(e) => setUser({ ...user, pass_confirm:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, municipio:e.target.value })}  type="text" name="c_password" id="C_password"></input>
+                        </div>
+                        <div class="element">
+                            <label for="password">Telefono</label>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, telefono:e.target.value })}  type="text" name="c_password" id="Telefono"></input>
+                        </div>
+                        <div class="element">
+                            <label for="password">NIT</label>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, nit:e.target.value })}  type="text" name="c_password" id="Nit"></input>
                         </div>
                         <div class="element">
                         <label for="lang">Tipo de licencia</label>
-                        <select name="lenguajes" id="lang">
-                            <option value="tipoa">A</option>
-                            <option value="tipob">B</option>
-                            <option value="tipoc">C</option>
-                            <option value="tipom">M</option>
-                            <option value="tipona">NA</option>
+                        <select onChange={(e) => setRepartidor({ ...repartidor, licencia:e.target.value })}  name="lenguajes" id="lang1">
+                            <option value="S">--Seleccione--</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="M">M</option>
+                            <option value="NA">NA</option>
                         </select>
                         </div>
                         <div class="element">
+                        <label for="lang">Motocicleta propio</label>
+                        <select onChange={(e) => setRepartidor({ ...repartidor, transporte:e.target.value })} name="lenguajes" id="lang2">
+                            <option value="S">--Seleccione--</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                        </div>
+                        {/* <div class="element">
                             
                             <FormControlLabel control={<Checkbox  onChange={(event)=>setValue(event.target.checked)} />} label="Motocicleta propia" />
-                            {/* <FormControlLabel
-                                label=""
-                                control={<Android12Switch onChange={(event)=>setValue(event.target.checked)}/>}
-                                
-                            /> */}
-                        </div>
+                            
+                        </div> */}
                         <div class="element">
                             <label for="curriculum">CV</label>
-                            <input onChange={(e) => setUser({ ...user, foto_perfil:e.target.files[0] })}  type="file" name="f_Perfil" id="fo_Perfil"></input>
+                            <input onChange={(e) => setRepartidor({ ...repartidor, hoja_vida:e.target.files[0] })}  type="file" name="f_Perfil" id="fo_Perfil"></input>
                         </div>
                         <div class="element">
                             {/* <button onClick={()=>console.log(value)} type="submit">Registrar</button> */}
@@ -213,3 +239,6 @@ const RegistroRepartidor = () => {
 }
 
 export default RegistroRepartidor
+
+
+// onChange={(e) => setRepartidor({ ...repartidor, hoja_vida:e.target.files[0] })}
