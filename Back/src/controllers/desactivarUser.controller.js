@@ -3,7 +3,7 @@ const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 
-const informeUser = async (req, res) => {
+const desactivarUser = async (req, res) => {
     const { id, rol } = req.token
 
     if (!id || !rol) {
@@ -50,7 +50,7 @@ const informeUser = async (req, res) => {
 
 }
 
-const totalUser = async (req, res) => {
+const desactivarEmpr = async (req, res) => {
     const { id, rol } = req.token
 
     if (!id || !rol) {
@@ -80,25 +80,25 @@ const totalUser = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        const clientes = await query("SELECT COUNT(*) AS total FROM cliente", []);
+        const clientes = await query("SELECT usuario_id, nombre, email FROM empresa WHERE estado = 1;", []);
         res.status(200).json(clientes);
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No hay clientes",
+                    "No hay empresas",
             },
             auth: false,
             message:
-                "No hay clientes",
+                "No hay empresas",
         });
     }
 
 }
 
-const top5Deliverys = async (req, res) => {
-    const { id, rol } = req.token 
+const desactivarRepr = async (req, res) => {
+    const { id, rol } = req.token
 
     if (!id || !rol) {
         return res.status(400).json({
@@ -127,30 +127,26 @@ const top5Deliverys = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        let query1 = "SELECT nombres, apellidos, email, departamento, calificacion ";
-        query1 +=  "FROM repartidor ";
-        query1 +=  "ORDER BY calificacion DESC ";
-        query1 +=  "LIMIT 5;";
-
-        const repartidor = await query(query1, []);
-        res.status(200).json(repartidor);
+        const clientes = await query("SELECT usuario_id, nombres, email FROM repartidor WHERE estado = 1;", []);
+        res.status(200).json(clientes);
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No hay repartidores para el top",
+                    "No hay repartidores",
             },
             auth: false,
             message:
-                "No hay repartidores para el top",
+                "No hay repartidores",
         });
     }
 
 }
 
-const top5Empresas = async (req, res) => {
-    const { id, rol } = req.token 
+
+const resDesactivarU = async (req, res) => {
+    const { id, rol } = req.token
 
     if (!id || !rol) {
         return res.status(400).json({
@@ -177,37 +173,47 @@ const top5Empresas = async (req, res) => {
                 "Token invalido",
         });
     }
-    try {
-        // Obtener data usuarios
-        let query1 = "select loka.usuario_id, count(loka.id) as pedidos from ( "
-        query1 += "select distinct empresa.usuario_id, pedido.id from empresa, menu, producto, detalle_pedido, pedido "
-        query1 += "where empresa.usuario_id = menu.empresa_usuario_id and "
-        query1 += "menu.id = producto.menu_id and "
-        query1 += "producto.id = detalle_pedido.producto_id  and "
-        query1 += "detalle_pedido.pedido_id = pedido.id) as loka "
-        query1 += "group by loka.usuario_id "
-        query1 += "ORDER BY pedidos DESC "
-        query1 += "LIMIT 5;"
 
-        const empresa = await query(query1, []);
-        res.status(200).json(empresa);
+    const { idUser,  resp} = req.body
+
+    if (!idUser || !resp) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Los datos de usuario son necesarios",
+            },
+            auth: false,
+            message:
+                "Los datos de usuario son necesarios",
+        });
+    }
+
+    try {
+        // Obtener data usuario  
+        await query("UPDATE cliente SET estado = ? WHERE usuario_id = ?;", [2, idUser]);
+        return res.status(200).json({
+            status: "OK",
+            message:
+                "Se deshabilito correctamente",
+        });
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No hay empresas para el top",
+                    "No se envio la respuesta a la solicitud correctamente",
             },
             auth: false,
             message:
-                "No hay empresas para el top",
+                "No se envio la respuesta a la solicitud correctamente",
         });
     }
 
 }
 
-const top5Productos = async (req, res) => {
-    const { id, rol } = req.token 
+const resDesactivarE = async (req, res) => {
+    const { id, rol } = req.token
 
     if (!id || !rol) {
         return res.status(400).json({
@@ -234,41 +240,118 @@ const top5Productos = async (req, res) => {
                 "Token invalido",
         });
     }
-    try {
-        // Obtener data usuarios
-        let query1 = "SELECT d.producto_id as id , pr.nombre, COUNT(*) AS pedido "
-        query1 += "FROM detalle_pedido d "
-        query1 += "JOIN producto pr ON d.producto_id = pr.id "
-        query1 += "GROUP BY d.producto_id, pr.nombre "
-        query1 += "ORDER BY pedido DESC "
-        query1 += "LIMIT 5;"
 
-        const producto = await query(query1, []);
-        res.status(200).json(producto);
+    const { idUser,  resp} = req.body
+
+    if (!idUser || !resp) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Los datos de empresa son necesarios",
+            },
+            auth: false,
+            message:
+                "Los datos de empresa son necesarios",
+        });
+    }
+
+    try {
+        // Obtener data empresa  
+        await query("UPDATE empresa SET estado = ? WHERE usuario_id = ?;", [2, idUser]);
+        return res.status(200).json({
+            status: "OK",
+            message:
+                "Se desactivo la empresa correctamente",
+        });
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No hay productos para el top",
+                    "No se envio la respuesta a la solicitud correctamente",
             },
             auth: false,
             message:
-                "No hay productos para el top",
+                "No se envio la respuesta a la solicitud correctamente",
         });
     }
 
 }
 
+const resDesactivarR = async (req, res) => {
+    const { id, rol } = req.token
 
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
 
+    if (rol != "admin") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
 
+    const { idUser,  resp} = req.body
+
+    if (!idUser || !resp) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Los datos de empresa son necesarios",
+            },
+            auth: false,
+            message:
+                "Los datos de empresa son necesarios",
+        });
+    }
+
+    try {
+        // Obtener data repartidor  
+        await query("UPDATE repartidor SET estado = ? WHERE usuario_id = ?;", [2, idUser]);
+        return res.status(200).json({
+            status: "OK",
+            message:
+                "Se desactivo el repartidor correctamente",
+        });
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No se envio la respuesta a la solicitud correctamente",
+            },
+            auth: false,
+            message:
+                "No se envio la respuesta a la solicitud correctamente",
+        });
+    }
+
+}
 
 
 module.exports = {
-    informeUser,
-    totalUser,
-    top5Deliverys,
-    top5Empresas,
-    top5Productos
+    desactivarUser,
+    desactivarEmpr,
+    desactivarRepr,
+    resDesactivarU,
+    resDesactivarE,
+    resDesactivarR
 }

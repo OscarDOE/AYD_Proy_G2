@@ -28,16 +28,19 @@ app.use(require('./routes/loginUser.route'))
 
 app.use(require('./routes/createRepar.route'))
 app.use(require('./routes/loginRepar.route'))
+app.use(require('./routes/miPerfil.route'))
 
 app.use(require('./routes/createEmpresa.route'))
 app.use(require('./routes/loginEmpresa.route'))
+app.use(require('./routes/agregarProducto.route'))
 
 app.use(require('./routes/loginAdmin.route'))
 app.use(require('./routes/solicitudRepar.route'))
 app.use(require('./routes/solicitudEmp.route'))
 app.use(require('./routes/informeUser.route'))
-app.use(require('./routes/miPerfil.route'))
-app.use(require('./routes/agregarProducto.route'))
+app.use(require('./routes/desactivarUser.route'))
+
+
 
 
 //Route Initial API
