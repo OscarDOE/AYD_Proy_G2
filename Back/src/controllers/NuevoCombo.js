@@ -6,7 +6,7 @@ const fs = require('fs/promises')
 
 const NuevoCombo = async (req, res) => {
     //nombre-descripcion,id_empresa,precio,estado,[id_producto]
-    const {
+    let {
         nombre,//
         descripcion,//
         id_empresa,//
@@ -33,7 +33,9 @@ const NuevoCombo = async (req, res) => {
     try {
 
         // Guarda hoja en S3
-        const menu_id = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${id_empresa}`);
+        let menu_id = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${id_empresa}`);
+        menu_id = menu_id[0].id
+        console.log(menu_id)
         const URL = await awsImage.uploadImage(
             "Empresa_combo",
             fileBase64,
