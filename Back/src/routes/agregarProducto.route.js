@@ -2,6 +2,7 @@ const {Router} = require('express')
 const router = Router()
 const multer = require('multer');
 const userController = require('../controllers/AgregarProducto')
+const NuevoCombo = require('../controllers/NuevoCombo')
 const verifyToken = require('../middlewares/verifyToken')
 
 // Configuración de Multer
@@ -28,4 +29,5 @@ router.post('/ObtenerProductos', userController.ObtenerProductos)
 // router.post('/RealizarPedido', userController.RealizarPedido)
 // router.post('/ObtenerProductos', userController.ObtenerProductos)
 
+router.post('/NuevoCombo',NuevoCombo.NuevoCombo)
 module.exports = router
