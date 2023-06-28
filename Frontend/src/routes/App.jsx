@@ -14,17 +14,18 @@ import PerfilRepartidor   from "../pages/MiPerfilR";
 import InformeUsers       from "../pages/InformeUsers";
 import PanelEmpresa       from "../pages/panel";
 import CombosEmpresa      from "../pages/combos";
-// import LoginPage from "../pages/LoginPage";
-// import RegisterPage from "../pages/RegisterPage";
-// import PagesVuelos from "../pages/PagesVuelos";
-// import PagesAdmin from "../pages/PagesAdmin";
+import CombosPage from "../pages/CombosPage";
+import ReportesAdmin from "../pages/ReportesAdmin";
+import DesactivarAdmin from "../pages/DesactivarAdmin";
+
 export const App = () => {
   return (
     <BrowserRouter>
             <Layout>
                 <Routes>
                 <Route index element={<Home />} />
-                <Route path="/combosempresa" element={<CombosEmpresa/>} />
+                <Route path="/desacusuarios" element={<DesactivarAdmin/>} />
+                <Route path="/combosempresa" element={<CombosPage/>} />
                 <Route path="/panelempresa" element={<PanelEmpresa/>} />
                 <Route path="/perfilrepartidor" element={<PerfilRepartidor/>} />
                 <Route path="/loginadmin" element={<LoginAdmin/>} />
@@ -36,6 +37,7 @@ export const App = () => {
                 <Route path="/loginusers" element={<LoginUsers />} />
                 <Route path="/homeadmin" element={<HomeAdmin />} />
                 <Route path="/informeusers" element={<InformeUsers />} />
+                <Route path="/reportesadmin" element={<ReportesAdmin />} />
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />

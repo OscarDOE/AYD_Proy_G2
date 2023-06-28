@@ -90,6 +90,8 @@ const Header = () => {
                                 <>
                                 <Link to='/homeadmin'><Button color="inherit">Solicitudes pendientes</Button></Link>
                                 <Link to='/informeusers'><Button color="inherit">Informe</Button></Link>
+                                <Link to='/reportesadmin'><Button color="inherit">Reportes</Button></Link>
+                                <Link to='/desacusuarios'><Button color="inherit">Usuarios</Button></Link>
                                 </> 
                                 : 
                                 <></>}
@@ -108,7 +110,8 @@ const Header = () => {
                                 <></>}
                                 {usuario_logeado?.rol === "4" ? 
                                 <>
-                                <Link to='/panelempresa'><Button color="inherit">Panel de control</Button></Link>
+                                <Link to='/panelempresa'><Button color="inherit">Productos</Button></Link>
+                                <Link to='/combosempresa'><Button color="inherit">Combos</Button></Link>
                                 </> 
                                 : 
                                 <></>}

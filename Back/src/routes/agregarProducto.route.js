@@ -29,5 +29,5 @@ router.post('/ObtenerProductos', userController.ObtenerProductos)
 // router.post('/RealizarPedido', userController.RealizarPedido)
 // router.post('/ObtenerProductos', userController.ObtenerProductos)
 
-router.post('/NuevoCombo',NuevoCombo.NuevoCombo)
+router.post('/NuevoCombo', upload.single('foto'),NuevoCombo.NuevoCombo)
 module.exports = router
