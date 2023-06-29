@@ -26,6 +26,7 @@ router.post('/ObtenerProductos', userController.ObtenerProductos)
 router.post('/AgregarTipoProducto', tipo_producto.AgregarTipoProducto)
 router.post('/ObtenerTipoProductos', tipo_producto.ObtenerTipoProductos)
 
+
 // router.post('/AgregarProducto', userController.AgregarProducto)
 // router.post('/EditarProducto', userController.EditarProducto)
 // router.post('/EliminarProducto', userController.EliminarProducto)
@@ -33,4 +34,5 @@ router.post('/ObtenerTipoProductos', tipo_producto.ObtenerTipoProductos)
 // router.post('/ObtenerProductos', userController.ObtenerProductos)
 
 router.post('/NuevoCombo', upload.single('foto'),NuevoCombo.NuevoCombo)
+router.post('/ObtenerCombos',NuevoCombo.ObtenerCombos)
 module.exports = router

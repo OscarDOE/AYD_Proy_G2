@@ -86,6 +86,29 @@ const NuevoCombo = async (req, res) => {
     }
 };
 
+const ObtenerCombos = async (req, res) => {
+    const {
+      menu_id
+    } = req.body;
+    try {
+      // Obtener todos los productos de la base de datos
+      const productos = await query(`SELECT * FROM combo where menu_id = ${menu_id}`);
+  
+      res.status(200).json({
+        status: "OK",
+        data: productos,
+      });
+    } catch (error) {
+      console.error("ERROR - ObtenerCombos", error);
+  
+      res.status(500).json({
+        status: "FAILED",
+        message: "Error al obtener los Combos",
+      });
+    }
+  };
+
 module.exports = {
-    NuevoCombo
+    NuevoCombo,
+    ObtenerCombos
 };
