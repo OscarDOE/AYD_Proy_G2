@@ -61,9 +61,10 @@ const AgregarProducto = async (req, res) => {
       "png"
     );
 
-    
-
-    
+    //obtener la categoria
+    let  idCategoria= await query(`SELECT id from tipo_producto where descripcion = ${categoria}`)
+    idCategoria = idCategoria[0].id
+    console.log(idCategoria)
 
     // Insertar el nuevo producto en la base de datos
     const insertQuery = `
@@ -75,7 +76,7 @@ const AgregarProducto = async (req, res) => {
       precio,
       URL,
       descripcion,
-      categoria,
+      idCategoria,
       newId[0].id
     ]);
 
