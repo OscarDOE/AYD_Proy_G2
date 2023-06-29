@@ -4,6 +4,7 @@ const multer = require('multer');
 const userController = require('../controllers/AgregarProducto')
 const NuevoCombo = require('../controllers/NuevoCombo')
 const verifyToken = require('../middlewares/verifyToken')
+const tipo_producto = require('../controllers/TipoProducto')
 
 // Configuración de Multer
 const storage = multer.diskStorage({
@@ -22,6 +23,8 @@ router.post('/AgregarProducto', upload.single('foto'), userController.AgregarPro
 // router.post('/EliminarProducto', upload.single('foto'), userController.EliminarProducto);
 // router.post('/RealizarPedido', upload.single('foto'), userController.RealizarPedido);
 router.post('/ObtenerProductos', userController.ObtenerProductos)
+router.post('/AgregarTipoProducto', tipo_producto.AgregarTipoProducto)
+router.post('/ObtenerTipoProductos', tipo_producto.ObtenerTipoProductos)
 
 // router.post('/AgregarProducto', userController.AgregarProducto)
 // router.post('/EditarProducto', userController.EditarProducto)
