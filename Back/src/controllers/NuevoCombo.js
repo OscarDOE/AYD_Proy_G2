@@ -46,22 +46,25 @@ const NuevoCombo = async (req, res) => {
         
         //Insertar el nuevo combo
         const insertQueryCombo = `
-        INSERT INTO combo(nombre,descripcion,menu_id,precio)
-        VALUES (?,?,?,?)
+        INSERT INTO combo(nombre,descripcion,menu_id,precio,estado)
+        VALUES (?,?,?,?,?)
         `;
         await query(insertQueryCombo, [
             nombre,
             descripcion,
             menu_id,
             precio,
+            estado
         ]);
         //obtener el indice del nuevo combo
-        const id_combo = await query(`SELECT max(id) FROM combo`);
+        let id_combo = await query(`SELECT max(id) as id FROM combo`);
+        id_combo = id_combo[0].id;
+        
         // Insertar el detalle_combo
         id_productos = id_productos.split(',')
         id_productos.forEach(async id_producto => {
             const insertQuery = `
-                INSERT INTO detalle_combo(combo_id,catalogo_id)
+                INSERT INTO detalle_combo(combo_id,producto_id)
                 VALUES (?, ?)
                 `;
             await query(insertQuery, [

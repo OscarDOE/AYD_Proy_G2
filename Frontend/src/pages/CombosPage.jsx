@@ -105,7 +105,6 @@ const CombosPage = () => {
       });
       const resp_get = await endpoint.json();
       setRows(resp_get.data)
-
     }
 
     const enviarDatos = async (e) => {

@@ -169,7 +169,8 @@ const PanelEmpresa = () => {
         },body: JSON.stringify({"empresa_id":usuario_logeado.usuario_id})
       });
       const resp_get = await endpoint.json();
-      setTipoProductos(resp_get)
+      const descripciones = resp_get.data.map(item => item.descripcion);
+      setTipoProductos(descripciones)
 
     }
 
@@ -290,6 +291,7 @@ const PanelEmpresa = () => {
                             'padding': '5px'
                           }} 
                           onChange={(e) => setProductosNuevos({ ...productosNuevos, categoria: e.target.value })} name="lenguajes" id="lang1">
+                            <option value="0">--Seleccione--</option>
                             {
                               tipoProductos.map(opt=><option>{opt}</option>)
                             }

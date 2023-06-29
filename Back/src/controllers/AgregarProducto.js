@@ -62,7 +62,7 @@ const AgregarProducto = async (req, res) => {
     );
 
     //obtener la categoria
-    let  idCategoria= await query(`SELECT id from tipo_producto where descripcion = ${categoria}`)
+    let  idCategoria= await query(`SELECT id from tipo_producto where descripcion = '${categoria}'`)
     idCategoria = idCategoria[0].id
     console.log(idCategoria)
 
