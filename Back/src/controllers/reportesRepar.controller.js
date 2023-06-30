@@ -3,7 +3,7 @@ const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 
-const miPerfil = async (req, res) => {
+const historialPedido = async (req, res) => {
     const { id, rol } = req.token
 
     if (!id || !rol) {
@@ -32,26 +32,26 @@ const miPerfil = async (req, res) => {
         });
     }
     try {
-        // Obtener data empresas
-        const repartidor = await query("SELECT * FROM repartidor WHERE usuario_id = ?;", [id]);
-        res.status(200).json(repartidor);
+        // Obtener data usuarios
+        const pedidos = await query("SELECT * FROM pedidos WHERE repartidor_usuario_id = ? ;", [id]);
+        res.status(200).json(pedidos);
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No se encontro el repartidor",
+                    "No hay pedidos del repartidor",
             },
             auth: false,
             message:
-                "No se encontro el repartidor",
+                "No hay pedidos del repartidor",
         });
     }
 
 }
 
-const cambioDep = async (req, res) => {
-    const { id, rol } = req.token
+const comisiones = async (req, res) => {
+    const { id, rol } = req.token 
 
     if (!id || !rol) {
         return res.status(400).json({
@@ -66,7 +66,7 @@ const cambioDep = async (req, res) => {
         });
     }
 
-    if (rol != "repartidor") {
+    if (rol != "admin") {
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -79,25 +79,30 @@ const cambioDep = async (req, res) => {
         });
     }
     try {
-        // Obtener data empresas
-        const repartidor = await query("SELECT * FROM repartidor WHERE usuario_id = ?;", [id]);
-        res.status(200).json(repartidor);
+        // Obtener data usuarios
+        let query1 = "SELECT SUM(p.precio * 0.05) AS comisiones "
+        query1 += "FROM pedido p "
+        query1 += "JOIN repartidor r ON p.repartidor_usuario_id = ?; "
+
+        const comisiones = await query(query1, [id]);
+        res.status(200).json(comisiones);
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
             data: {
                 error:
-                    "No se encontro el repartidor",
+                    "No hay comisiones",
             },
             auth: false,
             message:
-                "No se encontro el repartidor",
+                "No hay comisiones",
         });
     }
 
 }
+
 
 module.exports = {
-    miPerfil,
-    cambioDep
+    historialPedido,
+    comisiones
 }
