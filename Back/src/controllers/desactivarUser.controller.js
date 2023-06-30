@@ -33,7 +33,7 @@ const desactivarUser = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        const clientes = await query("SELECT * FROM cliente;", []);
+        const clientes = await query("SELECT * FROM cliente WHERE estado = 1;", []);
         res.status(200).json(clientes);
     } catch (error) {
         return res.status(400).json({
@@ -174,9 +174,9 @@ const resDesactivarU = async (req, res) => {
         });
     }
 
-    const { idUser,  resp} = req.body
+    const { idUser} = req.body
 
-    if (!idUser || !resp) {
+    if (!idUser) {
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -191,7 +191,7 @@ const resDesactivarU = async (req, res) => {
 
     try {
         // Obtener data usuario  
-        await query("UPDATE cliente SET estado = ? WHERE usuario_id = ?;", [2, idUser]);
+        await query("UPDATE cliente SET estado = 2 WHERE usuario_id = ?;", [idUser]);
         return res.status(200).json({
             status: "OK",
             message:

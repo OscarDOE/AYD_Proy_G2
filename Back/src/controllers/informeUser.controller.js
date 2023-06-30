@@ -179,8 +179,8 @@ const top5Empresas = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        let query1 = "select loka.usuario_id, count(loka.id) as pedidos from ( "
-        query1 += "select distinct empresa.usuario_id, pedido.id from empresa, menu, producto, detalle_pedido, pedido "
+        let query1 = "select loka.nombre, loka.usuario_id, count(loka.id) as pedidos from ( "
+        query1 += "select distinct empresa.usuario_id, pedido.id, empresa.nombre from empresa, menu, producto, detalle_pedido, pedido "
         query1 += "where empresa.usuario_id = menu.empresa_usuario_id and "
         query1 += "menu.id = producto.menu_id and "
         query1 += "producto.id = detalle_pedido.producto_id  and "
