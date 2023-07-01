@@ -65,26 +65,13 @@ const createEmpresa = async (req, res) => {
 
         // Obtener id de Usuario
         const idUser = await query("SELECT MAX(id) as id FROM usuario;", []);
-        // Obtener tipo de imagen
-        const encabezado = imagenes.substring(0, 20);
-        let tipo = ""
-        // Verificar el tipo de imagen basado en el encabezado
-        if (encabezado.includes('data:image/jpeg')) {
-            tipo = 'jpeg';
-        } else if (encabezado.includes('data:image/png')) {
-            tipo = 'png';
-        } else if (encabezado.includes('data:image/gif')) {
-            tipo = 'gif';
-        } else if (encabezado.includes('data:image/bmp')) {
-            tipo = 'bmp';
-        }
-
+        
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
             "Empresa_image",
             imagenes,
             idUser[0].id,
-            tipo
+            "jpeg"
         );
         console.log("imageURL", URL);
 
