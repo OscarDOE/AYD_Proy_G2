@@ -286,7 +286,7 @@ const getProducto = async (req, res) => {
 
     try {
         // Obtiene las empresas
-        const filtrado = "SELECT p.id AS producto_id, p.nombre AS producto_nombre, p.precio AS producto_precio "
+        let filtrado = "SELECT p.id AS producto_id, p.nombre AS producto_nombre, p.precio AS producto_precio "
         filtrado += "FROM producto p "
         filtrado += "INNER JOIN menu m ON p.menu_id = m.id "
         filtrado += "INNER JOIN tipo_producto tp ON p.tipo_producto_id = tp.id "
