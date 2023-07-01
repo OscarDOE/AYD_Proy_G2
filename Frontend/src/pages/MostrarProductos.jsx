@@ -13,6 +13,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { Link, useHistory } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -30,7 +31,8 @@ const MostrarProductos = () => {
     const usuario_logeado = cookies.get('session');
     // console.log(usuario_logeado)
     const empresa_seleccionada = cookies.get('empresa_seleccionada');
-    // console.log('carrito al cargar --------- ');
+    console.log('carrito al cargar --------- ');
+    console.log(cookies.get('carrito'))
     // console.log(usuario_logeado)
 
     const [productos, setProductos] = useState([]);
@@ -123,7 +125,7 @@ const MostrarProductos = () => {
             }
           });
 
-
+          setProductosOG(productos)
           
     }
 
@@ -155,9 +157,11 @@ const MostrarProductos = () => {
             return prevCarrito;
           });
 
+          setProductosOG(productos)
     }
 
     const pagar = ()=>{
+
 
         // Recorrer la primera lista (carrito)
         for (var i = 0; i < carrito.length; i++) {
@@ -176,7 +180,9 @@ const MostrarProductos = () => {
             }
         }
 
+
         if (carrito == []){
+            console.log()
             cookies.set('carrito', carrito)
         }else{
             cookies.remove('carrito')
@@ -187,6 +193,7 @@ const MostrarProductos = () => {
         console.log(JSON.parse(cookies.cookies.carrito))
 
     }
+
 
     useEffect(() => {getProductos()}, [] );
     useEffect(() => {getCategorias()}, [] );
@@ -222,7 +229,8 @@ const MostrarProductos = () => {
                 </Grid>
                 <Grid  item sx={{ marginRight: 2, marginTop: -2 }}>
                     <Item>
-                        <Button onClick={pagar} size="small">Carrito<ShoppingCartIcon /></Button>
+                    <Button onClick={pagar} size="small">Confirmar<ShoppingCartIcon /></Button>
+                    <Link to='/carrito'><Button size="small">Carrito<ShoppingCartIcon /></Button></Link>
 
                     </Item>
                     
