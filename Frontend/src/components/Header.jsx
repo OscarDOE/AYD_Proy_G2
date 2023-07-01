@@ -97,7 +97,7 @@ const Header = () => {
                                 <></>}
                                 {usuario_logeado?.rol === "2" ? 
                                 <>
-                                <Link to='/'><Button color="inherit">Nuevo pedido</Button></Link>
+                                <Link to='/elegirempresa'><Button color="inherit">Nuevo pedido</Button></Link>
                                 <Link to='/'><Button color="inherit">Direcciones</Button></Link>
                                 </> 
                                 : 

@@ -92,8 +92,8 @@ const ObtenerCombos = async (req, res) => {
     } = req.body;
     try {
       // Obtener todos los productos de la base de datos
-      let menu_id_ = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${id_empresa}`);
-        menu_id_ = menu_id[0].id
+      let menu_id_ = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${menu_id}`);
+        menu_id_ = menu_id_[0].id
       const productos = await query(`SELECT * FROM combo where menu_id = ${menu_id_}`);
   
       res.status(200).json({
