@@ -357,6 +357,104 @@ const historialPedido = async (req, res) => {
 
 }
 
+// DIRECCION
+const getDireccion = async (req, res) => {
+    const { id, rol } = req.token
+
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
+
+    if (rol != "cliente") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
+
+    try {
+        
+        // Obtiene direcciones de usuario 
+        const direccion = await query("SELECT * FROM direcciones_cliente WHERE cliente_usuario_id = ?;", [id]);
+        res.status(200).json(direccion);
+
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Error al pedir",
+            },
+            auth: false,
+            message: "Error al pedir",
+        });
+    }
+
+}
+// PAGO 
+const getTarjeta = async (req, res) => {
+    const { id, rol } = req.token
+
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
+
+    if (rol != "cliente") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
+
+    try {
+        
+        // Obtiene direcciones de usuario 
+        const direccion = await query("SELECT * FROM detalle_tarjeta WHERE cliente_usuario_id = ?;", [id]);
+        res.status(200).json(direccion);
+
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Error al pedir",
+            },
+            auth: false,
+            message: "Error al pedir",
+        });
+    }
+
+}
 
 
 module.exports = {
@@ -365,5 +463,7 @@ module.exports = {
     getMenu,
     getCategorias,
     getProducto,
-    historialPedido
+    historialPedido,
+    getDireccion,
+    getTarjeta
 }

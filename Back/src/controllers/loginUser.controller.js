@@ -67,6 +67,112 @@ const loginUser = async (req, res) => {
 
 }
 
+// DIRECCION 
+const setDireccion = async (req, res) => {
+    const { id, rol } = req.token
+
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
+
+    if (rol != "cliente") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
+
+    const {dep, mun, zona} = req.body
+    try {
+        
+        // add direcciones de usuario 
+        const direccion = await query("INSERT INTO direcciones_cliente (departamento, municipio, zona, cliente_usuario_id) VALUES (?,?,?,?);", [dep, mun, zona,id]);
+        res.status(200).json(direccion);
+
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Error al ingresar direccion",
+            },
+            auth: false,
+            message: "Error al ingresar direccion",
+        });
+    }
+
+}
+
+// DIRECCION 
+const setTarjeta = async (req, res) => {
+    const { id, rol } = req.token
+
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
+
+    if (rol != "cliente") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
+
+    const {num, cvv, emi, ven} = req.body
+    try {
+        
+        // add direcciones de usuario 
+        const direccion = await query("INSERT INTO  detalle_tarjeta (numero, cliente_usuario_id ,cvv, fecha_emision, fecha_vencimiento) VALUES (?,?,?,?);", [num, id, cvv, emi, ven]);
+        res.status(200).json(direccion);
+
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Error al ingresar metodo de pago",
+            },
+            auth: false,
+            message: "Error al ingresar metodo de pago",
+        });
+    }
+
+}
+
+
+
 module.exports = {
-    loginUser
+    loginUser,
+    setDireccion,
+    setTarjeta
 }

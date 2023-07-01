@@ -10,5 +10,7 @@ router.post('/menu', verifyToken, loginController.getMenu)
 router.post('/producto', verifyToken, loginController.getProducto)
 router.post('/categoria', verifyToken, loginController.getCategorias)
 router.post('/historialUser', verifyToken, loginController.historialPedido)
+router.post('/direccion', verifyToken, loginController.getDireccion)
+router.post('/tarjeta', verifyToken, loginController.getTarjeta)
 
 module.exports = router
