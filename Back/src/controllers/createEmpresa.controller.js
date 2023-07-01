@@ -69,9 +69,9 @@ const createEmpresa = async (req, res) => {
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
             "Empresa_image",
-            imagenes,
+            fileBase64,
             idUser[0].id,
-            "jpeg"
+            "jpg"
         );
         console.log("imageURL", URL);
 
