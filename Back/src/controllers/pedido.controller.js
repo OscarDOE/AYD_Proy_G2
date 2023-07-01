@@ -177,7 +177,7 @@ const getMenu = async (req, res) => {
     const { idEmp } = req.body
     try {
         // Obtiene las empresas
-        let query1 = "SELECT c.id AS id, c.nombre AS nombre, c.precio AS precio, c.imagen as imagen, c.descripcion as descripcion"
+        let query1 = "SELECT c.id AS id, c.nombre AS nombre, c.precio AS precio, c.imagen as imagen, c.descripcion as descripcion "
         query1 += "FROM empresa e "
         query1 += "LEFT JOIN menu m ON e.usuario_id = m.empresa_usuario_id "
         query1 += "LEFT JOIN combo c ON m.id = c.menu_id "
