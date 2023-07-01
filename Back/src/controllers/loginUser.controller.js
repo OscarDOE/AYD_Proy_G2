@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
             //Si los datos son correctos se genera el token
             const token = jwt.sign(
                 {
-                    id: result[0].usuario_id,
+                    id: result[0].id,
                     rol: "cliente"
                 },
                 "ayd1p1"
