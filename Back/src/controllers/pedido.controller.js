@@ -42,7 +42,7 @@ const pedirProducto = async (req, res) => {
         const fechaHoraMySQL = fechaHora.toISOString().slice(0, 19).replace('T', ' ');
         // Obtener precio 
         // Crea el carrito
-        await query("INSERT INTO pedido (cliente_usuario_id, tipo_estado_id, fecha_inicio, direcciones_cliente_id, detalle_tarjeta_id) VALUES (?, ?, ?, ?);", [id, 1, fechaHoraMySQL, dir, tar]);
+        await query("INSERT INTO pedido (cliente_usuario_id, tipo_estado_id, fecha_inicio, direcciones_cliente_id, detalle_tarjeta_id) VALUES (?, ?, ?, ?);", [id, 2, fechaHoraMySQL, dir, tar]);
         // Obtiene el id de carrito
         const idPedido = await query("SELECT MAX(id) as id FROM pedido;", []);
         // For para pasar por producto o xombo
@@ -177,14 +177,18 @@ const getMenu = async (req, res) => {
     const { idEmp } = req.body
     try {
         // Obtiene las empresas
-        let query1 = "SELECT c.id AS combo_id, c.nombre AS combo_nombre, c.precio AS combo_precio, "
-        query1 += "p.id AS producto_id, p.nombre AS producto_nombre, p.precio AS producto_precio "
+        let query1 = "SELECT c.id AS id, c.nombre AS nombre, c.precio AS precio "
         query1 += "FROM empresa e "
-        query1 += "LEFT JOIN menu m ON e.id = m.empresa_id "
+        query1 += "LEFT JOIN menu m ON e.usuario_id = m.empresa_usuario_id "
         query1 += "LEFT JOIN combo c ON m.id = c.menu_id "
+        query1 += "WHERE e.usuario_id = ? "
+        query1 += "UNION "
+        query1 += "SELECT p.id AS producto_id, p.nombre AS producto_nombre, p.precio AS producto_precio "
+        query1 += "FROM empresa e "
+        query1 += "LEFT JOIN menu m ON e.usuario_id = m.empresa_usuario_id "
         query1 += "LEFT JOIN producto p ON m.id = p.menu_id "
-        query1 += "WHERE e.id = ?;"
-        const menu = await query(query1, [idEmp]);
+        query1 += "WHERE e.usuario_id = ?;"
+        const menu = await query(query1, [idEmp,idEmp]);
         res.status(200).json(menu);
     } catch (error) {
         return res.status(400).json({
