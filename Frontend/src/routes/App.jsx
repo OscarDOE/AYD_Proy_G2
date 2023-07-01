@@ -47,6 +47,7 @@ export const App = () => {
                 <Route path="/elegirproductos" element={<MostrarProductos />} />
                 <Route path="/elegirempresa" element={<ElegirEmpresa />} />
                 <Route path="/formcreditcard" element={<FormCreditCard />} />
+                <Route path="/carrito" element={<ShowCarrito />} />
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />
