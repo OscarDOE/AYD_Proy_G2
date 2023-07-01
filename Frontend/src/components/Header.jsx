@@ -56,6 +56,8 @@ const Header = () => {
     const handleLogOut = () => {
         navigate("/");
         cookies.remove('session')
+        cookies.remove('carrito')
+        cookies.remove('empresa_seleccionada')
     };
     //console.log(usuario_logeado)
 

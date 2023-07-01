@@ -161,17 +161,17 @@ const MostrarProductos = () => {
     }
 
     const pagar = ()=>{
-
-
+        if(carritoCargado === undefined){
+            carritoCargado = carrito
+            return
+        }
         // Recorrer la primera lista (carrito)
         for (var i = 0; i < carrito.length; i++) {
             var carritoItem = carrito[i];
-        
             // Buscar el índice del elemento correspondiente en la segunda lista (carritocargado)
             var index = carritoCargado.findIndex(function(item) {
             return item.id === carritoItem.id;
             });
-        
             // Si se encuentra el elemento en la segunda lista, sumar las cantidades
             if (index !== -1) {
             carritoCargado[index].cantidad += carritoItem.cantidad;
@@ -179,19 +179,12 @@ const MostrarProductos = () => {
                 carritoCargado.push(carritoItem);
             }
         }
-
-
-        if (carrito == []){
-            console.log()
+        if (carrito.length==0 ){
             cookies.set('carrito', carrito)
         }else{
             cookies.remove('carrito')
             cookies.set('carrito', carritoCargado)
         }
-        
-        console.log('------cookies carrito------------')
-        console.log(JSON.parse(cookies.cookies.carrito))
-
     }
 
 
