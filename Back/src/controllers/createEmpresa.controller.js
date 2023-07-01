@@ -37,7 +37,7 @@ const createEmpresa = async (req, res) => {
 
     // validar correo
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexCorreo.test(email)){
+    if (!regexCorreo.test(email)) {
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -65,13 +65,26 @@ const createEmpresa = async (req, res) => {
 
         // Obtener id de Usuario
         const idUser = await query("SELECT MAX(id) as id FROM usuario;", []);
+        // Obtener tipo de imagen
+        const encabezado = imagenes.substring(0, 20);
+        let tipo = ""
+        // Verificar el tipo de imagen basado en el encabezado
+        if (encabezado.includes('data:image/jpeg')) {
+            tipo = 'jpeg';
+        } else if (encabezado.includes('data:image/png')) {
+            tipo = 'png';
+        } else if (encabezado.includes('data:image/gif')) {
+            tipo = 'gif';
+        } else if (encabezado.includes('data:image/bmp')) {
+            tipo = 'bmp';
+        }
 
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
             "Empresa_image",
-            fileBase64,
+            imagenes,
             idUser[0].id,
-            "pdf"
+            tipo
         );
         console.log("imageURL", URL);
 
@@ -96,7 +109,7 @@ const createEmpresa = async (req, res) => {
         // Obtener id de Empresa
         const idEmpresa = await query("SELECT MAX(usuario_id) as empresa_usuario_id FROM empresa;", []);
         await query("INSERT INTO menu SET ?", idEmpresa);
-        
+
         +9 +
             res.status(200).json({
                 status: "OK",

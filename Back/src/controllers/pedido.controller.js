@@ -129,7 +129,7 @@ const getEmpresas = async (req, res) => {
     try {
         // Obtiene las empresas
         //const empresas = await query("SELECT e.nombre, t.descripcion FROM empresa e INNER JOIN tipo_empresa t ON e.tipo_empresa_id = t.id;", []);
-        const empresas = await query("SELECT e.usuario_id, e.nombre FROM empresa e INNER JOIN tipo_empresa t ON e.tipo_empresa_id = t.id;", []);
+        const empresas = await query("SELECT e.usuario_id, e.nombre, e.imagenes, e.descripcion FROM empresa e INNER JOIN tipo_empresa t ON e.tipo_empresa_id = t.id;", []);
         res.status(200).json(empresas);
     } catch (error) {
         return res.status(400).json({
