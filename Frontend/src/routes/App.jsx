@@ -18,6 +18,8 @@ import CombosPage from "../pages/CombosPage";
 import ReportesAdmin from "../pages/ReportesAdmin";
 import DesactivarAdmin from "../pages/DesactivarAdmin";
 import FormCreditCard from "../pages/FormCreditCard";
+import DeliveryAddressForm from "../pages/DeliveryAddressForm";
+import Tarjets from "../pages/CardsView";
 
 export const App = () => {
   return (
@@ -39,7 +41,8 @@ export const App = () => {
                 <Route path="/homeadmin" element={<HomeAdmin />} />
                 <Route path="/informeusers" element={<InformeUsers />} />
                 <Route path="/reportesadmin" element={<ReportesAdmin />} />
-                <Route path="/formcreditcard" element={<FormCreditCard />} />
+                <Route path="/deliveryaddressform" element={<DeliveryAddressForm />} />
+                <Route path="/tarjets" element={<Tarjets />} />
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />
