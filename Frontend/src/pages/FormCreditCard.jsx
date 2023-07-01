@@ -16,8 +16,16 @@ export default function FormCreditCard() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log({
+            "num": cardNumber,
+            "cvv": cvv,
+            "emi": "Hoi",
+            "ven": expirationDate,
+            "titular": name,
+            "token": usuario_logeado.token,
+        })
         // Aquí puedes enviar los datos del formulario a través de una solicitud HTTP
-        const endpoint = await fetch(ruta_AWS + '/detallepago', {
+        const endpoint = await fetch(ruta_AWS + 'detallepago', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -27,7 +35,7 @@ export default function FormCreditCard() {
                 "emi": "Hoi",
                 "ven": expirationDate,
                 "titular": name,
-                "token": usuario_logeado.token
+                "token": usuario_logeado.token,
             })
         });
         const resp_get = await endpoint.json();
