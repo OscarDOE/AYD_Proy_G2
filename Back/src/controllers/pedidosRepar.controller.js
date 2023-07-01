@@ -213,10 +213,8 @@ const selectPedido = async (req, res) => {
 
 
 module.exports = {
-    pedirProducto,
-    getEmpresas,
-    getMenu,
-    getCategorias,
-    getProducto,
-    historialPedido
+    pedidoActual,
+    finPedido,
+    verPedidos,
+    selectPedido
 }
