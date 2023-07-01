@@ -17,6 +17,8 @@ import CombosEmpresa      from "../pages/combos";
 import CombosPage from "../pages/CombosPage";
 import ReportesAdmin from "../pages/ReportesAdmin";
 import DesactivarAdmin from "../pages/DesactivarAdmin";
+import MostrarProductos from "../pages/MostrarProductos";
+import ElegirEmpresa from "../pages/ElegirEmpresa";
 import FormCreditCard from "../pages/FormCreditCard";
 import DeliveryAddressForm from "../pages/DeliveryAddressForm";
 import Tarjets from "../pages/CardsView";
@@ -41,6 +43,8 @@ export const App = () => {
                 <Route path="/homeadmin" element={<HomeAdmin />} />
                 <Route path="/informeusers" element={<InformeUsers />} />
                 <Route path="/reportesadmin" element={<ReportesAdmin />} />
+                <Route path="/elegirproductos" element={<MostrarProductos />} />
+                <Route path="/elegirempresa" element={<ElegirEmpresa />} />
                 <Route path="/deliveryaddressform" element={<DeliveryAddressForm />} />
                 <Route path="/tarjets" element={<Tarjets />} />
                       {/* <Route path="/login" element={<LoginPage />} />

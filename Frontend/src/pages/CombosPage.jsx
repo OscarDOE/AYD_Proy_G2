@@ -29,6 +29,7 @@ const CombosPage = () => {
 
 
     const [rows,setRows] = useState([]);
+    const [rowsCombo,setRowsCombo] = useState([]);
     const [productosId,setProductosIds] = useState([]);
     const [clickedRow, setClickedRow] = useState();
     const [error, setError] = useState(null);
@@ -39,6 +40,29 @@ const CombosPage = () => {
         foto: "",
         id_empresa:null
     });
+
+    const columnsCombos = [
+      // { field: 'id', headerName: 'ID', width: 130 },
+      { field: 'nombre', headerName: 'Nombre', width: 130 },
+      { field: 'descripcion', headerName: 'Descripcion', width: 180 },
+      { field: 'precio', headerName: 'Precio', width: 130 },
+      { 
+        field: 'imagen', 
+        headerName: 'Imagen', 
+        width: 130,
+        renderCell: (params) => {
+
+            return (
+              <>
+                <Avatar src={params.row.imagen} />  
+                {/* .imagen hace referencia a lo que viene de la respuesta del json cuando se obtienen todos los productos */}
+              </>
+            );
+          }
+    },
+    { field: 'estado', headerName: 'Estado', width: 130 }
+
+    ];
 
 
 
@@ -95,6 +119,7 @@ const CombosPage = () => {
 
 
     useEffect(() => {getProductos()}, [] );
+    useEffect(() => {getCombos()}, [] );
 
     const getProductos = async () =>{
       const endpoint = await fetch(ruta_AWS+'/ObtenerProductos', {
@@ -105,6 +130,18 @@ const CombosPage = () => {
       });
       const resp_get = await endpoint.json();
       setRows(resp_get.data)
+    }
+
+    const getCombos = async () =>{
+      const endpoint = await fetch(ruta_AWS+'/ObtenerCombos', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },body: JSON.stringify({"menu_id":usuario_logeado.usuario_id})
+      });
+      const resp_get = await endpoint.json();
+      setRowsCombo(resp_get.data)
+      console.log(resp_get.data)
     }
 
     const enviarDatos = async (e) => {
@@ -232,6 +269,16 @@ const CombosPage = () => {
             <Grid container justifyContent="center" >
               <Grid item xs={6} >
                 <Item>
+                <div style={{ height: '100%', width: '100%' }}>
+                  <DataGrid
+                    // getRowId={(row) => row.nombre}
+                    rows={rowsCombo}
+                    columns={columnsCombos}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                  />
+                  {/* clickedRow: {clickedRow ? `${clickedRow.id}` : null} */}
+                </div>
                   
                 </Item>
               </Grid>
