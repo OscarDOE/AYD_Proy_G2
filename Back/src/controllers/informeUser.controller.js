@@ -290,17 +290,17 @@ const masVendido = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        let query1 = "select loka.nombre, loka.usuario_id, count(loka.id) as pedidos from ( "
-        query1 += "select distinct empresa.usuario_id, pedido.id, empresa.nombre from empresa, menu, producto, detalle_pedido, pedido "
-        query1 += "where empresa.usuario_id = menu.empresa_usuario_id and "
-        query1 += "menu.id = producto.menu_id and "
-        query1 += "producto.id = detalle_pedido.producto_id  and "
-        query1 += "detalle_pedido.pedido_id = pedido.id) as loka "
-        query1 += "group by loka.usuario_id "
-        query1 += "ORDER BY pedidos DESC "
+        let query1 = "SELECT p.id, p.nombre, COUNT(*) AS total_vendidos FROM producto p "
+        query1 += "JOIN detalle_pedido dp ON dp.producto_id = p.id "
+        query1 += "JOIN pedido pe ON dp.pedido_id = pe.id "
+        query1 += "JOIN menu m ON p.menu_id = m.id "
+        query1 += "JOIN empresa e ON m.empresa_usuario_id = e.usuario_id "
+        query1 += "WHERE e.usuario_id = ? AND pe.estado_pedido_id = 7 "
+        query1 += "GROUP BY p.id, p.nombre "
+        query1 += "ORDER BY total_vendidos DESC "
         query1 += "LIMIT 5;"
 
-        const empresa = await query(query1, []);
+        const empresa = await query(query1, [id]);
         res.status(200).json(empresa);
     } catch (error) {
         return res.status(400).json({
