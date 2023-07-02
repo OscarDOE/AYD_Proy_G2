@@ -163,8 +163,9 @@ const MostrarProductos = () => {
     }
 
     const pagar = ()=>{
+        console.log(carrito);
         if(carritoCargado === undefined){
-            carritoCargado = carrito
+            setCarritoCargado(carrito)
             return
         }
         // Recorrer la primera lista (carrito)
@@ -182,8 +183,10 @@ const MostrarProductos = () => {
             }
         }
         if (carrito.length==0 ){
+            console.log('entre primera asignacion carrito')
             cookies.set('carrito', carrito)
         }else{
+            console.log('entre nueva asignacion carrito');
             cookies.remove('carrito')
             cookies.set('carrito', carritoCargado)
         }

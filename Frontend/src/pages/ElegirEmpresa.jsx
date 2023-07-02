@@ -47,6 +47,7 @@ const ElegirEmpresa = () => {
         alert('¡Empresa ' + empresa.nombre + ' seleccionada!')
         setEmpresaSelected(empresa)
         cookies.set('empresa_seleccionada', empresa)
+        cookies.set('carrito', [])
         navigate("/elegirproductos");
     }
 
