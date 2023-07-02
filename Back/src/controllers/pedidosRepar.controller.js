@@ -84,8 +84,12 @@ const finPedido = async (req, res) => {
     }
 
     try {
+        // Obtener la fecha y hora actual
+        const fechaHora = new Date();
+        // Formatear la fecha y hora en formato ISO 8601 compatible con MySQL
+        const fechaHoraMySQL = fechaHora.toISOString().slice(0, 19).replace('T', ' ');
         // Cambia el estado del pedido que tiene el repartidor
-        await query(" UPDATE pedido SET estado_pedido_id = 7 WHERE repartidor_usuario_id = ? and estado_pedido_id = 5;", [id]);
+        await query(" UPDATE pedido SET estado_pedido_id = 7, fecha_llegada = ? WHERE repartidor_usuario_id = ? and estado_pedido_id = 5;", [fechaHoraMySQL, id]);
         res.status(200).json({
             status: "OK",
             message: "Se ha entregado pedido"

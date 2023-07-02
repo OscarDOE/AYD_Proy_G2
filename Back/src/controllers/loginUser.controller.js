@@ -23,7 +23,7 @@ const loginUser = async (req, res) => {
 
     // Iniciar sesión del usuario
     mysqlConnection.query(
-        "SELECT u.id, u.usuario, u.password, c.estado, c.cupon, c.email  FROM usuario u JOIN cliente c ON u.id = c.usuario_id WHERE u.usuario = ? AND u.password = ?;",
+        "SELECT u.id, u.usuario, u.password, c.estado, c.cupon, c.email  FROM usuario u JOIN cliente c ON u.id = c.usuario_id WHERE u.usuario = ? AND u.password = ? AND c.estado = 1;",
         [username, hashContra],
         async (err, result) => {
             if (err) {

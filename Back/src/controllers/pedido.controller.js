@@ -298,10 +298,10 @@ const getProducto = async (req, res) => {
         // Obtiene las empresas
         let filtrado = "SELECT p.id AS id, p.nombre AS nombre, p.precio AS precio, p.descripcion AS descripcion, p.imagen AS imagen "
         filtrado += "FROM producto p "
-        filtrado += "INNER JOIN menu m ON p.menu_id = m.id "
-        filtrado += "INNER JOIN tipo_producto tp ON p.tipo_producto_id = tp.id "
-        filtrado += "WHERE tp.descripcion = ?;"
-        const empresas = await query(filtrado, [filtro]);
+        filtrado += "JOIN tipo_producto tp ON p.tipo_producto_id = tp.id "
+        filtrado += "JOIN menu m ON p.menu_id = m.id "
+        filtrado += "WHERE tp.descripcion = ? AND m.empresa_usuario_id = ?;"
+        const empresas = await query(filtrado, [filtro, idEmp]);
         res.status(200).json(empresas);
     } catch (error) {
         return res.status(400).json({
