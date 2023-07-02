@@ -22,6 +22,7 @@ const ElegirEmpresa = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
     const usuario_logeado = cookies.get('session');
+    console.log(usuario_logeado);
     // console.log('empresa cookies')
     // console.log(cookies.get('empresa_seleccionada'))
 

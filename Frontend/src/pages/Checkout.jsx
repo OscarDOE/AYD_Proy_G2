@@ -10,6 +10,8 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link, useHistory } from 'react-router-dom';
+import PaymentIcon from '@mui/icons-material/Payment';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 //import AppEnvr from '../enviroment/AppEnvr';
 
@@ -29,6 +31,7 @@ const Checkout = () => {
     const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
+    console.log(usuario_logeado)
 
     const [dataEmpresas, setDataEmpresas] = useState([]);
     const [dataDireccion, setDataDireccion] = useState([]);
@@ -36,6 +39,10 @@ const Checkout = () => {
     const [productosCarrito, setProductosCarrito] = useState([]);
     const [carritoSubTotal, setCarritoSubTotal] = useState([]);
     const [total, setTotal] = useState([]);
+    const [clickedRow, setClickedRow] = useState();
+    const [tarjeta, setTarjeta] = useState('');
+    const [direccion, setDireccion] = useState('');
+    const [cupon, setCupon] = useState('');
 
     
 
@@ -65,27 +72,76 @@ const Checkout = () => {
     ];
 
     const columnsProductos = [
-        { field: 'nombre', headerName: 'Nombre producto', width: 170 },
-        { field: 'pedido', headerName: 'Cantidad de pedidos', width: 150 }
+        { field: 'departamento', headerName: 'Departamento', width: 170 },
+        { field: 'municipio', headerName: 'Municipio', width: 150 },
+        { field: 'zona', headerName: 'Zona', width: 75 },
+        {
+            field: "acceptButton",
+            headerName: "",
+            description: "Actions column.",
+            sortable: false,
+            width: 160,
+            renderCell: (params) => {
+              return (
+                <Button
+                  color="success"
+                  onClick={(e) => onAcceptClickDir(e, params.row)}
+                  //onClick={deleteVuelos}
+                  variant="contained"
+                >
+                  Seleccionar
+                </Button>
+              );
+            }
+          }
     ];
 
     const columnsDelivers = [
-        { field: 'nombres', headerName: 'Nombre', width: 130 },
-        { field: 'apellidos', headerName: 'Apellidos', width: 130 },
-        { field: 'email', headerName: 'Email', width: 130 },
-        { field: 'departamento', headerName: 'Departamento', width: 130 },
-        { field: 'calificacion', headerName: 'Calificacion', width: 130 }
+        // { field: 'id', headerName: 'ID', width: 130 },
+        { field: 'numero', headerName: 'Numero', width: 130 },
+        { field: 'fecha_terminacion', headerName: 'Fecha exp', width: 130 },
+        { field: 'cvv', headerName: 'CVV', width: 75 },
+        {
+            field: "acceptButton",
+            headerName: "",
+            description: "Actions column.",
+            sortable: false,
+            width: 160,
+            renderCell: (params) => {
+              return (
+                <Button
+                  color="success"
+                  onClick={(e) => onAcceptClickTar(e, params.row)}
+                  //onClick={deleteVuelos}
+                  variant="contained"
+                >
+                  Seleccionar
+                </Button>
+              );
+            }
+          }
     ];
 
+    const onAcceptClickTar = async (e,row) =>{ 
+        e.preventDefault();
+        setClickedRow(row);
+        setTarjeta(row)
+      };
 
+      const onAcceptClickDir = async (e,row) =>{ 
+        e.preventDefault();
+        setClickedRow(row);
+        setDireccion(row)
+      };
     
 
 
     const getCarritoCookies = () =>{
-        console.log('---- cookies cheout');
-        console.log(cookies.get('carrito'))
         setProductosCarrito(cookies.get('carrito'))
-        const varcarritoSubTotal = productosCarrito.map(producto => {
+        var productosCarritoFiltrados = cookies.get('carrito').filter(function(producto) {
+            return producto.cantidad > 0;
+          });
+        const varcarritoSubTotal = productosCarritoFiltrados.map(producto => {
             const subtotal = producto.cantidad * producto.precio;
             return { ...producto, subtotal: subtotal };
           });
@@ -118,6 +174,21 @@ const Checkout = () => {
         setDataTarjeta(resp_get)
     }
 
+    const enviarPedido = async () =>{
+        const endpoint = await fetch(ruta_AWS+'/pedir', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },body: JSON.stringify({
+                "token":usuario_logeado.token,
+                "dir": direccion.id,
+                "tar":tarjeta.id,
+                "cupon":usuario_logeado.cupon
+            })
+          });
+          const resp_get = await endpoint.json();   
+    }
+
 
     useEffect(() => {getCarritoCookies()}, [] );
     useEffect(() => {getDirecciones()}, [] );
@@ -128,102 +199,130 @@ const Checkout = () => {
     return (
         
 
-      <Box sx={{ flexGrow: 1 }}> 
-        <div>       
-          {usuario_logeado?.rol === "2" ? 
-          <>   {/* parte inicial del ternario */} 
+        <Box sx={{ flexGrow: 1 }}>
+            <div>
+                {usuario_logeado?.rol === "2" ?
+                    <>   {/* parte inicial del ternario */}
 
-            <br></br>
-            <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                <Grid  item xs={2}>
-                    <Item>
-                    <Link to='/carrito'>
-                    <Button variant="contained"><ArrowBackIcon />
-                                    Volver
-                    </Button>
-                    </Link>
+                        <br></br>
+                        <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            <Grid item xs={2}>
+                                <Item>
+                                    <Link to='/carrito'>
+                                        <Button variant="contained"><ArrowBackIcon />
+                                            Volver
+                                        </Button>
+                                    </Link>
 
-                    </Item>
-                </Grid>
-                <Grid item xs={6} >
-                <Item><h1><center>Check-out</center></h1>
-                <h4><center>Revisa tu pedido</center></h4> </Item>
-                </Grid>
-                
-            </Grid><br></br>
-            <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>                
+                                </Item>
+                            </Grid>
+                            <Grid item xs={6} >
+                                <Item><h1><center>Check-out</center></h1>
+                                    <h4><center>Revisa tu pedido</center></h4> </Item>
+                            </Grid>
 
-
-                <Grid item xs={3.5} >
-                    <Item>
-                    <h2>Productos</h2>
-
-                    <div style={{ height: 400 }} >
-                    <DataGrid
-                        rows={carritoSubTotal}
-                        columns={columnsEmpresas}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                    />
-                    {/* clickedRow: {clickedRow ? `${clickedRow.id}` : null} */}
-                    </div>
-                    <h2>Total: {total}</h2>
-                    
+                        </Grid><br></br>
+                        <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
 
-                    </Item>
-                </Grid>
+                            <Grid item xs={5.5} >
+                                <Item>
+                                    <h2>Productos</h2>
 
-                <Grid item xs={3.5} >
-                    <Item>
-                    <h2>Selecciona tu direccion</h2>
+                                    <div style={{ height: 400 }} >
+                                        <DataGrid
+                                            rows={carritoSubTotal}
+                                            columns={columnsEmpresas}
+                                            pageSize={5}
+                                            rowsPerPageOptions={[5]}
+                                        />
+                                        {/* clickedRow: {clickedRow ? `${clickedRow.id}` : null} */}
+                                    </div>
 
-                    <div style={{ height: 400 }} >
-                    <DataGrid
-                        getRowId={(row) => row.id}
-                        rows={dataDireccion}
-                        columns={columnsProductos}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                    />
-                    </div>
-                    
-                    
-                    </Item>
-                </Grid>
+                                </Item>
+                            </Grid>
+                            <Grid item xs={2} >
+                                <Item>
+                                    <h3>Direccion:</h3>
+                                    <h4>{direccion.departamento} </h4>
+                                    <h4>{direccion.municipio}, </h4>
+                                    <h4>zona {direccion.zona} </h4>
+                                    <h3>Tarjeta:</h3>
+                                    <h4>{tarjeta.numero}</h4>
+                                </Item>
+                                <br></br>
+                                <Item>
+                                    <TextField onChange={(e) => setCupon( e.target.value)} id="outlined-basic" label="Cupon" variant="outlined" />
+                                </Item>
+                                <br></br>
+                                <Item>
+                                    <h2>Total: {total}</h2>
+                                </Item>
+                                <br></br>
 
-                <Grid item xs={4} >
-                    <Item>
-                    <h2>Selecciona tu tarjeta</h2>
+                                <Item>
+                                    <Button onClick={enviarPedido} variant="contained" color="success" >
+                                        Enviar pedido
+                                        <PaymentIcon />
+                                    </Button>
+                                </Item>
 
-                    <div style={{ height: 400 }} >
-                    <DataGrid
-                        getRowId={(row) => row.email}
-                        rows={dataTarjeta}
-                        columns={columnsDelivers}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                    />
-                    </div>
-                    
-                    
-                    
-                    </Item>
-                </Grid>
+                            </Grid>
 
+                        
 
 
+                        </Grid>
+                        <br></br>
+                        <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                            <Grid item xs={5} >
+                                <Item>
+                                    <h2>Selecciona tu direccion</h2>
 
-            </Grid>
+                                    <div style={{ height: 400 }} >
+                                        <DataGrid
+                                            rows={dataDireccion}
+                                            columns={columnsProductos}
+                                            pageSize={5}
+                                            rowsPerPageOptions={[5]}
+                                        />
+                                    </div>
 
-            {/* -------------- termina ternario ------------------- */}
-            </>
-            :
-            <>
-             <center><h1>¡Cuidado! Aqui solo usuarios </h1></center>
-            </>}
 
-        </div>
+                                </Item>
+                            </Grid>
+
+                            <Grid item xs={4.5} >
+                                <Item>
+                                    <h2>Selecciona tu tarjeta</h2>
+
+                                    <div style={{ height: 400 }} >
+                                        <DataGrid
+                                            rows={dataTarjeta}
+                                            columns={columnsDelivers}
+                                            pageSize={5}
+                                            rowsPerPageOptions={[5]}
+                                        />
+                                    </div>
+
+
+
+                                </Item>
+                            </Grid>
+
+
+
+
+                        </Grid>
+
+                        {/* -------------- termina ternario ------------------- */}
+                    </>
+                    :
+                    <>
+                        <center><h1>¡Cuidado! Aqui solo usuarios </h1></center>
+                    </>}
+
+            </div>
         </Box>
     )
 }
