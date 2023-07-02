@@ -260,6 +260,119 @@ const top5Productos = async (req, res) => {
 
 }
 
+const masVendido = async (req, res) => {
+    const { id, rol } = req.token 
+
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
+
+    if (rol != "admin") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
+    try {
+        // Obtener data usuarios
+        let query1 = "select loka.nombre, loka.usuario_id, count(loka.id) as pedidos from ( "
+        query1 += "select distinct empresa.usuario_id, pedido.id, empresa.nombre from empresa, menu, producto, detalle_pedido, pedido "
+        query1 += "where empresa.usuario_id = menu.empresa_usuario_id and "
+        query1 += "menu.id = producto.menu_id and "
+        query1 += "producto.id = detalle_pedido.producto_id  and "
+        query1 += "detalle_pedido.pedido_id = pedido.id) as loka "
+        query1 += "group by loka.usuario_id "
+        query1 += "ORDER BY pedidos DESC "
+        query1 += "LIMIT 5;"
+
+        const empresa = await query(query1, []);
+        res.status(200).json(empresa);
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No hay empresas para el top",
+            },
+            auth: false,
+            message:
+                "No hay empresas para el top",
+        });
+    }
+
+}
+
+const historialP = async (req, res) => {
+    const { id, rol } = req.token 
+
+    if (!id || !rol) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No trae Token",
+            },
+            auth: false,
+            message:
+                "No trae Token",
+        });
+    }
+
+    if (rol != "empresa") {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Token invalido",
+            },
+            auth: false,
+            message:
+                "Token invalido",
+        });
+    }
+    try {
+        // Obtener data usuarios
+        let query1 = "SELECT distinct p.id, p.precio_total, p.fecha_salida FROM pedido p "
+        query1 += "JOIN detalle_pedido dp ON p.id = dp.pedido_id " 
+        query1 += "JOIN menu m ON m.id = (CASE WHEN dp.combo_id IS NOT NULL THEN (SELECT menu_id FROM combo WHERE id = dp.combo_id) "
+        query1 += "                            WHEN dp.producto_id IS NOT NULL THEN (SELECT menu_id FROM producto WHERE id = dp.producto_id) "
+        query1 += "                       END) "
+        query1 += "JOIN empresa e ON e.usuario_id = m.empresa_usuario_id "
+        query1 += "WHERE p.estado_pedido_id = 7 AND e.usuario_id = ?;"
+
+        const producto = await query(query1, [id]);
+        res.status(200).json(producto);
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "No hay historial de pedido",
+            },
+            auth: false,
+            message:
+                "No hay historial de pedido",
+        });
+    }
+
+}
+
+
 
 
 
@@ -270,5 +383,7 @@ module.exports = {
     totalUser,
     top5Deliverys,
     top5Empresas,
-    top5Productos
+    top5Productos,
+    historialP,
+    masVendido
 }
