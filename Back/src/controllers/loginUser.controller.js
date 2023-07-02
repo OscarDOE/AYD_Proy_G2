@@ -84,7 +84,7 @@ const setDireccion = async (req, res) => {
         });
     }
 
-    if (rol != "cliente") {
+    if (rol != "cliente" || rol != "repartidor") {
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -99,13 +99,22 @@ const setDireccion = async (req, res) => {
 
     const { dep, mun, zona } = req.body
     try {
+        if (rol == "cliente") {
+            // add direcciones de usuario 
+            await query("INSERT INTO direcciones_cliente (departamento, municipio, zona, cliente_usuario_id) VALUES (?,?,?,?);", [dep, mun, zona, id]);
+            res.status(200).json({
+                status: "OK",
+                message: "se agrego direccion correctamente"
+            });
+        } else {
+            // add direcciones de usuario 
+            await query("INSERT INTO autorizaciones (departamento, municipio, zona, repartidor_usuario_id, estado) VALUES (?,?,?,?);", [dep, mun, zona, id, 0]);
+            res.status(200).json({
+                status: "OK",
+                message: "se agrego direccion correctamente"
+            });
+        }
 
-        // add direcciones de usuario 
-        await query("INSERT INTO direcciones_cliente (departamento, municipio, zona, cliente_usuario_id) VALUES (?,?,?,?);", [dep, mun, zona, id]);
-        res.status(200).json({
-            status: "OK",
-            message: "se agrego direccion correctamente"
-        });
 
     } catch (error) {
         return res.status(400).json({
