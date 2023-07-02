@@ -108,7 +108,7 @@ const setDireccion = async (req, res) => {
             });
         } else {
             // add direcciones de usuario 
-            await query("INSERT INTO autorizaciones (departamento, municipio, zona, repartidor_usuario_id, estado) VALUES (?,?,?,?);", [dep, mun, zona, id, 0]);
+            await query("INSERT INTO autorizacion (departamento, municipio, zona, repartidor_usuario_id, estado) VALUES (?,?,?,?,?);", [dep, mun, zona, id, 0]);
             res.status(200).json({
                 status: "OK",
                 message: "se agrego direccion correctamente"
