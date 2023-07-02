@@ -16,6 +16,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Tarjets = () => {
+    const cookies = new Cookies();
+    const usuario_logeado = cookies.get('session');
     const [creditCards, setCreditCards] = useState([
         {
             numero: '--',
@@ -54,6 +56,8 @@ const Tarjets = () => {
 
     return (
         <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        {usuario_logeado?.rol === "2" ? 
+          <>
             {/* Tu código existente */}
             <Grid item xs={12}>
                 <Item>
@@ -65,6 +69,12 @@ const Tarjets = () => {
                     <CreditCardList creditCards={creditCards} />
                 </Item>
             </Grid>
+            {/* -------------- termina ternario ------------------- */}
+                </>
+                :
+                <>
+                    <h1>¡Cuidado! Aquí solo usuarios</h1>
+                </>}
         </Grid>
     );
 };

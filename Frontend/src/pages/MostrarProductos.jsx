@@ -201,6 +201,8 @@ const MostrarProductos = () => {
 
     return (
         <Box sx={{ flexGrow: 1,marginTop:5 }} >
+            {usuario_logeado?.rol === "2" ? 
+            <>
             
             <Grid container justifyContent="center">
 
@@ -291,7 +293,12 @@ const MostrarProductos = () => {
 
         </Grid>
 
-
+                {/* -------------- termina ternario ------------------- */}
+                </>
+                :
+                <>
+                    <h1>¡Cuidado! Aquí solo usuarios</h1>
+                </>}
         </Box>
 
     )

@@ -113,7 +113,8 @@ const CombosPage = () => {
       const onAcceptClickEmp = async (e,row) =>{ //CAMBIO ESTADO DE EMPRESAS-----------------------------
         e.preventDefault();
         setClickedRow(row);
-        productosId.push(row.id)
+        productosId.push(row.id);
+        console.log(productosId);
 
       };
 

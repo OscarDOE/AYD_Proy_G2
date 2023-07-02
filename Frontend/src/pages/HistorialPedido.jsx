@@ -186,7 +186,7 @@ const HistorialPedido = () => {
                     </>
                     :
                     <>
-                        <center><h1>¡Cuidado! Aqui solo empresas </h1></center>
+                        <center><h1>¡Cuidado! Aqui solo usuarios </h1></center>
                     </>}
 
             </div>

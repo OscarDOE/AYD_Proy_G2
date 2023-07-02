@@ -56,46 +56,52 @@ const ElegirEmpresa = () => {
     useEffect(() => {getEmpresas()}, [] );
 
     return (
-        <Box sx={{ flexGrow: 1,marginTop:5 }} >
-            
-            <Grid container justifyContent="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            
-                {
-                    empresas.map((empresa, index) => (
-                        <Grid item xs={2.5} key={index} sx={{margin:2}}>
-                            <Card sx={{ maxWidth: 345 }}>
-                                <CardMedia
-                                    sx={{ height: 140 }}
-                                    image={empresa.imagenes}
-                                    title="green iguana"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        {empresa.nombre}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                    {empresa.descripcion}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    
-                                <Button onClick={()=>(agregarEmpresa(empresa))} sx={{margin:'auto'}} variant="contained" color="success">
-                                    Seleccionar
-                                </Button>
+        <Box sx={{ flexGrow: 1, marginTop: 5 }} >
+            {usuario_logeado?.rol === "2" ?
+                <>
+                    <Grid container justifyContent="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-                                </CardActions>
-                            </Card>
+                        {
+                            empresas.map((empresa, index) => (
+                                <Grid item xs={2.5} key={index} sx={{ margin: 2 }}>
+                                    <Card sx={{ maxWidth: 345 }}>
+                                        <CardMedia
+                                            sx={{ height: 140 }}
+                                            image={empresa.imagenes}
+                                            title="green iguana"
+                                        />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {empresa.nombre}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {empresa.descripcion}
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions>
+
+                                            <Button onClick={() => (agregarEmpresa(empresa))} sx={{ margin: 'auto' }} variant="contained" color="success">
+                                                Seleccionar
+                                            </Button>
+
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))
+                        }
+                        <Grid item xs={6}>
+
                         </Grid>
-                    ))
-                }
-                <Grid item xs={6}>
-
-            </Grid>
-        
-
-        </Grid>
 
 
+                    </Grid>
+
+                    {/* -------------- termina ternario ------------------- */}
+                </>
+                :
+                <>
+                    <h1>¡Cuidado! Aquí solo usuarios</h1>
+                </>}
         </Box>
 
     )
