@@ -99,8 +99,8 @@ const DesactivarAdmin = () => {
 
 
       const columns_cliente = [
-        { field: 'usuario_id', headerName: 'ID', width: 70 },
-        { field: 'username', headerName: 'User', width: 170 },
+        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'usuario', headerName: 'User', width: 170 },
         { field: 'password', headerName: 'Password', width: 200, sortable: true },
           {
             field: "denyButton",
@@ -234,11 +234,11 @@ const DesactivarAdmin = () => {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
-          },body: JSON.stringify({"resp":"0","token":usuario_logeado.token,"idUser":row.usuario_id})
+          },body: JSON.stringify({"token":usuario_logeado.token,"idUser":row.id})
         });
 
         if (endpoint.status != 400){
-          alert("¡Cliente " + row.usuario_id + " | " + row.nombres + " deshabilitado!")
+          alert("¡Cliente " + row.id + " | " + row.usuario + " deshabilitado!")
         }
         getDatosCliente()
       };
@@ -267,7 +267,7 @@ const DesactivarAdmin = () => {
                         </Grid>
                         <br></br>
 
-                        <Grid container justifyContent="center" >
+                        {/* <Grid container justifyContent="center" >
                             <Grid item xs={5.5} >
                                 <Item > 
                                 <h3>Empresas</h3>
@@ -301,7 +301,7 @@ const DesactivarAdmin = () => {
                             </Grid>
 
                         </Grid>
-                        <br />
+                        <br /> */}
 
                         <Grid container justifyContent="center" >
                             <Grid item xs={5.5} >
@@ -309,7 +309,6 @@ const DesactivarAdmin = () => {
                                 <h3>Clientes</h3>
                                 <div style={{ height: 400 }} >
                                     <DataGrid
-                                        getRowId={(row) => row.usuario_id}
                                         rows={rows_clientes}
                                         columns={columns_cliente}
                                         pageSize={5}

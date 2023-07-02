@@ -25,6 +25,9 @@ import Checkout from "../pages/Checkout";
 import DeliveryAddressForm from "../pages/DeliveryAddressForm";
 import Tarjets from "../pages/CardsView";
 import Address from "../pages/Address";
+import SolicitudesEmpresa from "../pages/SolicitudesEmpresa";
+import PedidosRepartidor from "../pages/PedidosRepartidor";
+import HistorialPedido from "../pages/HistorialPedido";
 
 export const App = () => {
   return (
@@ -52,6 +55,9 @@ export const App = () => {
                 <Route path="/carrito" element={<ShowCarrito />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/deliveryaddressform" element={<Address/>}/>
+                <Route path="/solicitudesempresa" element={<SolicitudesEmpresa/>}/>
+                <Route path="/pedidosrepartidor" element={<PedidosRepartidor/>}/>
+                <Route path="/historialpedidos" element={<HistorialPedido/>}/>
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />

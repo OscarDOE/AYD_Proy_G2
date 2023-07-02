@@ -65,10 +65,6 @@ const PerfilRepartidor = () => {
             </Grid><br></br>
             <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-
-                
-
-
                 <Grid item xs={6} >
                     <Item>
 
@@ -85,6 +81,7 @@ const PerfilRepartidor = () => {
   
                     </Item>
                 </Grid>
+                
                 <Grid item xs={4} >
                     <Item>
                         <h3 style={{ marginBottom:'5px'}}>Calificación </h3>

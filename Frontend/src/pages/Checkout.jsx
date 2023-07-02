@@ -174,22 +174,28 @@ const Checkout = () => {
         setDataTarjeta(resp_get)
     }
 
-    const enviarPedido = async () =>{
-        const endpoint = await fetch(ruta_AWS+'/pedir', {
+    const enviarPedido = async () => {
+        const endpoint = await fetch(ruta_AWS + '/pedir', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
-            },body: JSON.stringify({
-                "token":usuario_logeado.token,
+            }, body: JSON.stringify({
+                "token": usuario_logeado.token,
                 "dir": direccion.id,
-                "tar":tarjeta.id,
-                "cupon":cupon,
-                "productos":carritoSubTotal,
-                "total":total
+                "tar": tarjeta.id,
+                "cupon": cupon,
+                "productos": carritoSubTotal,
+                "total": total
             })
-          });
-          const resp_get = await endpoint.json();
-          console.log(resp_get)   
+        });
+        const resp_get = await endpoint.json();
+        console.log(resp_get)
+        if (endpoint.status !== 401 || endpoint.status !== 400) {
+            alert('¡Pedido enviado con exito!')
+        }else{
+            alert('¡Parece que no se envio tu pedido!')
+        }
+
     }
 
 
@@ -258,7 +264,6 @@ const Checkout = () => {
                                 {usuario_logeado?.cupon === 0 ? 
                                 <>
                                     <h3>Cupon no disponible</h3>
-                                    {setCupon('')}
                                 </> 
                                 : 
                                 <>
