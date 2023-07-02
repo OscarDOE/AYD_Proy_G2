@@ -16,6 +16,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import { Link, useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { useNavigate } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -31,6 +32,7 @@ const MostrarProductos = () => {
     const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
+    const navigate = useNavigate();
     // console.log(usuario_logeado)
     const empresa_seleccionada = cookies.get('empresa_seleccionada');
     console.log('carrito al cargar --------- ');
@@ -183,10 +185,8 @@ const MostrarProductos = () => {
             }
         }
         if (carrito.length==0 ){
-            console.log('entre primera asignacion carrito')
             cookies.set('carrito', carrito)
         }else{
-            console.log('entre nueva asignacion carrito');
             cookies.remove('carrito')
             cookies.set('carrito', carritoCargado)
         }
@@ -212,7 +212,6 @@ const MostrarProductos = () => {
                     </Link>
 
                     </Item>
-                    
                 </Grid>
 
                 <Grid  item sx={{ marginRight: 2, marginTop: -2 }}>

@@ -42,45 +42,27 @@ const ShowCarrito = () => {
     const [carrito, setCarrito] = useState([]);
 
     const getCarritoCookies = async () =>{
-        setProductosCarrito(cookies.get('carrito'))
+        var productosCarritoFiltrados = cookies.get('carrito').filter(function(producto) {
+            return producto.cantidad > 0;
+          });
+        setProductosCarrito(productosCarritoFiltrados)
     }
 
     const agregarProducto = (producto) => {
-        setProductos(prevProductos => {
+        setProductosCarrito(prevProductos => {
           return prevProductos.map(productoCurrent => {
             if (productoCurrent.id === producto.id) {
               return { ...productoCurrent, cantidad: productoCurrent.cantidad + 1 };
             }
             return productoCurrent;
           });
-        });
-
-
-
-
-        setCarrito(prevCarrito => {
-            const productoEnCarrito = prevCarrito.find(item => item?.id === producto.id);
-            
-            if (productoEnCarrito) {
-              return prevCarrito.map(item => {
-                if (item.id === producto.id) {
-                  return { ...item, cantidad: item.cantidad + 1 };
-                }
-                return item;
-              });
-            } else {
-              return [...prevCarrito, { ...producto, cantidad: 1 }];
-            }
-          });
-
-
-          
+        });    
     }
 
     
 
     const eliminarProducto = (producto)=>{
-        setProductos(prevProductos => {
+        setProductosCarrito(prevProductos => {
             return prevProductos.map(productoCurrent => {
               if (productoCurrent.id === producto.id) {
                 if(productoCurrent.cantidad > 0){
@@ -91,20 +73,16 @@ const ShowCarrito = () => {
               return productoCurrent;
             });
           });
+    }
 
-          setCarrito(prevCarrito => {
-            const productoEnCarrito = prevCarrito.find(item => item.id === producto.id);
-            if (productoEnCarrito) {
-              return prevCarrito.map(item => {
-                if (item.id === producto.id) {
-                  return { ...item, cantidad: item.cantidad - 1 };
-                }
-                return item;
-              }).filter(item => item.cantidad > 0); // Eliminar productos con cantidad cero
-            }
-            return prevCarrito;
-          });
+    const volverProductos = () => {
+        cookies.set('carrito', productosCarrito)
+        navigate("/elegirproductos");
+    }
 
+    const handleToCheckout = () => {
+        cookies.set('carrito', productosCarrito)
+        navigate("/checkout");
     }
 
 
@@ -118,11 +96,9 @@ const ShowCarrito = () => {
 
                 <Grid item sx={{ marginRight: 2, marginTop: -2 }}>
                     <Item>
-                        <Link to='/elegirproductos'>
-                            <Button variant="contained"><ArrowBackIcon />
+                            <Button onClick={volverProductos} variant="contained"><ArrowBackIcon />
                                 Volver
                             </Button>
-                        </Link>
 
                     </Item>
 
@@ -140,7 +116,7 @@ const ShowCarrito = () => {
 
                 <Grid item sx={{ marginRight: 2, marginTop: -2 }}>
                     <Item>
-                        <Button size="small"> Check-out <PaymentsIcon /></Button>
+                        <Button onClick={handleToCheckout}  size="small"> Check-out <PaymentsIcon /></Button>
 
                     </Item>
 
