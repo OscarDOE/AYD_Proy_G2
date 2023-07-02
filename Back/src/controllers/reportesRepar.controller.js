@@ -33,7 +33,7 @@ const historialPedido = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        const pedidos = await query("SELECT * FROM pedidos WHERE repartidor_usuario_id = ? ;", [id]);
+        const pedidos = await query("SELECT * FROM pedido WHERE repartidor_usuario_id = ? ;", [id]);
         res.status(200).json(pedidos);
     } catch (error) {
         return res.status(400).json({
