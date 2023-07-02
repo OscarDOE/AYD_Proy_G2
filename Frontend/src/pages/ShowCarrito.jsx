@@ -11,9 +11,11 @@ import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link, useHistory } from 'react-router-dom';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -41,7 +43,6 @@ const ShowCarrito = () => {
 
     const getCarritoCookies = async () =>{
         setProductosCarrito(cookies.get('carrito'))
-        console.log(cookies)
     }
 
     const agregarProducto = (producto) => {
@@ -112,15 +113,39 @@ const ShowCarrito = () => {
     return (
         <Box sx={{ flexGrow: 1,marginTop:5 }} >
 
-            <Grid container justifyContent="right">
+
+            <Grid container justifyContent="center">
 
                 <Grid item sx={{ marginRight: 2, marginTop: -2 }}>
                     <Item>
-                        <Button size="small">Carrito<ShoppingCartIcon /></Button>
+                        <Link to='/elegirproductos'>
+                            <Button variant="contained"><ArrowBackIcon />
+                                Volver
+                            </Button>
+                        </Link>
 
                     </Item>
 
                 </Grid>
+
+                <Grid item sx={{ marginRight: 2, marginTop: -2 }}>
+                    <Item>
+                        <h2>Carrito</h2>
+
+                    </Item>
+
+                </Grid>
+
+                
+
+                <Grid item sx={{ marginRight: 2, marginTop: -2 }}>
+                    <Item>
+                        <Button size="small"> Check-out <PaymentsIcon /></Button>
+
+                    </Item>
+
+                </Grid>
+
             </Grid>
             
             <Grid container justifyContent="center" rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

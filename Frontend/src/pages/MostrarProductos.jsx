@@ -14,6 +14,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { Link, useHistory } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -196,7 +198,29 @@ const MostrarProductos = () => {
     return (
         <Box sx={{ flexGrow: 1,marginTop:5 }} >
             
-            <Grid container justifyContent="right">
+            <Grid container justifyContent="center">
+
+                <Grid  item sx={{ marginRight: 2, marginTop: -2 }}>
+                    <Item>
+                    <Link to='/elegirempresa'>
+                    <Button onClick={()=>cookies.set('carrito',[])} variant="contained"><ArrowBackIcon />
+                                    Volver
+                    </Button>
+                    </Link>
+
+                    </Item>
+                    
+                </Grid>
+
+                <Grid  item sx={{ marginRight: 2, marginTop: -2 }}>
+                    <Item>
+                    <h2>{cookies.get('empresa_seleccionada').nombre.toUpperCase()}</h2>
+
+                    </Item>
+                    
+                </Grid>
+                
+                
                 <Grid xs={2} item sx={{ marginRight: 2, marginTop: -2 }}>
                     <Item>
                         <h3>Tipo de Producto</h3>
@@ -219,11 +243,12 @@ const MostrarProductos = () => {
                                     Filtrar
                         </Button>
                     </Item>
+
                 </Grid>
-                <Grid  item sx={{ marginRight: 2, marginTop: -2 }}>
+                <Grid item sx={{ marginRight: 2, marginTop: -2 }}>
                     <Item>
-                    <Button onClick={pagar} size="small">Confirmar<ShoppingCartIcon /></Button>
-                    <Link to='/carrito'><Button size="small">Carrito<ShoppingCartIcon /></Button></Link>
+                    <Button onClick={pagar}  size="small">Confirmar<CheckCircleOutlineIcon /></Button>
+                    <Link to='/carrito'><Button   size="small">Carrito<ShoppingCartIcon /></Button></Link>
 
                     </Item>
                     
