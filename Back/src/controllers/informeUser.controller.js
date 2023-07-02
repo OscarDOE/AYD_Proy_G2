@@ -276,7 +276,7 @@ const masVendido = async (req, res) => {
         });
     }
 
-    if (rol != "admin") {
+    if (rol != "empresa") {
         return res.status(400).json({
             status: "FAILED",
             data: {
