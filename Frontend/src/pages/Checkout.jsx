@@ -183,10 +183,13 @@ const Checkout = () => {
                 "token":usuario_logeado.token,
                 "dir": direccion.id,
                 "tar":tarjeta.id,
-                "cupon":usuario_logeado.cupon
+                "cupon":cupon,
+                "productos":carritoSubTotal,
+                "total":total
             })
           });
-          const resp_get = await endpoint.json();   
+          const resp_get = await endpoint.json();
+          console.log(resp_get)   
     }
 
 
@@ -252,7 +255,16 @@ const Checkout = () => {
                                 </Item>
                                 <br></br>
                                 <Item>
+                                {usuario_logeado?.cupon === 0 ? 
+                                <>
+                                    <h3>Cupon no disponible</h3>
+                                    {setCupon('')}
+                                </> 
+                                : 
+                                <>
                                     <TextField onChange={(e) => setCupon( e.target.value)} id="outlined-basic" label="Cupon" variant="outlined" />
+
+                                </>}  
                                 </Item>
                                 <br></br>
                                 <Item>

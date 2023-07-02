@@ -86,12 +86,13 @@ const MostrarProductos = () => {
           },body: JSON.stringify({"token":usuario_logeado.token, "idEmp":empresa_seleccionada.usuario_id})
         });
         const resp_get = await endpoint.json();
-        const productosArrayRes = resp_get.map(({id, nombre, descripcion, precio, imagen})=>(
+        const productosArrayRes = resp_get.map(({id, nombre, descripcion, tipo, precio, imagen})=>(
             {
                 id,
                 nombre,
                 precio,
                 descripcion,
+                tipo,
                 imagen,
                 cantidad:0
             }

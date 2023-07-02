@@ -82,8 +82,13 @@ const PerfilRepartidor = () => {
                         <h3 style={{ marginBottom:'5px'}}>Teléfono : {datosperfil.telefono}</h3>
                         {/* <h3 style={{color : "blue", marginBottom:'5px'}}>Hoja de Vida : {}</h3> */}
                         <h3 style={{marginBottom:'5px'}}>NIT : {datosperfil.nit}</h3>
-                        <h3 style={{ marginBottom:'5px'}}>Calificación : {datosperfil.calificacion}</h3>
   
+                    </Item>
+                </Grid>
+                <Grid item xs={4} >
+                    <Item>
+                        <h3 style={{ marginBottom:'5px'}}>Calificación </h3>
+                        <h1>{datosperfil.calificacion}</h1>
                     </Item>
                 </Grid>
             </Grid>

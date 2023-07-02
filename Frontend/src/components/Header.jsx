@@ -108,6 +108,7 @@ const Header = () => {
                                 {usuario_logeado?.rol === "3" ? 
                                 <>
                                 <Link to='/perfilrepartidor'><Button color="inherit">Mi perfil</Button></Link>
+                                <Link to='/deliveryaddressform'><Button color="inherit">Cambio de zona</Button></Link>
                                 </> 
                                 : 
                                 <></>}
