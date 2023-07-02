@@ -84,7 +84,7 @@ const setDireccion = async (req, res) => {
         });
     }
 
-    if (rol != "cliente" || rol != "repartidor") {
+    if (rol != "cliente" && rol != "repartidor") {
         return res.status(400).json({
             status: "FAILED",
             data: {
