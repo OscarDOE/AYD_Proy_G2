@@ -1,3 +1,25 @@
+-- DROP DEPENDIENTES
+DROP TABLE detalle_tarjeta;
+DROP TABLE direcciones_cliente;
+DROP TABLE detalle_pedido;
+DROP TABLE pedido;
+DROP TABLE detalle_licencia;
+DROP TABLE detalle_combo;
+DROP TABLE combo;
+DROP TABLE producto;
+DROP TABLE menu;
+DROP TABLE tipo_producto;
+DROP TABLE empresa;
+DROP TABLE administrador;
+DROP TABLE cliente;
+DROP TABLE repartidor;
+-- DROP INDEPENDIENTES
+DROP TABLE usuario;
+DROP TABLE tipo_licencia;
+DROP TABLE estado_pedido;
+DROP TABLE tipo_empresa;
+
+
 -- Independientes
 CREATE TABLE tipo_empresa (
      id INT NOT NULL AUTO_INCREMENT,
@@ -17,14 +39,9 @@ CREATE TABLE tipo_licencia (
      PRIMARY KEY (id)
 );
 
-CREATE TABLE tipo_producto (
-     id INT NOT NULL AUTO_INCREMENT,
-     descripcion VARCHAR(50) NOT NULL,
-     PRIMARY KEY (id)
-);
 CREATE TABLE usuario (
      id INT NOT NULL AUTO_INCREMENT,
-     usuario VARCHAR(50) NOT NULL,
+     usuario VARCHAR(50) NOT NULL UNIQUE,
      password VARCHAR(50) NOT NULL,
      PRIMARY KEY (id)
 );
@@ -36,7 +53,7 @@ CREATE TABLE repartidor (
      usuario_id INT NOT NULL,
      nombres VARCHAR(50) NOT NULL,
      apellidos VARCHAR(50) NOT NULL,
-     email VARCHAR(50) NOT NULL,
+     email VARCHAR(50) NOT NULL UNIQUE,
      departamento VARCHAR(50) NOT NULL,
      municipio VARCHAR(50) NOT NULL,
      zona INT NOT NULL,
@@ -52,16 +69,15 @@ CREATE TABLE repartidor (
 
 
 CREATE TABLE cliente (
-     username VARCHAR(50) NOT NULL,
-     password VARCHAR(50) NOT NULL,
      usuario_id INT NOT NULL,
+     estado INT NOT NULL,
+     cupon INT NOT NULL,
+     email VARCHAR(50) NOT NULL UNIQUE,
      PRIMARY KEY (usuario_id),
      FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 CREATE TABLE administrador (
-     username VARCHAR(50) NOT NULL,
-     password VARCHAR(50) NOT NULL,
      usuario_id INT NOT NULL,
      PRIMARY KEY (usuario_id),
      FOREIGN KEY (usuario_id) REFERENCES usuario(id)
@@ -72,7 +88,7 @@ CREATE TABLE empresa (
      usuario_id INT NOT NULL,
      nombre VARCHAR(50) NOT NULL,
      descripcion VARCHAR(50) NOT NULL,
-     email VARCHAR(50) NOT NULL,
+     email VARCHAR(50) NOT NULL UNIQUE,
      departamento VARCHAR(50) NOT NULL,
      municipio VARCHAR(50) NOT NULL,
      zona INT NOT NULL,
@@ -84,21 +100,19 @@ CREATE TABLE empresa (
      FOREIGN KEY (tipo_empresa_id) REFERENCES tipo_empresa(id)
 );
 
+CREATE TABLE tipo_producto (
+     id INT NOT NULL AUTO_INCREMENT,
+     descripcion VARCHAR(50) NOT NULL,
+     empresa_usuario_id INT NOT NULL,
+     PRIMARY KEY (id),
+     FOREIGN KEY(empresa_usuario_id) REFERENCES empresa(usuario_id)
+);
+
 CREATE TABLE menu (
      id INT NOT NULL AUTO_INCREMENT,
      empresa_usuario_id INT NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (empresa_usuario_id) REFERENCES empresa(usuario_id)
-);
-
-CREATE TABLE combo (
-     id INT NOT NULL AUTO_INCREMENT,
-     nombre VARCHAR(100) NOT NULL,
-     descripcion VARCHAR(250) NOT NULL,
-     menu_id INT NOT NULL,
-     precio FLOAT NOT NULL,
-     PRIMARY KEY (id),
-     FOREIGN KEY (menu_id) REFERENCES menu(id)
 );
 
 CREATE TABLE producto (
@@ -109,12 +123,26 @@ CREATE TABLE producto (
      menu_id INT NOT NULL,
      precio FLOAT NOT NULL,
      imagen VARCHAR(500) NOT NULL,
+     estado INT NOT NULL,
+     disponibilidad INT NOT NULL,
      PRIMARY KEY (id),
      FOREIGN KEY (menu_id) REFERENCES menu(id),
      FOREIGN KEY (tipo_producto_id) REFERENCES tipo_producto(id)
 );
 
-CREATE TABLE detalle_producto (
+CREATE TABLE combo (
+     id INT NOT NULL AUTO_INCREMENT,
+     nombre VARCHAR(100) NOT NULL,
+     descripcion VARCHAR(250) NOT NULL,
+     menu_id INT NOT NULL,
+     precio FLOAT NOT NULL,
+     estado INT NOT NULL,
+     PRIMARY KEY (id),
+     FOREIGN KEY (menu_id) REFERENCES menu(id)
+);
+
+
+CREATE TABLE detalle_combo (
      id INT NOT NULL AUTO_INCREMENT,
      combo_id INT NOT NULL,
      producto_id INT NOT NULL,
@@ -137,7 +165,7 @@ CREATE TABLE detalle_licencia (
 
 CREATE TABLE pedido (
      id INT NOT NULL AUTO_INCREMENT,
-     repartidor_usuario_id INT NOT NULL,
+     repartidor_usuario_id INT,
      cliente_usuario_id INT NOT NULL,
      estado_pedido_id INT NOT NULL,
      calificacion FLOAT NOT NULL,
@@ -153,21 +181,37 @@ CREATE TABLE pedido (
 CREATE TABLE detalle_pedido (
      id INT NOT NULL AUTO_INCREMENT,
      pedido_id INT NOT NULL,
-     producto_id INT NOT NULL,
+     producto_id INT,
+     combo_id INT,
      PRIMARY KEY (id),
      FOREIGN KEY (pedido_id) REFERENCES pedido(id),
      FOREIGN KEY (producto_id) REFERENCES producto(id)
+     FOREIGN KEY (combo_id) REFERENCES combo(id),
+     CHECK ((combo_id IS NULL AND producto_id IS NOT NULL) OR (combo_id IS NOT NULL AND producto_id IS NULL))
+);
+-- Cliente
+CREATE TABLE direcciones_cliente (
+     id INT NOT NULL AUTO_INCREMENT,
+     departamento VARCHAR(50) NOT NULL,
+     municipio VARCHAR(50) NOT NULL,
+     zona INT NOT NULL,
+     cliente_usuario_id INT NOT NULL,
+     PRIMARY KEY (id),
+     FOREIGN KEY (cliente_usuario_id) REFERENCES cliente(usuario_id)
+);
+
+CREATE TABLE detalle_tarjeta (
+     id INT NOT NULL AUTO_INCREMENT,
+     numero BIGINT NOT NULL,
+     cvv INT NOT NULL,
+     fecha_emision DATETIME NOT NULL,
+     fecha_vencimiento DATETIME NOT NULL,
+     cliente_usuario_id INT NOT NULL,
+     PRIMARY KEY (id),
+     FOREIGN KEY (cliente_usuario_id) REFERENCES cliente(usuario_id)
 );
 
 
-DROP TABLE detalle_pedido;
-DROP TABLE pedido;
-DROP TABLE estado_pedido,
-DROP TABLE detalle_licencia;
-DROP TABLE tipo_licencia;
-DROP TABLE repartidor;
-DROP TABLE cliente;
-DROP TABLE detal;
 
 
 
@@ -181,8 +225,10 @@ INSERT INTO tipo_empresa  (descripcion) VALUES("Empresa");
 INSERT INTO tipo_empresa  (descripcion) VALUES("Tienda de Conveniencia");
 INSERT INTO tipo_empresa  (descripcion) VALUES("Supermercado");
 
-INSERT INTO tipo_producto  (descripcion) VALUES("Desayunos");
-INSERT INTO tipo_producto  (descripcion) VALUES("Almuerzos");
-INSERT INTO tipo_producto  (descripcion) VALUES("Cenas");
-INSERT INTO tipo_producto  (descripcion) VALUES("Bebidas");
-INSERT INTO tipo_producto  (descripcion) VALUES("Postres");
+INSERT INTO estado_pedido (descripcion) VALUES("En Carrito");
+INSERT INTO estado_pedido (descripcion) VALUES("Pendiente de Aprobación");
+INSERT INTO estado_pedido (descripcion) VALUES("Cocinandose");
+INSERT INTO estado_pedido (descripcion) VALUES("Asignando Repartidor");
+INSERT INTO estado_pedido (descripcion) VALUES("En Camino");
+INSERT INTO estado_pedido (descripcion) VALUES("Cancelado");
+INSERT INTO estado_pedido (descripcion) VALUES("Entregado");
