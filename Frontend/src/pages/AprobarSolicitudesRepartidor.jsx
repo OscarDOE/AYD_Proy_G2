@@ -105,7 +105,7 @@ const AprobarSolicitudesRepartidor = () => {
                             <Grid item xs={6}>
                                 <Item>
                                     <center>
-                                        <h1>Solicitud de Repartidores</h1>
+                                        <h1>Solicitud cambio de direccion de repartidores </h1>
                                     </center>
                                 </Item>
                             </Grid>
@@ -114,7 +114,7 @@ const AprobarSolicitudesRepartidor = () => {
                         <Grid container justifyContent="center">
                             <Grid item xs={5.5}>
                                 <Item>
-                                    <h3>Clientes</h3>
+                                    <h3>Repartidores</h3>
                                     <div style={{ height: 400 }}>
                                         <DataGrid
                                             rows={rowsClientes}

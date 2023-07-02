@@ -121,6 +121,8 @@ const Header = () => {
                                 <Link to='/panelempresa'><Button color="inherit">Productos</Button></Link>
                                 <Link to='/combosempresa'><Button color="inherit">Combos</Button></Link>
                                 <Link to='/solicitudesempresa'><Button color="inherit">Solicitudes</Button></Link>
+                                <Link to='/historialempresa'><Button color="inherit">Historial</Button></Link>
+                                <Link to='/masvendido'><Button color="inherit">Mas vendido</Button></Link>
                                 </> 
                                 : 
                                 <></>}

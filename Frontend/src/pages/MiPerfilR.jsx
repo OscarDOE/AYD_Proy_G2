@@ -28,10 +28,11 @@ const PerfilRepartidor = () => {
 
 
     const [datosperfil, setDatosperfil] = useState([]);
+    const [comision, setComision] = useState([]);
 
 
     useEffect(() => {getDatosRepartidor()}, [] );
-    
+    useEffect(() => {getComision()}, [] );
 
     const getDatosRepartidor = async () =>{
 
@@ -42,8 +43,19 @@ const PerfilRepartidor = () => {
         },body: JSON.stringify({"token":usuario_logeado.token})
       });
       const resp_get = await endpoint.json();
-      console.log(resp_get[0])
       setDatosperfil(resp_get[0])
+    }
+
+    const getComision= async () =>{
+
+      const endpoint = await fetch(ruta_AWS+'/comision', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },body: JSON.stringify({"token":usuario_logeado.token})
+      });
+      const resp_get = await endpoint.json();
+      setComision(resp_get[0].comisiones)
     }
     
 
@@ -82,10 +94,15 @@ const PerfilRepartidor = () => {
                     </Item>
                 </Grid>
                 
-                <Grid item xs={4} >
+                <Grid item xs={3} >
                     <Item>
                         <h3 style={{ marginBottom:'5px'}}>Calificación </h3>
                         <h1>{datosperfil.calificacion}</h1>
+                    </Item>
+                    <br></br>
+                    <Item>
+                        <h3 style={{ marginBottom:'5px'}}>Comisiones </h3>
+                        <h1>{comision}</h1>
                     </Item>
                 </Grid>
             </Grid>

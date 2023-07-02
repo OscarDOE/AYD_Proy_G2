@@ -30,7 +30,7 @@ const InformeUsers = () => {
 
     const columns = [
         { field: 'usuario_id', headerName: 'ID', width: 70 },
-        { field: 'username', headerName: 'Usuario', width: 130 },
+        { field: 'usuario', headerName: 'Usuario', width: 130 },
         { field: 'password', headerName: 'Password', width: 130 }
     ];
 
@@ -52,6 +52,7 @@ const InformeUsers = () => {
       });
       const resp_get = await endpoint.json();
       setRows(resp_get)
+      console.log(resp_get)
     }
 
     const getTotalUsuarios = async () =>{

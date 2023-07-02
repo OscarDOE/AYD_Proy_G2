@@ -30,6 +30,8 @@ import PedidosRepartidor from "../pages/PedidosRepartidor";
 import HistorialPedido from "../pages/HistorialPedido";
 import HistorialPedidoRepartidor from "../pages/HistorialPedidoRepartidor";
 import AprobarSolicitudesRepartidor from "../pages/AprobarSolicitudesRepartidor";
+import HistorialPedidoEmpresa from "../pages/HistorialPedidosEmpresa";
+import MasVendido from "../pages/MasVendido";
 
 export const App = () => {
   return (
@@ -62,6 +64,8 @@ export const App = () => {
                 <Route path="/historialpedidos" element={<HistorialPedido/>}/>
                 <Route path="/historialrepartidor" element={<HistorialPedidoRepartidor/>}/>
                 <Route path="/solicitudes" element={<AprobarSolicitudesRepartidor/>}/>
+                <Route path="/historialempresa" element={<HistorialPedidoEmpresa/>}/>
+                <Route path="/masvendido" element={<MasVendido/>}/>
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />
