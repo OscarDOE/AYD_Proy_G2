@@ -218,7 +218,7 @@ const respuestaPed = async (req, res) => {
 
     try {
         // Obtener data repartidores  
-        await query("UPDATE pedido SET estado_pedido_id = 3 WHERE id = ?;", [idped]);
+        await query("UPDATE pedido SET estado_pedido_id = 4 WHERE id = ?;", [idped]);
         return res.status(200).json({
             status: "OK",
             message:

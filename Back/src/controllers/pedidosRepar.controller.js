@@ -137,11 +137,12 @@ const verPedidos = async (req, res) => {
 
     try {
         // Obtiene los pedidos que puede aceptar el repartidor
-        const query1 = " SELECT p.* FROM pedido p JOIN direcciones_cliente dc ON p.direcciones_cliente_id = dc.id " 
+        let query1 = "SELECT p.id, p.fecha_salida, p.precio_total, dc.departamento, dc.municipio, dc.zona FROM pedido p "
+        query1 += "JOIN direcciones_cliente dc ON p.direcciones_cliente_id = dc.id "
         query1 += "JOIN repartidor r ON dc.departamento = r.departamento "
-        query1 += "WHERE p.estado = 0; "
+        query1 += "WHERE p.estado_pedido_id = 4 AND r.usuario_id = ?; "
 
-        const pedidos = await query(query1, []);
+        const pedidos = await query(query1, [id]);
         res.status(200).json(pedidos);
 
     } catch (error) {
@@ -190,8 +191,16 @@ const selectPedido = async (req, res) => {
 
     const {idPed} = req.body
     try {
+        // Veridicar si tiene ya pedido
+        const estado = await query("SELECT id FROM pedido WHERE estado_pedido_id = 5 and repartidor_usuario_id = ? ;", [id]);
+        if (estado.length === 0) {
+            return res.status(400).json({
+                status: "FAILED",
+                message: "YA TIENE UN PEDIDO EN PROCESO"
+            });
+        }
         // Cambia el estado del pedido que tiene el repartidor
-        await query(" UPDATE pedido SET estado = 2 WHERE pedido = ?;", [idPed]);
+        await query(" UPDATE pedido SET estado_pedido_id = 5, repartidor_usuario_id = ? WHERE id = ?;", [id, idPed]);
         res.status(200).json({
             status: "OK",
             message: "Seleccion de pedido correcta"
@@ -210,6 +219,8 @@ const selectPedido = async (req, res) => {
     }
 
 }
+
+
 
 
 module.exports = {
