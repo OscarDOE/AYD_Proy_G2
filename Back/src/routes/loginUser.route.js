@@ -6,7 +6,7 @@ const verifyToken = require('../middlewares/verifyToken')
 //const verifyToken = require('../middlewares/verifyToken')
 //router.post('/loginUser', verifyToken, loginController.loginUser)
 router.post('/loginUser', loginController.loginUser)
-router.post('/detallepago', verifyToken,loginController.setTarjeta)
+router.post('/detallepago', verifyToken, loginController.setTarjeta)
 router.post('/detalledir', verifyToken, loginController.setDireccion)
 
 

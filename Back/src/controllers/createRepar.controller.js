@@ -103,7 +103,7 @@ const createRepar = async (req, res) => {
             "Repartidores",
             fileBase64,
             idUser[0].id,
-            "pdf"
+            "jpeg"
         );
         console.log("imageURL", URL);
 

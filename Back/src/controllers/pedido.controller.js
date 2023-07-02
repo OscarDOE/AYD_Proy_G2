@@ -40,9 +40,8 @@ const pedirProducto = async (req, res) => {
         const fechaHora = new Date();
         // Formatear la fecha y hora en formato ISO 8601 compatible con MySQL
         const fechaHoraMySQL = fechaHora.toISOString().slice(0, 19).replace('T', ' ');
-        // Obtener precio 
         // Crea el carrito
-        await query("INSERT INTO pedido (cliente_usuario_id, tipo_estado_id, fecha_inicio, direcciones_cliente_id, detalle_tarjeta_id) VALUES (?, ?, ?, ?);", [id, 2, fechaHoraMySQL, dir, tar]);
+        await query("INSERT INTO pedido (cliente_usuario_id, estado_pedido_id, fecha_salida, direcciones_cliente_id, detalle_tarjeta_id) VALUES (?, ?, ?, ?, ?);", [id, 2, fechaHoraMySQL, dir, tar]);
         // Obtiene el id de carrito
         const idPedido = await query("SELECT MAX(id) as id FROM pedido;", []);
         // For para pasar por producto o xombo
@@ -50,9 +49,18 @@ const pedirProducto = async (req, res) => {
             // For para ingresar la cantidad de cada prodicto o combo
             for (let i = 0; i < objeto.cant; i++) {
                 // Agrega el producto al carrito
-                await query("INSERT INTO detalle_pedido (pedido_id, ?) VALUES (?, ?);", [objeto.tipo, idPedido[0].id, objeto.idPro]);
+                mysqlConnection.query(
+                    `INSERT INTO detalle_pedido (pedido_id, ${objeto.tipo}) VALUES (?, ?);`,
+                    [idPedido[0].id, objeto.idPro],
+                    async (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            return res.status(500).json({ message: "Error SQL - LoginUser" });
+                        }
+                    }
+                );
             }
-        });
+        }); 
 
         // Guarda el precio total del pedido
         let precio = "SELECT SUM(IFNULL(pr.precio, 0) + IFNULL(c.precio, 0)) AS precio "
@@ -358,7 +366,7 @@ const historialPedido = async (req, res) => {
 }
 
 // DIRECCION
-const getDireccion = async (req, res) => {
+const direccion = async (req, res) => {
     const { id, rol } = req.token
 
     if (!id || !rol) {
@@ -387,8 +395,7 @@ const getDireccion = async (req, res) => {
         });
     }
 
-    try {
-        
+    try {   
         // Obtiene direcciones de usuario 
         const direccion = await query("SELECT * FROM direcciones_cliente WHERE cliente_usuario_id = ?;", [id]);
         res.status(200).json(direccion);
@@ -407,7 +414,7 @@ const getDireccion = async (req, res) => {
 
 }
 // PAGO 
-const getTarjeta = async (req, res) => {
+const tarjeta = async (req, res) => {
     const { id, rol } = req.token
 
     if (!id || !rol) {
@@ -437,11 +444,9 @@ const getTarjeta = async (req, res) => {
     }
 
     try {
-        
         // Obtiene direcciones de usuario 
         const direccion = await query("SELECT * FROM detalle_tarjeta WHERE cliente_usuario_id = ?;", [id]);
         res.status(200).json(direccion);
-
     } catch (error) {
         return res.status(400).json({
             status: "FAILED",
@@ -464,6 +469,6 @@ module.exports = {
     getCategorias,
     getProducto,
     historialPedido,
-    getDireccion,
-    getTarjeta
+    direccion,
+    tarjeta
 }

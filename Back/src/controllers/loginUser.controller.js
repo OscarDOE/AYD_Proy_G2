@@ -97,11 +97,11 @@ const setDireccion = async (req, res) => {
         });
     }
 
-    const {dep, mun, zona} = req.body
+    const { dep, mun, zona } = req.body
     try {
-        
+
         // add direcciones de usuario 
-        await query("INSERT INTO direcciones_cliente (departamento, municipio, zona, cliente_usuario_id) VALUES (?,?,?,?);", [dep, mun, zona,id]);
+        await query("INSERT INTO direcciones_cliente (departamento, municipio, zona, cliente_usuario_id) VALUES (?,?,?,?);", [dep, mun, zona, id]);
         res.status(200).json({
             status: "OK",
             message: "se agrego direccion correctamente"
@@ -151,11 +151,10 @@ const setTarjeta = async (req, res) => {
         });
     }
 
-    const {num, cvv, emi, ven} = req.body
+    const { num, cvv, emi, ven } = req.body
     try {
-        
         // add direcciones de usuario 
-       await query("INSERT INTO  detalle_tarjeta (numero, cliente_usuario_id ,cvv, fecha_emision, fecha_vencimiento) VALUES (?,?,?,?);", [num, id, cvv, emi, ven]);
+        await query("INSERT INTO  detalle_tarjeta (numero, cvv, cliente_usuario_id ,fecha_creacion, fecha_terminacion) VALUES (?,?,?,?,?);", [num, cvv, id, emi, ven]);
         res.status(200).json({
             status: "OK",
             message: "se agrego metodo de pago correctamente"

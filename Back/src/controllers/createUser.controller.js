@@ -6,11 +6,12 @@ const crypto = require("crypto");
 const createUser = async (req, res) => {
   const {
       username,
-      password
+      password,
+      correo
     } = req.body;
 
     // falta direcciones y pago
-    if (!username || !password)
+    if (!username || !password || !correo)
     return res.status(400).json({
       status: "FAILED",
       data: {
@@ -42,8 +43,9 @@ const createUser = async (req, res) => {
       // Guarda cliente en db
       const dataCliente = [
         { 
-          username, 
-          password: hashContra, 
+          estado: 1, 
+          cupon: 1,
+          email: correo,
           usuario_id: idUser[0].id
         },
       ];
