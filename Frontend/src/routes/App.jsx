@@ -28,6 +28,7 @@ import Address from "../pages/Address";
 import SolicitudesEmpresa from "../pages/SolicitudesEmpresa";
 import PedidosRepartidor from "../pages/PedidosRepartidor";
 import HistorialPedido from "../pages/HistorialPedido";
+import HistorialPedidoRepartidor from "../pages/HistorialPedidoRepartidor";
 
 export const App = () => {
   return (
@@ -58,6 +59,7 @@ export const App = () => {
                 <Route path="/solicitudesempresa" element={<SolicitudesEmpresa/>}/>
                 <Route path="/pedidosrepartidor" element={<PedidosRepartidor/>}/>
                 <Route path="/historialpedidos" element={<HistorialPedido/>}/>
+                <Route path="/historialrepartidor" element={<HistorialPedidoRepartidor/>}/>
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />

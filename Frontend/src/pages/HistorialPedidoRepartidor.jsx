@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-const HistorialPedido = () => {
+const HistorialPedidoRepartidor = () => {
     //const { logIn, getNombre } = useContext(AppEnvr)
     const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
@@ -53,7 +53,7 @@ const HistorialPedido = () => {
 
       const columns_historial = [
         { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'repartidor_usuario_id', headerName: 'Repartidor', width: 100, sortable: true },
+        { field: 'cliente_usuario_id', headerName: 'Cliente', width: 100, sortable: true },
         { field: 'estado_pedido_id', headerName: 'Estado pedido', width: 100 },
         { field: 'direcciones_cliente_id', headerName: 'Direccion', width: 100 },
         { field: 'detalle_tarjeta_id', headerName: 'Tarjeta', width: 100 },
@@ -68,36 +68,18 @@ const HistorialPedido = () => {
 
 
       const getDatosPedidos = async () =>{
-        const endpoint = await fetch(ruta_AWS+'/historialUser', {
+        const endpoint = await fetch(ruta_AWS+'/historialRep', {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
           },body: JSON.stringify({"token":usuario_logeado.token})
         });
         const resp_get = await endpoint.json();
+        console.log(resp_get)
         setRows(resp_get)
 
       }
 
-      const calificarPedido = async () =>{
-        const endpoint = await fetch(ruta_AWS+'/calificacion', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },body: JSON.stringify({
-                "token":usuario_logeado.token,
-                "idped":pedidoSelected,
-                "cali":puntaje
-            })
-          });
-          const resp_get = await endpoint.json();
-          if (endpoint.status != 400){
-            alert("¡Pedido " + pedidoSelected + " | " + puntaje + " calificado!")
-          }else{
-              alert("Calificacion " + pedidoSelected + " | " + puntaje + " con problemas!")
-          }
-          getDatosPedidos()
-      }
 
 
 
@@ -106,13 +88,13 @@ const HistorialPedido = () => {
 
         <Box sx={{ flexGrow: 1 }}>
             <div>
-                {usuario_logeado?.rol === "2" ?
+                {usuario_logeado?.rol === "3" ?
                     <>
                         <br></br>
                         <Grid container justifyContent="center" >
                             <Grid item xs={6} >
                                 <Item>
-                                    <center><h1>Historial de pedidos</h1></center>
+                                    <center><h1>Historial de pedidos entregados</h1></center>
 
                                 </Item>
                             </Grid>
@@ -121,7 +103,7 @@ const HistorialPedido = () => {
 
 
                         <Grid container justifyContent="center" >
-                            <Grid item xs={5} >
+                            <Grid item xs={6} >
                                 <Item>
                                 <h3>Pedidos</h3>
                                 <div style={{ height: 400 }} >
@@ -134,50 +116,6 @@ const HistorialPedido = () => {
                                 </div>
                                 </Item>
                             </Grid>
-                            <Grid item xs={3} sx={{ margin: 2,}} >
-                                <Item>
-                                    <h2>Calificar pedidos</h2>
-                                    <br></br>
-                                    <h3>Escoge pedido</h3>
-                                    <select
-                                        style={{
-                                            'width': '100%',
-                                            'font-size': ' 15px',
-                                            'height': '30px',
-                                            'padding': '5px'
-                                        }}
-                                        name="lenguajes" id="lang1"
-                                        onChange={(e) => setPedidoSelected(e.target.value)}>
-                                        {/* onChange={(e)=>(sendCategoria(e.target.value))} */}
-                                        <option value="0">--Seleccione--</option>
-                                        {
-                                            rows.map(opt => <option>{opt.id}</option>)
-                                        }
-                                    </select>
-                                    
-                                    <h3>Escoge calificacion</h3>
-                                    <select 
-                                    style={{
-                                        'width': '100%',
-                                        'font-size': ' 15px',
-                                        'height': '30px',
-                                        'padding': '5px'
-                                    }}
-                                    onChange={(e) => setPuntaje(e.target.value)} name="categoria" id="lang">
-                                        <option value="0">--Seleccione--</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                    
-                
-                                    <Button sx={{ marginTop: 2,}} onClick={calificarPedido} variant="contained">
-                                Calificar
-                            </Button>
-                                </Item>
-                            </Grid>
                         </Grid>
 
 
@@ -186,7 +124,7 @@ const HistorialPedido = () => {
                     </>
                     :
                     <>
-                        <center><h1>¡Cuidado! Aqui solo empresas </h1></center>
+                        <center><h1>¡Cuidado! Aqui solo repartidor </h1></center>
                     </>}
 
             </div>
@@ -194,4 +132,4 @@ const HistorialPedido = () => {
     )
 }
 
-export default HistorialPedido
+export default HistorialPedidoRepartidor

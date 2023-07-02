@@ -102,6 +102,7 @@ const Header = () => {
                                 <Link to='/elegirempresa'><Button color="inherit">Nuevo pedido</Button></Link>
                                 <Link to='/deliveryaddressform'><Button color="inherit">Direcciones</Button></Link>
                                 <Link to='/formcreditcard'><Button color="inherit">Tarjetas</Button></Link>
+                                <Link to='/historialpedidos'><Button color="inherit">Historial</Button></Link>
                                 </> 
                                 : 
                                 <></>}
@@ -110,6 +111,7 @@ const Header = () => {
                                 <Link to='/perfilrepartidor'><Button color="inherit">Mi perfil</Button></Link>
                                 <Link to='/deliveryaddressform'><Button color="inherit">Cambio de zona</Button></Link>
                                 <Link to='/pedidosrepartidor'><Button color="inherit">Pedidos</Button></Link>
+                                <Link to='/historialrepartidor'><Button color="inherit">Historial</Button></Link>
                                 </> 
                                 : 
                                 <></>}
