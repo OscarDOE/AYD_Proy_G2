@@ -19,11 +19,12 @@ import ReportesAdmin from "../pages/ReportesAdmin";
 import DesactivarAdmin from "../pages/DesactivarAdmin";
 import MostrarProductos from "../pages/MostrarProductos";
 import ElegirEmpresa from "../pages/ElegirEmpresa";
-import FormCreditCard from "../pages/FormCreditCard";
+//import FormCreditCard from "../pages/FormCreditCard";
 import ShowCarrito from "../pages/ShowCarrito";
 import Checkout from "../pages/Checkout";
 import DeliveryAddressForm from "../pages/DeliveryAddressForm";
 import Tarjets from "../pages/CardsView";
+import Address from "../pages/Address";
 
 export const App = () => {
   return (
@@ -47,9 +48,10 @@ export const App = () => {
                 <Route path="/reportesadmin" element={<ReportesAdmin />} />
                 <Route path="/elegirproductos" element={<MostrarProductos />} />
                 <Route path="/elegirempresa" element={<ElegirEmpresa />} />
-                <Route path="/formcreditcard" element={<FormCreditCard />} />
+                <Route path="/formcreditcard" element={<Tarjets />} />
                 <Route path="/carrito" element={<ShowCarrito />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/deliveryaddressform" element={<Address/>}/>
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />

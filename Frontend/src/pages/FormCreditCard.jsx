@@ -6,7 +6,6 @@ import '../App.css'
 
 const ruta_AWS = 'http://localhost:4000/'
 export default function FormCreditCard() {
-    const [name, setName] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
     const [cvv, setCvv] = useState('');
@@ -16,14 +15,6 @@ export default function FormCreditCard() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log({
-            "num": cardNumber,
-            "cvv": cvv,
-            "emi": "Hoi",
-            "ven": expirationDate,
-            "titular": name,
-            "token": usuario_logeado.token,
-        })
         // Aquí puedes enviar los datos del formulario a través de una solicitud HTTP
         const endpoint = await fetch(ruta_AWS + 'detallepago', {
             method: "POST",
@@ -34,28 +25,17 @@ export default function FormCreditCard() {
                 "cvv": cvv,
                 "emi": "Hoi",
                 "ven": expirationDate,
-                "titular": name,
                 "token": usuario_logeado.token,
             })
         });
         const resp_get = await endpoint.json();
         console.log(resp_get)
         // o realizar cualquier otra acción que desees con los datos del formulario
-        console.log('Datos enviados:', { name, cardNumber, expirationDate, cvv });
+        //console.log('Datos enviados:', { name, cardNumber, expirationDate, cvv });
     };
     return (
         <form onSubmit={handleSubmit} className="credit-card-form">
             <Grid container spacing={2}>
-
-                <Grid item xs={12}>
-                    <TextField
-                        label="Nombre"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        fullWidth
-                        required
-                    />
-                </Grid>
                 <Grid item xs={12}>
                     <TextField
                         label="Número de tarjeta"

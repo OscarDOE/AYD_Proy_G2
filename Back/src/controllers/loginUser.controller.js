@@ -154,7 +154,7 @@ const setTarjeta = async (req, res) => {
     const { num, cvv, emi, ven } = req.body
     try {
         // add direcciones de usuario 
-        await query("INSERT INTO  detalle_tarjeta (numero, cvv, cliente_usuario_id ,fecha_creacion, fecha_terminacion) VALUES (?,?,?,?,?);", [num, cvv, id, emi, ven]);
+        await query("INSERT INTO  detalle_tarjeta (numero, cvv, cliente_usuario_id ,fecha_emision, fecha_terminacion) VALUES (?,?,?,?,?);", [num, cvv, id, emi, ven]);
         res.status(200).json({
             status: "OK",
             message: "se agrego metodo de pago correctamente"

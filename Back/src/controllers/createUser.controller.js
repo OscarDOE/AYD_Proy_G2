@@ -6,12 +6,11 @@ const crypto = require("crypto");
 const createUser = async (req, res) => {
   const {
       username,
-      password,
-      correo
+      password
     } = req.body;
 
     // falta direcciones y pago
-    if (!username || !password || !correo)
+    if (!username || !password)
     return res.status(400).json({
       status: "FAILED",
       data: {
@@ -45,13 +44,11 @@ const createUser = async (req, res) => {
         { 
           estado: 1, 
           cupon: 1,
-          email: correo,
           usuario_id: idUser[0].id
         },
       ];
       // Crear el Cliente
       await query("INSERT INTO cliente SET ?", dataCliente);
-+9+
       res.status(200).json({
         status: "OK",
         message: "Usuario creado exitosamente",

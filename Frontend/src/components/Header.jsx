@@ -100,7 +100,7 @@ const Header = () => {
                                 {usuario_logeado?.rol === "2" ? 
                                 <>
                                 <Link to='/elegirempresa'><Button color="inherit">Nuevo pedido</Button></Link>
-                                <Link to='/'><Button color="inherit">Direcciones</Button></Link>
+                                <Link to='/deliveryaddressform'><Button color="inherit">Direcciones</Button></Link>
                                 <Link to='/formcreditcard'><Button color="inherit">Tarjetas</Button></Link>
                                 </> 
                                 : 

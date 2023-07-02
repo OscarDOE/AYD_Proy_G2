@@ -1,11 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import '../styles/sHomeAdmin.css';
 import Cookies from 'universal-cookie';
-import { DataGrid } from '@mui/x-data-grid';
 import { Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import FormCreditCard from './FormCreditCard';
-import CreditCardList from './CreditCardList';
+import DeliveryAddressForm from './DeliveryAddressForm';
+import ShowAddress from './ShowAddress';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#ffff',
@@ -15,29 +14,25 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.primary,
 }));
 
-const Tarjets = () => {
-    const [creditCards, setCreditCards] = useState([
+const Address = () => {
+    const [directions, setDirections] = useState([
         {
-            numero: '--',
-            cvv: '--',
-            fecha_creacion: '--',
-            fecha_terminacion: '--',
+            departamento: '--',
+            municipio: '--',
+            zona: '--',
             id: '--'
         },
-        // Agrega más objetos de tarjetas de crédito según sea necesario
     ]);
-
-
     useEffect(() => {
         // Simulación de carga de datos de tarjetas de crédito
-        const fetchCreditCards = async () => {
+        const fetchAddress = async () => {
             const ruta_AWS = 'http://localhost:4000/'
             const cookies = new Cookies();
             const usuario_logeado = cookies.get('session');
             const Send = {
                 token: usuario_logeado.token
             }
-            const endpoint = await fetch(ruta_AWS + 'tarjeta', {
+            const endpoint = await fetch(ruta_AWS + 'direccion', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -45,11 +40,10 @@ const Tarjets = () => {
             });
             const data = await endpoint.json();
             console.log(data);
-            setCreditCards(data);
-
+            setDirections(data);
         };
 
-        fetchCreditCards();
+        fetchAddress();
     }, []);
 
     return (
@@ -57,16 +51,16 @@ const Tarjets = () => {
             {/* Tu código existente */}
             <Grid item xs={12}>
                 <Item>
-                    <FormCreditCard />
+                    <DeliveryAddressForm />
                 </Item>
             </Grid>
             <Grid item xs={12}>
                 <Item>
-                    <CreditCardList creditCards={creditCards} />
+                    <ShowAddress Direcciones={directions} />
                 </Item>
             </Grid>
         </Grid>
     );
 };
 
-export default Tarjets;
+export default Address;
