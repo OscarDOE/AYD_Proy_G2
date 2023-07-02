@@ -298,7 +298,7 @@ const masVendido = async (req, res) => {
         query1 += "WHERE e.usuario_id = ? AND pe.estado_pedido_id = 7 "
         query1 += "GROUP BY p.id, p.nombre "
         query1 += "ORDER BY total_vendidos DESC "
-        query1 += "LIMIT 5;"
+        query1 += "LIMIT 1;"
 
         const empresa = await query(query1, [id]);
         res.status(200).json(empresa);
