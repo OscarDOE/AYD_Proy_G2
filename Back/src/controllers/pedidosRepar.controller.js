@@ -36,7 +36,7 @@ const pedidoActual = async (req, res) => {
 
     try {
         // Obtiene data de pedido
-        const pedido = await query("SELECT * FROM pedido WHERE repartidor_usuario_id = ? and estado = 5;", [id]);
+        const pedido = await query("SELECT * FROM pedido WHERE repartidor_usuario_id = ? and estado_pedido_id = 5;", [id]);
         res.status(200).json(pedido);
 
     } catch (error) {
