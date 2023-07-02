@@ -26,20 +26,35 @@ const AprobarSolicitudesRepartidor = () => {
     }, []);
 
     const columnsCliente = [
-        { field: 'nombre', headerName: 'Nombre', width: 70 },
-        { field: 'zona', headerName: 'Zona', width: 170 },
-        { field: 'departamento', headerName: 'Departamento', width: 200, sortable: true },
-        { field: 'municipio', headerName: 'Municipio', width: 200, sortable: true },
+        { field: 'id', headerName: 'Id', width: 20 },
+        { field: 'repartidor', headerName: 'Nombre', width: 100 },
+        { field: 'zona', headerName: 'Zona', width: 80 },
+        { field: 'departamento', headerName: 'Departamento', width: 150, sortable: true },
+        { field: 'municipio', headerName: 'Municipio', width: 150, sortable: true },
         {
-            field: 'denyButton',
-            headerName: 'Actions',
-            description: 'Actions column.',
+            field: 'aprobeButton',
+            headerName: 'Aprobar',
+            description: 'aprobar solicitud.',
             sortable: false,
-            width: 160,
+            width: 140,
             renderCell: (params) => {
                 return (
-                    <Button color="success" onClick={(e) => onDenyClickUser(e, params.row)} variant="contained">
+                    <Button color="success" onClick={(e) => onDenyClickUser(e, params.row,1)} variant="contained">
                         Aprobar
+                    </Button>
+                );
+            },
+        },
+        {
+            field: 'denyButton',
+            headerName: 'Denegar',
+            description: 'denegar solicitud.',
+            sortable: false,
+            width: 140,
+            renderCell: (params) => {
+                return (
+                    <Button color="error" onClick={(e) => onDenyClickUser(e, params.row,2)} variant="contained">
+                        Denegar
                     </Button>
                 );
             },
@@ -58,33 +73,24 @@ const AprobarSolicitudesRepartidor = () => {
             body: JSON.stringify(dataSend),
         });
         const respGet = await endpoint.json();
-        let list = []
-        for (let index = 0; index < respGet.length; index++) {
-            list.append({
-                repartidor:respGet[index].nombres,
-                zona:respGet[index].zona,
-                departamento:respGet[index].departamento,
-                municipio:respGet[index].municipio,
-            })
-        }
-        setRowsClientes(list);
+        setRowsClientes(respGet);
     };
 
-    const onDenyClickUser = async (e, row) => {
+    const onDenyClickUser = async (e, row,status) => {
         e.preventDefault();
         const formdata = new FormData();
         formdata.append('estado_solicitud', false);
 
-        const endpoint = await fetch(`${ruta_AWS}/resDesactivarU`, {
+        const endpoint = await fetch(`${ruta_AWS}/respuestaCambio`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ token: usuarioLogeado.token, idUser: row.id }),
+            body: JSON.stringify({ token: usuarioLogeado.token, idaut: row.id, estado:status }),
         });
 
         if (endpoint.status !== 400) {
-            alert(`¡Cliente ${row.id} | ${row.usuario} deshabilitado!`);
+            alert(`¡Cliente ${row.id} ha sido cambiado!`);
         }
         getDatosCliente();
     };

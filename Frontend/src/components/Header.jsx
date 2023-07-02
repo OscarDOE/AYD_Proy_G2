@@ -94,6 +94,7 @@ const Header = () => {
                                 <Link to='/informeusers'><Button color="inherit">Informe</Button></Link>
                                 <Link to='/reportesadmin'><Button color="inherit">Reportes</Button></Link>
                                 <Link to='/desacusuarios'><Button color="inherit">Usuarios</Button></Link>
+                                <Link to='/solicitudes'><Button color="inherit">Solicitudes</Button></Link>
                                 </> 
                                 : 
                                 <></>}
