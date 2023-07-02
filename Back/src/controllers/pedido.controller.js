@@ -44,14 +44,16 @@ const pedirProducto = async (req, res) => {
         await query("INSERT INTO pedido (cliente_usuario_id, estado_pedido_id, fecha_salida, direcciones_cliente_id, detalle_tarjeta_id) VALUES (?, ?, ?, ?, ?);", [id, 2, fechaHoraMySQL, dir, tar]);
         // Obtiene el id de carrito
         const idPedido = await query("SELECT MAX(id) as id FROM pedido;", []);
+        // Total
+        let total_pedido = 0;
         // For para pasar por producto o xombo
         productos.forEach(async function (objeto) {
             // For para ingresar la cantidad de cada prodicto o combo
-            for (let i = 0; i < objeto.cant; i++) {
+            for (let i = 0; i < objeto.cantidad; i++) {
                 // Agrega el producto al carrito
                 mysqlConnection.query(
                     `INSERT INTO detalle_pedido (pedido_id, ${objeto.tipo}) VALUES (?, ?);`,
-                    [idPedido[0].id, objeto.idPro],
+                    [idPedido[0].id, objeto.id],
                     async (err, result) => {
                         if (err) {
                             console.log(err);
@@ -60,29 +62,29 @@ const pedirProducto = async (req, res) => {
                     }
                 );
             }
+            total_pedido += objeto.subtotal
         }); 
 
         // Guarda el precio total del pedido
-        let precio = "SELECT SUM(IFNULL(pr.precio, 0) + IFNULL(c.precio, 0)) AS precio "
+        /*let precio = "SELECT SUM(IFNULL(pr.precio, 0) + IFNULL(c.precio, 0)) AS precio "
         precio += "FROM detalle_pedido p "
         precio += "LEFT JOIN producto pr ON p.producto_id = pr.id "
         precio += "LEFT JOIN combo c ON p.combo_id = c.id "
-        precio += "WHERE p.pedido_id = ? ;"
-        // 
-        const total = await query(precio, [idPedido[0].id]);
+        precio += "WHERE p.pedido_id = ? ;"*/
+        // const total = await query(precio, [idPedido[0].id]);
 
         // Verifica si ocupa el cupon
-        if (cupon) {
+        if (cupon!="") {
             // agregar el total al pedido - 15%
             let addPr = "UPDATE pedido SET precio_total = ? WHERE id = ?;"
-            await query(addPr, [(total[0].precio)*0.15, idPedido[0].id]);
+            await query(addPr, [(total_pedido)*0.15, idPedido[0].id]);
             // actualiza usuario
             let upCupon = "UPDATE cliente SET cupon = 0 WHERE usuario_id = ?;"
             await query(upCupon,[id])
         } else {
             // agregar el total al pedido
             let addPr = "UPDATE pedido SET precio_total = ? WHERE id = ?;"
-            await query(addPr, [total[0].precio, idPedido[0].id]);
+            await query(addPr, [total_pedido, idPedido[0].id]);
         }
         
         res.status(200).json({
