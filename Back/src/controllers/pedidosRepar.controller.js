@@ -85,7 +85,7 @@ const finPedido = async (req, res) => {
 
     try {
         // Cambia el estado del pedido que tiene el repartidor
-        await query(" UPDATE pedido SET estado = ? WHERE repartidor_usuario_id = ? and estado = 3;", [id]);
+        await query(" UPDATE pedido SET estado_pedido_id = 7 WHERE repartidor_usuario_id = ? and estado_pedido_id = 5;", [id]);
         res.status(200).json({
             status: "OK",
             message: "Se ha entregado pedido"
