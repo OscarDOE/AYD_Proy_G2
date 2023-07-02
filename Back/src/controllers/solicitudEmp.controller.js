@@ -5,7 +5,7 @@ const crypto = require("crypto");
 
 const solicitudEmp = async (req, res) => {
     const { id, rol } = req.token
-
+    console.log("SOLICITUD ", req.token)
     if (!id || !rol) {
         return res.status(400).json({
             status: "FAILED",
@@ -53,6 +53,8 @@ const solicitudEmp = async (req, res) => {
 
 const respuestaEmp = async (req, res) => {
     const { id, rol } = req.token
+    console.log("AAAAAAAAAAAAAAAAAAA")
+    console.log(req.token)
 
     if (!id || !rol) {
         return res.status(400).json({

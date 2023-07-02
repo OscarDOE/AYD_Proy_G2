@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">32.87% </span>
+                <span class="strong">15.06% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/73</span>
+                <span class='fraction'>11/73</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/24</span>
+                <span class='fraction'>0/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">32.87% </span>
+                <span class="strong">15.06% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/73</span>
+                <span class='fraction'>11/73</span>
             </div>
         
             
@@ -343,40 +343,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -601,7 +601,7 @@ const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const awsImage = require("../functions/awsImage");
 const fs = require('fs/promises')
 &nbsp;
-const AgregarProducto = async (req, res) =&gt; {
+const AgregarProducto = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
   const {
     nombre,//
     precio,//
@@ -609,17 +609,17 @@ const AgregarProducto = async (req, res) =&gt; {
     descripcion,//
     categoria,//tipo numero
     menu_id,
-  } = req.body;
-  console.log(req.body)
+  } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+<span class="cstat-no" title="statement not covered" >  console.log(req.body)</span>
 &nbsp;
-  console.log(req.file.path)
-  const filePath = req.file.path
-  const fileBase64 = (await fs.readFile(filePath)).toString('base64')
+<span class="cstat-no" title="statement not covered" >  console.log(req.file.path)</span>
+  const filePath = <span class="cstat-no" title="statement not covered" >req.file.path</span>
+  const fileBase64 = <span class="cstat-no" title="statement not covered" >(await fs.readFile(filePath)).toString('base64')</span>
 &nbsp;
 &nbsp;
 &nbsp;
-  if (!nombre || !precio || !categoria || !fileBase64 || !menu_id) {
-    return res.status(400).json({
+<span class="cstat-no" title="statement not covered" >  if (!nombre || !precio || !categoria || !fileBase64 || !menu_id) {</span>
+<span class="cstat-no" title="statement not covered" >    return res.status(400).json({</span>
       status: "FAILED",
       data: {
         error: "El nombre, precio y categoría del producto son obligatorios",
@@ -628,21 +628,21 @@ const AgregarProducto = async (req, res) =&gt; {
     });
   }
 &nbsp;
-  try {
+<span class="cstat-no" title="statement not covered" >  try {</span>
 &nbsp;
-    const newId = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${menu_id}`);
-    console.log(newId)
+    const newId = <span class="cstat-no" title="statement not covered" >await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${menu_id}`);</span>
+<span class="cstat-no" title="statement not covered" >    console.log(newId)</span>
 &nbsp;
 &nbsp;
 &nbsp;
     // Verificar si el producto ya existe en la base de datos
-    const existingProduct = await query(
+    const existingProduct = <span class="cstat-no" title="statement not covered" >await query(</span>
       "SELECT * FROM producto WHERE nombre = ?",
       [nombre]
     );
 &nbsp;
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (existingProduct.length &gt; 0) {
-      return res.status(409).json({
+<span class="cstat-no" title="statement not covered" >    if (existingProduct.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >      return res.status(409).json({</span>
         status: "FAILED",
         message: "Error, el producto ya existe",
       });
@@ -868,7 +868,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-02T04:36:52.286Z
+                at 2023-07-02T13:58:01.270Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

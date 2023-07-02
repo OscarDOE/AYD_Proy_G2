@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.52% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/17</span>
+                <span class='fraction'>15/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.52% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/17</span>
+                <span class='fraction'>15/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -104,33 +104,33 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,34 +140,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const aws = require('aws-sdk')
 const awsConfig = require('../config/aws.config')
 &nbsp;
-const uploadImage = <span class="fstat-no" title="function not covered" >as</span>ync (directory, data, imageName, type) =&gt; {
-    const pathName = <span class="cstat-no" title="statement not covered" >`${directory}/${imageName}.${type}`;</span>
+const uploadImage = async (directory, data, imageName, type) =&gt; {
+    const pathName = `${directory}/${imageName}.${type}`;
 &nbsp;
-    const buff = <span class="cstat-no" title="statement not covered" >Buffer.from(data, 'base64');</span>
+    const buff = Buffer.from(data, 'base64');
 &nbsp;
-    const content = <span class="cstat-no" title="statement not covered" >type == 'pdf' ? 'application/pdf':`image/${type}`;</span>
+    const content = type == 'pdf' ? <span class="branch-0 cbranch-no" title="branch not covered" >'application/pdf':</span>`image/${type}`;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    aws.config.update(awsConfig.configS3)</span>
+    aws.config.update(awsConfig.configS3)
 &nbsp;
     //Se crea una variable que contiene el servicio o caracteristicas S3
-    const s3 = <span class="cstat-no" title="statement not covered" >new aws.S3()</span>
+    const s3 = new aws.S3()
 &nbsp;
-    const paramsS3 = <span class="cstat-no" title="statement not covered" >{</span>
+    const paramsS3 = {
         Bucket: 'ayddata',
         Key: pathName,
         Body: buff,
         ContentType: content
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        s3.putObject(paramsS3, <span class="fstat-no" title="function not covered" >(e</span>rr, data) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            if (err) {</span>
+    return new Promise((resolve, reject) =&gt; {
+        s3.putObject(paramsS3, (err, data) =&gt; {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
 <span class="cstat-no" title="statement not covered" >                console.log('ERROR uploadImage - ', err)</span>
 <span class="cstat-no" title="statement not covered" >                return reject(err);</span>
             }
 &nbsp;
-            const imageURL = <span class="cstat-no" title="statement not covered" >`https://ayddata.s3.amazonaws.com/${pathName}`</span>
-<span class="cstat-no" title="statement not covered" >            resolve(imageURL);</span>
+            const imageURL = `https://ayddata.s3.amazonaws.com/${pathName}`
+            resolve(imageURL);
         });
     })
 }
@@ -181,7 +181,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-02T04:36:52.286Z
+                at 2023-07-02T13:58:01.270Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

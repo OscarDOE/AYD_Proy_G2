@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10.15% </span>
+                <span class="strong">10.48% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>13/128</span>
+                <span class='fraction'>13/124</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10.23% </span>
+                <span class="strong">10.56% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>13/127</span>
+                <span class='fraction'>13/123</span>
             </div>
         
             
@@ -536,7 +536,9 @@
 <a name='L471'></a><a href='#L471'>471</a>
 <a name='L472'></a><a href='#L472'>472</a>
 <a name='L473'></a><a href='#L473'>473</a>
-<a name='L474'></a><a href='#L474'>474</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L474'></a><a href='#L474'>474</a>
+<a name='L475'></a><a href='#L475'>475</a>
+<a name='L476'></a><a href='#L476'>476</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -589,6 +591,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -598,16 +602,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1055,14 +1059,16 @@ const pedirProducto = <span class="fstat-no" title="function not covered" >as</s
 <span class="cstat-no" title="statement not covered" >        await query("INSERT INTO pedido (cliente_usuario_id, estado_pedido_id, fecha_salida, direcciones_cliente_id, detalle_tarjeta_id) VALUES (?, ?, ?, ?, ?);", [id, 2, fechaHoraMySQL, dir, tar]);</span>
         // Obtiene el id de carrito
         const idPedido = <span class="cstat-no" title="statement not covered" >await query("SELECT MAX(id) as id FROM pedido;", []);</span>
+        // Total
+        let total_pedido = <span class="cstat-no" title="statement not covered" >0;</span>
         // For para pasar por producto o xombo
 <span class="cstat-no" title="statement not covered" >        productos.forEach(<span class="fstat-no" title="function not covered" >as</span>ync function (objeto) {</span>
             // For para ingresar la cantidad de cada prodicto o combo
-<span class="cstat-no" title="statement not covered" >            for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; objeto.cant; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; objeto.cantidad; i++) {</span>
                 // Agrega el producto al carrito
 <span class="cstat-no" title="statement not covered" >                mysqlConnection.query(</span>
                     `INSERT INTO detalle_pedido (pedido_id, ${objeto.tipo}) VALUES (?, ?);`,
-                    [idPedido[0].id, objeto.idPro],
+                    [idPedido[0].id, objeto.id],
 <span class="fstat-no" title="function not covered" >                    as</span>ync (err, result) =&gt; {
 <span class="cstat-no" title="statement not covered" >                        if (err) {</span>
 <span class="cstat-no" title="statement not covered" >                            console.log(err);</span>
@@ -1071,29 +1077,29 @@ const pedirProducto = <span class="fstat-no" title="function not covered" >as</s
                     }
                 );
             }
+<span class="cstat-no" title="statement not covered" >            total_pedido += objeto.subtotal</span>
         }); 
 &nbsp;
         // Guarda el precio total del pedido
-        let precio = <span class="cstat-no" title="statement not covered" >"SELECT SUM(IFNULL(pr.precio, 0) + IFNULL(c.precio, 0)) AS precio "</span>
-<span class="cstat-no" title="statement not covered" >        precio += "FROM detalle_pedido p "</span>
-<span class="cstat-no" title="statement not covered" >        precio += "LEFT JOIN producto pr ON p.producto_id = pr.id "</span>
-<span class="cstat-no" title="statement not covered" >        precio += "LEFT JOIN combo c ON p.combo_id = c.id "</span>
-<span class="cstat-no" title="statement not covered" >        precio += "WHERE p.pedido_id = ? ;"</span>
-        // 
-        const total = <span class="cstat-no" title="statement not covered" >await query(precio, [idPedido[0].id]);</span>
+        /*let precio = "SELECT SUM(IFNULL(pr.precio, 0) + IFNULL(c.precio, 0)) AS precio "
+        precio += "FROM detalle_pedido p "
+        precio += "LEFT JOIN producto pr ON p.producto_id = pr.id "
+        precio += "LEFT JOIN combo c ON p.combo_id = c.id "
+        precio += "WHERE p.pedido_id = ? ;"*/
+        // const total = await query(precio, [idPedido[0].id]);
 &nbsp;
         // Verifica si ocupa el cupon
-<span class="cstat-no" title="statement not covered" >        if (cupon) {</span>
+<span class="cstat-no" title="statement not covered" >        if (cupon!="") {</span>
             // agregar el total al pedido - 15%
             let addPr = <span class="cstat-no" title="statement not covered" >"UPDATE pedido SET precio_total = ? WHERE id = ?;"</span>
-<span class="cstat-no" title="statement not covered" >            await query(addPr, [(total[0].precio)*0.15, idPedido[0].id]);</span>
+<span class="cstat-no" title="statement not covered" >            await query(addPr, [(total_pedido)*0.15, idPedido[0].id]);</span>
             // actualiza usuario
             let upCupon = <span class="cstat-no" title="statement not covered" >"UPDATE cliente SET cupon = 0 WHERE usuario_id = ?;"</span>
 <span class="cstat-no" title="statement not covered" >            await query(upCupon,[id])</span>
         } else {
             // agregar el total al pedido
             let addPr = <span class="cstat-no" title="statement not covered" >"UPDATE pedido SET precio_total = ? WHERE id = ?;"</span>
-<span class="cstat-no" title="statement not covered" >            await query(addPr, [total[0].precio, idPedido[0].id]);</span>
+<span class="cstat-no" title="statement not covered" >            await query(addPr, [total_pedido, idPedido[0].id]);</span>
         }
         
 <span class="cstat-no" title="statement not covered" >        res.status(200).json({</span>
@@ -1196,13 +1202,13 @@ const getMenu = <span class="fstat-no" title="function not covered" >as</span>yn
     const { idEmp } = <span class="cstat-no" title="statement not covered" >req.body</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
         // Obtiene las empresas
-        let query1 = <span class="cstat-no" title="statement not covered" >"SELECT c.id AS id, c.nombre AS nombre, c.precio AS precio, c.imagen as imagen, c.descripcion as descripcion "</span>
+        let query1 = <span class="cstat-no" title="statement not covered" >"SELECT c.id AS id, c.nombre AS nombre, c.precio AS precio, c.imagen as imagen, c.descripcion as descripcion, 'combo_id' AS tipo "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "FROM empresa e "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "LEFT JOIN menu m ON e.usuario_id = m.empresa_usuario_id "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "LEFT JOIN combo c ON m.id = c.menu_id "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "WHERE e.usuario_id = ? "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "UNION "</span>
-<span class="cstat-no" title="statement not covered" >        query1 += "SELECT p.id AS producto_id, p.nombre AS producto_nombre, p.precio AS producto_precio, p.imagen as imagen, p.descripcion as descripcion "</span>
+<span class="cstat-no" title="statement not covered" >        query1 += "SELECT p.id AS producto_id, p.nombre AS producto_nombre, p.precio AS producto_precio, p.imagen as imagen, p.descripcion as descripcion, 'producto_id' AS tipo "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "FROM empresa e "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "LEFT JOIN menu m ON e.usuario_id = m.empresa_usuario_id "</span>
 <span class="cstat-no" title="statement not covered" >        query1 += "LEFT JOIN producto p ON m.id = p.menu_id "</span>
@@ -1489,7 +1495,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-07-02T04:36:52.286Z
+                at 2023-07-02T13:58:01.270Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
