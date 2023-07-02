@@ -96,6 +96,10 @@ const respuestaRepar = async (req, res) => {
 
     try {
         // Obtener data repartidores  
+        console.log("RERERERER")
+        console.log(resp)
+        console.log("ERERERERE")
+        console.log(idUser)
         await query("UPDATE repartidor SET estado = ? WHERE usuario_id = ?;", [resp, idUser]);
         return res.status(200).json({
             status: "OK",

@@ -8,10 +8,10 @@ const NuevoCombo = async (req, res) => {
     //nombre-descripcion,id_empresa,precio,estado,[id_producto]
     let {
         nombre,//
-        descripcion,//
-        id_empresa,//
         precio,//tipo numero
+        descripcion,//
         estado,
+        id_empresa,//
         id_productos,
     } = req.body;
     console.log(req.body)
@@ -33,6 +33,8 @@ const NuevoCombo = async (req, res) => {
     try {
 
         // Guarda hoja en S3
+        console.log("VVVVVVVVVVVVVVVVVVV")
+        console.log(id_empresa)
         let menu_id = await query(`SELECT menu.id FROM menu where menu.empresa_usuario_id = ${id_empresa}`);
         menu_id = menu_id[0].id
         console.log(menu_id)

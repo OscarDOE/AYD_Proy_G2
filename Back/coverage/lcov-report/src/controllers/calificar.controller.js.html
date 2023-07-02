@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/controllers/miPerfil.controller.js</title>
+    <title>Code coverage report for src/controllers/calificar.controller.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> miPerfil.controller.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> calificar.controller.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/15</span>
+                <span class='fraction'>6/21</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/15</span>
+                <span class='fraction'>6/21</span>
             </div>
         
             
@@ -118,7 +118,19 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -154,10 +166,22 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -178,7 +202,7 @@ const util = require('util');
 const query = util.promisify(mysqlConnection.query).bind(mysqlConnection);
 const crypto = require("crypto");
 &nbsp;
-const miPerfil = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+const calificacion = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
     const { id, rol } = <span class="cstat-no" title="statement not covered" >req.token</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!id || !rol) {</span>
@@ -194,7 +218,7 @@ const miPerfil = <span class="fstat-no" title="function not covered" >as</span>y
         });
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    if (rol != "repartidor") {</span>
+<span class="cstat-no" title="statement not covered" >    if (rol != "cliente") {</span>
 <span class="cstat-no" title="statement not covered" >        return res.status(400).json({</span>
             status: "FAILED",
             data: {
@@ -206,28 +230,40 @@ const miPerfil = <span class="fstat-no" title="function not covered" >as</span>y
                 "Token invalido",
         });
     }
+    const { idped, cali } = <span class="cstat-no" title="statement not covered" >req.body</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    try {</span>
-        // Obtener data empresas
-        const repartidor = <span class="cstat-no" title="statement not covered" >await query("SELECT * FROM repartidor WHERE usuario_id = ?;", [id]);</span>
-<span class="cstat-no" title="statement not covered" >        res.status(200).json(repartidor);</span>
+        // Poner calificacion
+<span class="cstat-no" title="statement not covered" >        await query("UPDATE pedido SET calificacion = ? WHERE pedido.id = ? ;", [cali, idped]);</span>
+        // obtener id repartidor
+        const idrep = <span class="cstat-no" title="statement not covered" >await query("SELECT repartidor_usuario_id as id FROM pedido WHERE pedido.id = ? ;", [idped]);</span>
+        // calcular promedio
+        let query1 = <span class="cstat-no" title="statement not covered" >"SELECT AVG(calificacion) AS promedio "</span>
+<span class="cstat-no" title="statement not covered" >        query1 += "FROM pedido where repartidor_usuario_id = ?;"</span>
+        const promedio = <span class="cstat-no" title="statement not covered" >await query(query1, [idrep[0].id]);</span>
+        // actualizar promedio en repartidor
+<span class="cstat-no" title="statement not covered" >        await query("UPDATE repartidor SET calificacion = ? WHERE repartidor.usuario_id = ?;", [promedio[0].promedio, idrep[0].id]);</span>
+<span class="cstat-no" title="statement not covered" >        res.status(200).json({</span>
+            status: "OK",
+            message: "Se califico correctamente al repartidor"
+        });
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >        return res.status(400).json({</span>
             status: "FAILED",
             data: {
                 error:
-                    "No se encontro el repartidor",
+                    "No hay clientes",
             },
             auth: false,
             message:
-                "No se encontro el repartidor",
+                "No hay clientes",
         });
     }
 &nbsp;
 }
 &nbsp;
-&nbsp;
 module.exports = {
-    miPerfil
+    calificacion
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
