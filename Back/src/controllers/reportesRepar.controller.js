@@ -80,7 +80,7 @@ const comisiones = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        let query1 = "SELECT SUM(p.precio * 0.05) AS comisiones "
+        let query1 = "SELECT SUM(p.precio_total * 0.05) AS comisiones "
         query1 += "FROM pedido p "
         query1 += "JOIN repartidor r ON p.repartidor_usuario_id = ?; "
 
