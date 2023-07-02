@@ -26,7 +26,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(require('./routes/createUser.route'))
 app.use(require('./routes/loginUser.route'))
 // app.use(require('./routes/calificar.route')) //PROBAR 
-app.use(require('./routes/pedido.route')) //PROBAR
+app.use(require('./routes/pedido.route')) //
 
 app.use(require('./routes/createRepar.route'))
 app.use(require('./routes/loginRepar.route'))

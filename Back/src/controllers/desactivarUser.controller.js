@@ -33,7 +33,11 @@ const desactivarUser = async (req, res) => {
     }
     try {
         // Obtener data usuarios
-        const clientes = await query("SELECT * FROM cliente WHERE estado = 1;", []);
+        let query1 = "SELECT u.id, u.usuario, u.password FROM usuario u "
+        query1 += "JOIN cliente c ON u.id = c.usuario_id "
+        query1 += "WHERE c.estado = 1;"
+
+        const clientes = await query(query1, []);
         res.status(200).json(clientes);
     } catch (error) {
         return res.status(400).json({
