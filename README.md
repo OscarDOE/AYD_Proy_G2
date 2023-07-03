@@ -310,6 +310,70 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
   - **Como empresa necesito poder agregar combos en base a mis productos previamente añadidos.**
        - *Se necesita agregar una página para poder agregar y visualizar los combos de la empresa.*
        - *Para agregar productos al combo se deberán de mostrar un choice con la lista de productos.*
+## Rol de Usuario
+
+### Historia de Usuario 1: Navegar entre productos | categorías
+Como usuario, quiero poder navegar fácilmente por los productos y categorías de la plataforma para encontrar lo que estoy buscando.
+
+### Historia de Usuario 2: Pedir producto
+Como usuario, quiero poder seleccionar y pedir un producto específico de la plataforma.
+
+### Historia de Usuario 3: Manejar carrito
+Como usuario, quiero poder agregar, eliminar o modificar los productos en mi carrito de compras antes de realizar el pedido.
+
+### Historia de Usuario 4: Agregar cupón
+Como usuario, quiero poder ingresar un código de cupón válido durante el proceso de compra para obtener un descuento.
+
+### Historia de Usuario 5: Historial de pedidos
+Como usuario, quiero poder ver mi historial de pedidos anteriores para hacer un seguimiento de mis compras.
+
+### Historia de Usuario 6: Calificar
+Como usuario, quiero poder calificar y dejar comentarios sobre los productos y servicios que he recibido.
+
+## Rol de Repartidor
+
+### Historia de Usuario 7: Ver calificación
+Como repartidor, quiero poder ver las calificaciones y comentarios que los usuarios han dejado sobre mis servicios de entrega.
+
+### Historia de Usuario 8: Seleccionar pedido a entregar
+Como repartidor, quiero poder seleccionar un pedido específico para entregar, considerando la zona en la que me encuentro y la ubicación del cliente.
+
+### Historia de Usuario 9: Solicitud de cambio de zona
+Como repartidor, quiero poder solicitar un cambio de zona de entrega si considero que sería más eficiente o conveniente.
+
+### Historia de Usuario 10: Historial de pedidos
+Como repartidor, quiero poder acceder a un historial de los pedidos que he entregado para hacer un seguimiento de mis actividades.
+
+### Historia de Usuario 11: Comisiones generadas
+Como repartidor, quiero poder ver las comisiones que he generado a través de mis entregas.
+
+## Rol de Empresa
+
+### Historia de Usuario 12: Aprobar pedido
+Como empresa, quiero poder revisar y aprobar los pedidos realizados por los usuarios antes de procesarlos.
+
+### Historia de Usuario 13: Reportes - Informe de producto más vendido
+Como empresa, quiero poder generar un informe que muestre cuál es el producto más vendido en un período de tiempo específico.
+
+### Historia de Usuario 14: Reportes - Historial de pedidos
+Como empresa, quiero poder acceder a un informe que muestre el historial de todos los pedidos realizados en la plataforma.
+
+## Rol de Administrador
+
+### Historia de Usuario 15: Deshabilitar usuario
+Como administrador, quiero poder deshabilitar la cuenta de un usuario en caso de que infrinja las normas o reglas de la plataforma.
+
+### Historia de Usuario 16: Reportes - TOP 5 de las empresas que más pedidos generan
+Como administrador, quiero poder generar un informe que muestre las cinco empresas que han generado la mayor cantidad de pedidos en un período de tiempo específico.
+
+### Historia de Usuario 17: Reportes - Informe de los productos más vendidos
+Como administrador, quiero poder generar un informe que muestre cuáles son los productos más vendidos en un período de tiempo específico.
+
+### Historia de Usuario 18: Informes de repartidores - TOP 5 de los mejores delivery
+Como administrador, quiero poder generar un informe que muestre los cinco mejores repartidores en función de sus calificaciones y desempeño.
+
+### Historia de Usuario 19: Autenticación de Usuarios
+Como administrador, quiero asegurarme de que los usuarios se autentiquen correctamente antes de acceder a la plataforma y realizar acciones.
 
 
 
