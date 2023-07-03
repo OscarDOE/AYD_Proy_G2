@@ -16,3 +16,5 @@ CMD ["npm", "start"]
 
 
 #docker push 7771512001/frontend_ayd1vacas
+
+#docker pull 7771512001/frontend_ayd1vacas

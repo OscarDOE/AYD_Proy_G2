@@ -194,8 +194,15 @@ const selectPedido = async (req, res) => {
     }
 
     const {idPed} = req.body
+    try {
         // Veridicar si tiene ya pedido
-
+        const estado = await query("SELECT id FROM pedido WHERE estado_pedido_id = 5 and repartidor_usuario_id = ? ;", [id]);
+        if (estado.length === 0) {
+            return res.status(400).json({
+                status: "FAILED",
+                message: "YA TIENE UN PEDIDO EN PROCESO"
+            });
+        }
         // Cambia el estado del pedido que tiene el repartidor
         await query(" UPDATE pedido SET estado_pedido_id = 5, repartidor_usuario_id = ? WHERE id = ?;", [id, idPed]);
         res.status(200).json({
@@ -203,7 +210,17 @@ const selectPedido = async (req, res) => {
             message: "Seleccion de pedido correcta"
         });
 
-    
+    } catch (error) {
+        return res.status(400).json({
+            status: "FAILED",
+            data: {
+                error:
+                    "Error al seleccionar pedido",
+            },
+            auth: false,
+            message: "Error al seleccionar pedido",
+        });
+    }
 
 }
 

@@ -82,6 +82,7 @@ const pedirProducto = async (req, res) => {
             let upCupon = "UPDATE cliente SET cupon = 0 WHERE usuario_id = ?;"
             await query(upCupon,[id])
         } else {
+            
             // agregar el total al pedido
             let addPr = "UPDATE pedido SET precio_total = ? WHERE id = ?;"
             await query(addPr, [total_pedido, idPedido[0].id]);
