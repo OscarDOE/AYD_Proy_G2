@@ -159,6 +159,7 @@ const PedidosRepartidor = () => {
         }else{
             alert("¡Pedido " + row.id + " | " + row.precio_total + " con problemas!")
         }
+        getDatosRepartidor()
         getPedidosActuales()
       };
 
