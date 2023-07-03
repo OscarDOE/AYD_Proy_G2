@@ -33,7 +33,7 @@ const Tarjets = () => {
     useEffect(() => {
         // Simulación de carga de datos de tarjetas de crédito
         const fetchCreditCards = async () => {
-            const ruta_AWS = 'http://localhost:4000/'
+            const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com/'
             const cookies = new Cookies();
             const usuario_logeado = cookies.get('session');
             const Send = {

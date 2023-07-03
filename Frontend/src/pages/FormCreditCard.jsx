@@ -4,7 +4,7 @@ import { TextField, Button } from '@mui/material';
 import Cookies from "universal-cookie"
 import '../App.css'
 
-const ruta_AWS = 'http://localhost:4000/'
+const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com/'
 export default function FormCreditCard() {
     const [cardNumber, setCardNumber] = useState('');
     const [expirationDate, setExpirationDate] = useState('');

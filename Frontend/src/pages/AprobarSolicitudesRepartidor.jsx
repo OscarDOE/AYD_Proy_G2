@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const AprobarSolicitudesRepartidor = () => {
-    const ruta_AWS = 'http://localhost:4000';
+    const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com';
     const cookies = new Cookies();
     const usuarioLogeado = cookies.get('session');
     const [rowsClientes, setRowsClientes] = useState([]);
