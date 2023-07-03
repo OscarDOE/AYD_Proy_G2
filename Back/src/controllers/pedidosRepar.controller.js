@@ -194,7 +194,6 @@ const selectPedido = async (req, res) => {
     }
 
     const {idPed} = req.body
-    try {
         // Veridicar si tiene ya pedido
 
         // Cambia el estado del pedido que tiene el repartidor
@@ -204,17 +203,7 @@ const selectPedido = async (req, res) => {
             message: "Seleccion de pedido correcta"
         });
 
-    } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "Error al seleccionar pedido",
-            },
-            auth: false,
-            message: "Error al seleccionar pedido",
-        });
-    }
+    
 
 }
 
