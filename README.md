@@ -162,14 +162,129 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 - Utilizacion de tokens de seguridad
 
 
+# Mockups de las principales vistas para la página web.
 
 
+* Landing Page
+  
+![1](./img1/mock/img1.png)
 
+```Página que muestra la información general de inicio. ```
+
+* Register Empresa
+  
+![1](./img1/mock/img2.png)
+
+```Página que muestra el formulario para poder registrarse como empresa ```
+- Registro Repartidor
+  
+![1](./img1/mock/img2.png)
+
+```Es igual que para la empresa, solo que con datos de repartidores, como el tipo de licencia vehicular ```
+- Login 
+  
+![1](./img1/mock/img3.png)
+
+```El login es similar para todos los tipos de usuario, pero al ingresar los redirigirá a sus respectivas páginas.```
+- Mi Perfil
+  
+![1](./img1/mock/img4.png)
+
+```Muestra los datos de los usuarios, en general es el mismo para todos los tipos de usuario, solo que con sus respectivos campos.```
+
+- Catalogo 
+![1](./img1/mock/img5.png)
+
+```Muestra como se ingresaran, eliminaran o editaran los productos de cada empresa.```
+
+## Cliente
+
+-  Escoger Empresa
+  
+![1](./img1/mock/cliente1.png)
+
+```Muestra como se escogerá alguna empresa que ofrezca los productos, para proceder a escoger los productos.```
+-  Escoger Productos
+  
+![1](./img1/mock/cliente2.png)
+
+```Muestra como se escogerán los productos por parte del cliente y así agregarlos al pedido.```
+-  Manejo del Carrito
+  
+![1](./img1/mock/cliente3.png)
+
+```Se muestran ls productos actuales que ha escogido el cliente para su pedido.```
+-  Check-Out 
+  
+![1](./img1/mock/cliente4.png)
+
+```Muestra la información del pago del pedido, en donde se pueden apreciar las direcciones asociadas al cliente, así como sus tarjetas de pago y si tiene algún cupón de descuento disponible.```
+-  Calificar Pedidos
+  
+![1](./img1/mock/cliente5.png)
+
+```Muestra todo el historial de pedidos, en donde podrá calificar cada pedido realizado.```
+-  Agregar Preferencias
+  
+![1](./img1/mock/cliente6.png)
+
+```Formulario en donde podrá agregar las preferencias de pago, así como las direcciones a las que enviar el pedido, y las tarjetas con las que realizará sus pagos.```
+
+## Repartidor
+
+-  Mi Perfil
+  
+![1](./img1/mock/repartidor1.png)
+
+```Muestra los datos del perfil del usuario, así como su calificación actual y las comisiones generadas por sus entregas.```
+-  Escoger Pedido
+  
+![1](./img1/mock/repartidor2.png)
+
+```Muestra todos los pedidos correspondientes a su zona, así como la dirección del cliente, la empresa y el nombre de la propia empreas.```
+-  Historial de Pedidos 
+  
+![1](./img1/mock/repartidor3.png)
+
+```Muestra la información del pago del pedido, en donde se pueden apreciar las direcciones asociadas al cliente, así como sus tarjetas de pago y si tiene algún cupón de descuento disponible.```
+-  Solicitud de cambio de zona
+  
+![1](./img1/mock/repartidor4.png)
+
+```Muestra un formulario en donde podrá agregar la nueva dirección a la que desea cambiarse, en dado tenga que mudarse o cualquier razón, la cual podrá ser aprobada por el administrador.```
+
+## Administrador
+-  Solicitudes de los usuarios
+  
+![1](./img1/mock/admin1.png)
+
+```Muestra diferentes tablas en donde se podrán aceptar solicitudes de los usuarios, tales como las empresas nuevas, los repartidores nuevos, y los repartidores que quieran cambiar de localidad.```
+-  Cantidad de Usuarios y Deshabilitar Usuarios
+  
+![1](./img1/mock/admin2.png)
+
+```Muestra la cantidad de usuarios clientes registrados, así también como la opción para deshabilitar usuarios.```
+-  Top 5 de Repartidores y Empresas
+
+![1](./img1/mock/admin3.png)
+
+```Muestra una tablacon el top 5 de los repartidores con mejor calificación, así como de las 5 empresas con mayor cantidad de pedidos realizados.```
+
+
+# Diagrama de Despliegue
+
+![1](./img1/mock/admin3.png)
+
+# User Story Mapping
+
+- Primera fase 
+![1](./img1/diagramas/UHM%20Fase%201.png)
+
+- Segunda fase
+![1](./img1/diagramas/UHM%20Fase%202.png)
 
   # <center> Historias de usuario / criterios de aceptación. </center>
 <br>
-
-
 
    - **Como usuario cliente debo poder registrarme y logearme a la pagina.**
        - *Se necesita que los usuarios puedan ingresar a la pagina de registro y de Login, para poder ingresar sus datos.*
@@ -205,30 +320,6 @@ El siguiente diagrama es una representacion de la entidad relacion que se utiliz
 ![ER](./img1/diagramas/rel.jpg)
 
 
-# Mockups de las principales vistas para la página web.
-
-
-* Landing Page
-![1](./img1/mock/img1.png)
-
-```Página que muestra la información general de inicio. ```
-* Register Empresa
-![1](./img1/mock/img2.png)
-```Página que muestra el formulario para poder registrarse como empresa ```
-- Registro Repartidor
-![1](./img1/mock/img2.png)
-```Es igual que para la empresa, solo que con datos de repartidores, como el tipo de licencia vehicular ```
-- Login 
-![1](./img1/mock/img3.png)
-```El login es similar para todos los tipos de usuario, pero al ingresar los redirigirá a sus respectivas páginas.```
-- Mi Perfil
-![1](./img1/mock/img4.png)
-```Muestra los datos de los usuarios, en general es el mismo para todos los tipos de usuario, solo que con sus respectivos campos.```
-- Catalogo 
-![1](./img1/mock/img5.png)
-```Muestra como se ingresaran, eliminaran o editaran los productos de cada empresa.```
-
-
 
 # Tecnologias Usadas
 ## Frontend
@@ -238,6 +329,9 @@ En cuanto al backend de la aplicación, hemos utilizado Nodejs. Nodejs es un ent
 ## Base de Datos
 RDS (Relational Database Service) con MySQL es un servicio de bases de datos en la nube de Amazon Web Services (AWS). Proporciona una instancia de base de datos MySQL totalmente administrada, escalable y segura. RDS simplifica la administración de la base de datos al encargarse de tareas como la configuración, el escalado y las copias de seguridad. Ofrece alta disponibilidad, rendimiento y flexibilidad para almacenar y recuperar datos de manera eficiente en aplicaciones y servicios basados en MySQL.
 
+## Tests
+Se utilizó la herramienta de `jest` con `supertest`  de `nodejs` para realizar las pruebas de los endpoints utillizados, validando todos los errores y respuestas que se hayan recibido por parte del backend.
+
 # Arquitectura
 ![alt text](img/Arquitectura.png)
 
@@ -245,4 +339,5 @@ RDS (Relational Database Service) con MySQL es un servicio de bases de datos en 
 ## Azure DevOps
 Azure DevOps es una plataforma integral de desarrollo de software basada en la nube de Microsoft. Proporciona un conjunto de herramientas y servicios que permiten la planificación, desarrollo, pruebas, implementación y seguimiento de aplicaciones. Incluye capacidades de gestión de proyectos, control de versiones, compilación y entrega continua, pruebas automatizadas, seguimiento de problemas y más. Azure DevOps fomenta la colaboración entre equipos, mejora la productividad y ayuda a entregar software de alta calidad de manera eficiente.
 ### ***Tablero***
+Se utilizó el manejador de Azure DevOps para llevar el control del proyecto y todos sus procesos.
 https://dev.azure.com/krenmoraleja/krenmoraleja/_backlogs/backlog/krenmoraleja%20Team/Epics

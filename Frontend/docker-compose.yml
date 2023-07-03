@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  frontend:
+    image: '7771512001/frontend_ayd1vacas'
+    container_name: 'frontend-NodeJS'
+    ports:
+      - '3000:3000' #del no de hub al mio
+    restart: always
