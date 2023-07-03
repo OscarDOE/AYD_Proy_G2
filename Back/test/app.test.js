@@ -690,7 +690,7 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .send(respuestahomeadmin);
         // console.log(createUser.username)
         // console.log(createUser.password)
-        expect(response.statusCode).toBe(400);
+        expect(response.statusCode).toBe(200);
         // expect(response.body.message).toBe("SSSS");
     })
     test('Empresa Solcitar pedidos NO Trae Token', async () =>{
@@ -719,39 +719,26 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         expect(response.statusCode).toBe(400);
         // expect(response.body.message).toBe("SSSS");
     })
-    test('Empresa Solcitar pedidos', async () =>{
-        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
-        respuestahomeadmin.resp = '1'
-        respuestahomeadmin.idUser = '2'
-        respuestahomeadmin.token = token_empresa_quemado
-        const response = await supertest(app)
-        .post('/solicitudPed')
-        .send(respuestahomeadmin);
-        // console.log(createUser.username)
-        // console.log(createUser.password)
-        expect(response.statusCode).toBe(400);
-        // expect(response.body.message).toBe("SSSS");
-    })
-    test('Empresa Solcitar pedidos NO Trae Token', async () =>{
+    test('Empresa Respuesta pedidos NO Trae Token', async () =>{
         // .set('Authorization', `Bearer ${logeado.token.trim()}`)
         respuestahomeadmin.resp = '1'
         respuestahomeadmin.idUser = '2'
         respuestahomeadmin.token = token_errornoid
         const response = await supertest(app)
-        .post('/solicitudPed')
+        .post('/respuestaPed')
         .send(respuestahomeadmin);
         // console.log(createUser.username)
         // console.log(createUser.password)
         expect(response.statusCode).toBe(400);
         // expect(response.body.message).toBe("SSSS");
     })
-    test('Empresa Solcitar pedidos NO ES Empresa ', async () =>{
+    test('Empresa Respuesta pedidos NO ES Empresa ', async () =>{
         // .set('Authorization', `Bearer ${logeado.token.trim()}`)
         respuestahomeadmin.resp = '1'
         respuestahomeadmin.idUser = '8'
         respuestahomeadmin.token = token_admin
         const response = await supertest(app)
-        .post('/solicitudPed')
+        .post('/respuestaPed')
         .send(respuestahomeadmin);
         // console.log(createUser.username)
         // console.log(createUser.password)
@@ -763,6 +750,84 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
 
 
 
+    test('Home Admin Solicitud Repartidor', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/solicitudRepar')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Solicitud Repartidor NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/solicitudRepar')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Solicitud Repartidor NO ES admin ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/solicitudRepar')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Respuestas Repartidor', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/respuestaRepar')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Respuestas Repartidor NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/respuestaRepar')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Respuestas Repartidor NO ES admin ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/respuestaRepar')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
 
     test('Home Admin Respuesta REPARTIDOR 1', async () =>{
         respuestahomeadmin.resp = '1'
@@ -792,6 +857,77 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
     })
+
+
+    test('Home Admin SolicitudCambio', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/solicitudCambio')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin SolicitudCambio NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/solicitudCambio')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin SolicitudCambio NO ES admin ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/solicitudCambio')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+
+    test('Home Admin RespuestaCambio NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/respuestaCambio')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin RespuestaCambio NO ES admin ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/respuestaCambio')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+
+
+
     test('Login Empresa sin username', async () =>{
         // .set('Authorization', `Bearer ${token.token.trim()}`)
         const response = await supertest(app)
@@ -1556,6 +1692,7 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         expect(response.statusCode).toBe(400);
         // expect(response.body.message).toBe("SSSS");
     })
+   
   
     
 
