@@ -197,7 +197,7 @@ const selectPedido = async (req, res) => {
     try {
         // Veridicar si tiene ya pedido
         const estado = await query("SELECT id FROM pedido WHERE estado_pedido_id = 5 and repartidor_usuario_id = ? ;", [id]);
-        if (estado.length === 0) {
+        if (estado.length != 0) {
             return res.status(400).json({
                 status: "FAILED",
                 message: "YA TIENE UN PEDIDO EN PROCESO"
