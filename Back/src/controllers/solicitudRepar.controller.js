@@ -36,16 +36,7 @@ const solicitudRepar = async (req, res) => {
         const repartidor = await query("SELECT * FROM repartidor WHERE estado = 0;", []);
         res.status(200).json(repartidor);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay repartidores pendientes",
-            },
-            auth: false,
-            message:
-                "No hay repartidores pendientes",
-        });
+
     }
 
 }
@@ -155,16 +146,7 @@ const solicitudCambio = async (req, res) => {
         const repartidor = await query(query1, []);
         res.status(200).json(repartidor);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay repartidores pendientes",
-            },
-            auth: false,
-            message:
-                "No hay repartidores pendientes",
-        });
+
     }
 
 }
