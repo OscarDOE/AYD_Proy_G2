@@ -37,7 +37,7 @@ const createEmpresa = async (req, res) => {
 
     // validar correo
     const regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regexCorreo.test(email)){
+    if (!regexCorreo.test(email)) {
         return res.status(400).json({
             status: "FAILED",
             data: {
@@ -65,13 +65,13 @@ const createEmpresa = async (req, res) => {
 
         // Obtener id de Usuario
         const idUser = await query("SELECT MAX(id) as id FROM usuario;", []);
-
+        
         // Guarda hoja en S3
         const URL = await awsImage.uploadImage(
             "Empresa_image",
             fileBase64,
             idUser[0].id,
-            "pdf"
+            "jpg"
         );
         console.log("imageURL", URL);
 
@@ -96,7 +96,7 @@ const createEmpresa = async (req, res) => {
         // Obtener id de Empresa
         const idEmpresa = await query("SELECT MAX(usuario_id) as empresa_usuario_id FROM empresa;", []);
         await query("INSERT INTO menu SET ?", idEmpresa);
-        
+
         +9 +
             res.status(200).json({
                 status: "OK",

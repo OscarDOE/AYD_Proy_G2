@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 function verifyToken (req, res, next) {
     //const token = req.headers['authorization']
     const {token} = req.body
+    // console.log("VERIFY TOKEN",req.body)
     if(!token){
         return res.status(401).json({auth: false, message: 'no token'})
     }

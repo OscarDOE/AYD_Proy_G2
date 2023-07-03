@@ -8,9 +8,10 @@ import { TrendingUpOutlined } from '@mui/icons-material';
 
 const HomeAdmin = () => {
     //const { logIn, getNombre } = useContext(AppEnvr)
-    const ruta_AWS = 'http://localhost:4000'
+    const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
+    console.log(usuario_logeado)
     // const link_image = usuario_logeado?.usuario_logeado.foto_perfil
 
     const [clickedRow, setClickedRow] = useState();
@@ -310,7 +311,7 @@ const HomeAdmin = () => {
             </div>
             <div class="sCuadradoR2">
                 <h1>Bienvenido </h1>
-                <h2>{usuario_logeado.username}</h2>
+                <h2>{usuario_logeado.usuario}</h2>
             </div>
 
             {/* -------------- termina ternario ------------------- */}

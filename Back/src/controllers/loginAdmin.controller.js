@@ -23,7 +23,7 @@ const loginAdmin = async (req, res) => {
 
     // Iniciar sesión del usuario
     mysqlConnection.query(
-        "SELECT * FROM administrador WHERE username = ?",
+        "SELECT * FROM administrador,usuario WHERE usuario.usuario = ? and usuario.id = administrador.usuario_id",
         [username],
         async (err, result) => {
             if (err) {

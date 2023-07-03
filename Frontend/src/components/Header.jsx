@@ -56,6 +56,8 @@ const Header = () => {
     const handleLogOut = () => {
         navigate("/");
         cookies.remove('session')
+        cookies.remove('carrito')
+        cookies.remove('empresa_seleccionada')
     };
     //console.log(usuario_logeado)
 
@@ -90,25 +92,37 @@ const Header = () => {
                                 <>
                                 <Link to='/homeadmin'><Button color="inherit">Solicitudes pendientes</Button></Link>
                                 <Link to='/informeusers'><Button color="inherit">Informe</Button></Link>
+                                <Link to='/reportesadmin'><Button color="inherit">Reportes</Button></Link>
+                                <Link to='/desacusuarios'><Button color="inherit">Usuarios</Button></Link>
+                                <Link to='/solicitudes'><Button color="inherit">Solicitudes</Button></Link>
                                 </> 
                                 : 
                                 <></>}
                                 {usuario_logeado?.rol === "2" ? 
                                 <>
-                                <Link to='/'><Button color="inherit">Nuevo pedido</Button></Link>
-                                <Link to='/'><Button color="inherit">Direcciones</Button></Link>
+                                <Link to='/elegirempresa'><Button color="inherit">Nuevo pedido</Button></Link>
+                                <Link to='/deliveryaddressform'><Button color="inherit">Direcciones</Button></Link>
+                                <Link to='/formcreditcard'><Button color="inherit">Tarjetas</Button></Link>
+                                <Link to='/historialpedidos'><Button color="inherit">Historial</Button></Link>
                                 </> 
                                 : 
                                 <></>}
                                 {usuario_logeado?.rol === "3" ? 
                                 <>
                                 <Link to='/perfilrepartidor'><Button color="inherit">Mi perfil</Button></Link>
+                                <Link to='/deliveryaddressform'><Button color="inherit">Cambio de zona</Button></Link>
+                                <Link to='/pedidosrepartidor'><Button color="inherit">Pedidos</Button></Link>
+                                <Link to='/historialrepartidor'><Button color="inherit">Historial</Button></Link>
                                 </> 
                                 : 
                                 <></>}
                                 {usuario_logeado?.rol === "4" ? 
                                 <>
-                                <Link to='/panelempresa'><Button color="inherit">Panel de control</Button></Link>
+                                <Link to='/panelempresa'><Button color="inherit">Productos</Button></Link>
+                                <Link to='/combosempresa'><Button color="inherit">Combos</Button></Link>
+                                <Link to='/solicitudesempresa'><Button color="inherit">Solicitudes</Button></Link>
+                                <Link to='/historialempresa'><Button color="inherit">Historial</Button></Link>
+                                <Link to='/masvendido'><Button color="inherit">Mas vendido</Button></Link>
                                 </> 
                                 : 
                                 <></>}

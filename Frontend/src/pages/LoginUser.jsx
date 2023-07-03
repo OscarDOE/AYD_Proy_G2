@@ -9,7 +9,7 @@ const LoginUsers = () => {
 
     // const displ = useRef(null);
     // const [userV, setUserV] = useState(true)
-    const ruta_AWS = 'http://localhost:4000'
+    const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com'
 
     const [error, setError] = useState(null);
     const form = useRef();

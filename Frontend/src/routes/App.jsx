@@ -14,17 +14,33 @@ import PerfilRepartidor   from "../pages/MiPerfilR";
 import InformeUsers       from "../pages/InformeUsers";
 import PanelEmpresa       from "../pages/panel";
 import CombosEmpresa      from "../pages/combos";
-// import LoginPage from "../pages/LoginPage";
-// import RegisterPage from "../pages/RegisterPage";
-// import PagesVuelos from "../pages/PagesVuelos";
-// import PagesAdmin from "../pages/PagesAdmin";
+import CombosPage from "../pages/CombosPage";
+import ReportesAdmin from "../pages/ReportesAdmin";
+import DesactivarAdmin from "../pages/DesactivarAdmin";
+import MostrarProductos from "../pages/MostrarProductos";
+import ElegirEmpresa from "../pages/ElegirEmpresa";
+//import FormCreditCard from "../pages/FormCreditCard";
+import ShowCarrito from "../pages/ShowCarrito";
+import Checkout from "../pages/Checkout";
+import DeliveryAddressForm from "../pages/DeliveryAddressForm";
+import Tarjets from "../pages/CardsView";
+import Address from "../pages/Address";
+import SolicitudesEmpresa from "../pages/SolicitudesEmpresa";
+import PedidosRepartidor from "../pages/PedidosRepartidor";
+import HistorialPedido from "../pages/HistorialPedido";
+import HistorialPedidoRepartidor from "../pages/HistorialPedidoRepartidor";
+import AprobarSolicitudesRepartidor from "../pages/AprobarSolicitudesRepartidor";
+import HistorialPedidoEmpresa from "../pages/HistorialPedidosEmpresa";
+import MasVendido from "../pages/MasVendido";
+
 export const App = () => {
   return (
     <BrowserRouter>
             <Layout>
                 <Routes>
                 <Route index element={<Home />} />
-                <Route path="/combosempresa" element={<CombosEmpresa/>} />
+                <Route path="/desacusuarios" element={<DesactivarAdmin/>} />
+                <Route path="/combosempresa" element={<CombosPage/>} />
                 <Route path="/panelempresa" element={<PanelEmpresa/>} />
                 <Route path="/perfilrepartidor" element={<PerfilRepartidor/>} />
                 <Route path="/loginadmin" element={<LoginAdmin/>} />
@@ -36,6 +52,20 @@ export const App = () => {
                 <Route path="/loginusers" element={<LoginUsers />} />
                 <Route path="/homeadmin" element={<HomeAdmin />} />
                 <Route path="/informeusers" element={<InformeUsers />} />
+                <Route path="/reportesadmin" element={<ReportesAdmin />} />
+                <Route path="/elegirproductos" element={<MostrarProductos />} />
+                <Route path="/elegirempresa" element={<ElegirEmpresa />} />
+                <Route path="/formcreditcard" element={<Tarjets />} />
+                <Route path="/carrito" element={<ShowCarrito />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/deliveryaddressform" element={<Address/>}/>
+                <Route path="/solicitudesempresa" element={<SolicitudesEmpresa/>}/>
+                <Route path="/pedidosrepartidor" element={<PedidosRepartidor/>}/>
+                <Route path="/historialpedidos" element={<HistorialPedido/>}/>
+                <Route path="/historialrepartidor" element={<HistorialPedidoRepartidor/>}/>
+                <Route path="/solicitudes" element={<AprobarSolicitudesRepartidor/>}/>
+                <Route path="/historialempresa" element={<HistorialPedidoEmpresa/>}/>
+                <Route path="/masvendido" element={<MasVendido/>}/>
                       {/* <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/vuelos" element={<PagesVuelos />} />
