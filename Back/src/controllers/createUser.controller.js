@@ -42,14 +42,13 @@ const createUser = async (req, res) => {
       // Guarda cliente en db
       const dataCliente = [
         { 
-          username, 
-          password: hashContra, 
+          estado: 1, 
+          cupon: 1,
           usuario_id: idUser[0].id
         },
       ];
       // Crear el Cliente
       await query("INSERT INTO cliente SET ?", dataCliente);
-+9+
       res.status(200).json({
         status: "OK",
         message: "Usuario creado exitosamente",

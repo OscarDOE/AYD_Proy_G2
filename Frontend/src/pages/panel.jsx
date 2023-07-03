@@ -26,13 +26,16 @@ const PanelEmpresa = () => {
     const ruta_AWS = 'http://localhost:4000'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
-    console.log(usuario_logeado)
+    // console.log(usuario_logeado)
 
     const [rows,setRows] = useState([]);
     const [rows_repartis,setRowsRepartis] = useState([]);
     const [datosperfil, setDatosperfil] = useState([]);
     const [productos, setProductos] = useState([]);
     const [error, setError] = useState(null);
+    const [val, setVal] = useState('');
+    const [tipoName, setTipoName] = useState('');
+    const [tipoProductos, setTipoProductos] = useState([]);
     const [productosNuevos, setProductosNuevos] = useState({
         nombre: "",
         descripcion: "",
@@ -56,7 +59,7 @@ const PanelEmpresa = () => {
           headerName: 'Imagen', 
           width: 130,
           renderCell: (params) => {
-              console.log(params)
+              // console.log(params)
               return (
                 <>
                   <Avatar src={params.row.imagen} />  
@@ -143,6 +146,7 @@ const PanelEmpresa = () => {
     }
 
     useEffect(() => {getProductos()}, [] );
+    useEffect(() => {getTipoProductos()}, [] );
 
     const getProductos = async () =>{
       const endpoint = await fetch(ruta_AWS+'/ObtenerProductos', {
@@ -153,6 +157,32 @@ const PanelEmpresa = () => {
       });
       const resp_get = await endpoint.json();
       setRows(resp_get.data)
+
+    }
+
+
+    const getTipoProductos = async () =>{
+      const endpoint = await fetch(ruta_AWS+'/ObtenerTipoProductos', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },body: JSON.stringify({"empresa_id":usuario_logeado.usuario_id})
+      });
+      const resp_get = await endpoint.json();
+      const descripciones = resp_get.data.map(item => item.descripcion);
+      setTipoProductos(descripciones)
+
+    }
+
+    const postTipoProductos = async () =>{
+      const endpoint = await fetch(ruta_AWS+'/AgregarTipoProducto', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },body: JSON.stringify({"id_empresa":usuario_logeado.usuario_id, "nombre":tipoName})
+      });
+      const resp_get = await endpoint.json();
+      console.log(tipoName)
 
     }
 
@@ -208,6 +238,24 @@ const PanelEmpresa = () => {
               <br></br>
 
               <Grid container justifyContent="center">
+                <Grid item xs={4} >
+                  <Item>
+                  <form className="row1" onSubmit={postTipoProductos}>
+                  <h3>Registra una categoria</h3>
+                  <input
+                          type="text"
+                          style={{
+                            'marginTop': '55px',
+                            'width': '100%', 'padding': '12px 20px', 'margin': '20px 0', 'box-sizing': 'border-box'
+                          }}
+                          placeholder="Nombre de categoria"
+                          onChange={(e) => setTipoName( e.target.value )}
+                          name="Agency" />
+                  <Button type="sumbit" variant="contained">Agregar categoria</Button>
+                  </form>
+                  </Item>
+                </Grid>
+
                 <Grid item xs={6} >
                   <Item>
                     <h3>Registrando un nuevo Producto</h3>
@@ -243,12 +291,10 @@ const PanelEmpresa = () => {
                             'padding': '5px'
                           }} 
                           onChange={(e) => setProductosNuevos({ ...productosNuevos, categoria: e.target.value })} name="lenguajes" id="lang1">
-                            <option value="S">--Seleccione--</option>
-                            <option value="1">Desayuno</option>
-                            <option value="2">Almuerzo</option>
-                            <option value="3">Cena</option>
-                            <option value="4">Bebidas</option>
-                            <option value="5">Postres</option>
+                            <option value="0">--Seleccione--</option>
+                            {
+                              tipoProductos.map(opt=><option>{opt}</option>)
+                            }
                           </select>
 
 

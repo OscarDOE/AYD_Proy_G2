@@ -2,8 +2,8 @@
 //Prod
 const configS3 = {
     region: "us-east-1",
-    accessKeyId: "AKIA54JBW3SIJNKHU6EK",
-    secretAccessKey: "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",
+    accessKeyId: "AKIA54JBW3SIFT7SDSMM",
+    secretAccessKey: "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",
 }
 
 module.exports = {

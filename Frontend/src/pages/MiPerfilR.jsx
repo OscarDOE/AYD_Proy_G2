@@ -28,10 +28,11 @@ const PerfilRepartidor = () => {
 
 
     const [datosperfil, setDatosperfil] = useState([]);
+    const [comision, setComision] = useState([]);
 
 
     useEffect(() => {getDatosRepartidor()}, [] );
-    
+    useEffect(() => {getComision()}, [] );
 
     const getDatosRepartidor = async () =>{
 
@@ -42,8 +43,19 @@ const PerfilRepartidor = () => {
         },body: JSON.stringify({"token":usuario_logeado.token})
       });
       const resp_get = await endpoint.json();
-      console.log(resp_get[0])
       setDatosperfil(resp_get[0])
+    }
+
+    const getComision= async () =>{
+
+      const endpoint = await fetch(ruta_AWS+'/comision', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },body: JSON.stringify({"token":usuario_logeado.token})
+      });
+      const resp_get = await endpoint.json();
+      setComision(resp_get[0].comisiones)
     }
     
 
@@ -65,10 +77,6 @@ const PerfilRepartidor = () => {
             </Grid><br></br>
             <Grid container justifyContent="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
-
-                
-
-
                 <Grid item xs={6} >
                     <Item>
 
@@ -82,8 +90,19 @@ const PerfilRepartidor = () => {
                         <h3 style={{ marginBottom:'5px'}}>Teléfono : {datosperfil.telefono}</h3>
                         {/* <h3 style={{color : "blue", marginBottom:'5px'}}>Hoja de Vida : {}</h3> */}
                         <h3 style={{marginBottom:'5px'}}>NIT : {datosperfil.nit}</h3>
-                        <h3 style={{ marginBottom:'5px'}}>Calificación : {datosperfil.calificacion}</h3>
   
+                    </Item>
+                </Grid>
+                
+                <Grid item xs={3} >
+                    <Item>
+                        <h3 style={{ marginBottom:'5px'}}>Calificación </h3>
+                        <h1>{datosperfil.calificacion}</h1>
+                    </Item>
+                    <br></br>
+                    <Item>
+                        <h3 style={{ marginBottom:'5px'}}>Comisiones </h3>
+                        <h1>{comision}</h1>
                     </Item>
                 </Grid>
             </Grid>

@@ -25,19 +25,26 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 //Routes API
 app.use(require('./routes/createUser.route'))
 app.use(require('./routes/loginUser.route'))
+app.use(require('./routes/calificar.route')) //PROBAR 
+app.use(require('./routes/pedido.route')) //
 
 app.use(require('./routes/createRepar.route'))
 app.use(require('./routes/loginRepar.route'))
+app.use(require('./routes/miPerfil.route'))
+app.use(require('./routes/reportesRepar.route')) //PROBAR
+app.use(require('./routes/pedidosRepar.route')) //
 
 app.use(require('./routes/createEmpresa.route'))
 app.use(require('./routes/loginEmpresa.route'))
+app.use(require('./routes/agregarProducto.route'))
 
 app.use(require('./routes/loginAdmin.route'))
 app.use(require('./routes/solicitudRepar.route'))
 app.use(require('./routes/solicitudEmp.route'))
 app.use(require('./routes/informeUser.route'))
-app.use(require('./routes/miPerfil.route'))
-app.use(require('./routes/agregarProducto.route'))
+app.use(require('./routes/desactivarUser.route')) //PROBAR
+//app.use(require('./routes/solicitudDepa.route')) //PROBAR
+
 
 
 //Route Initial API
@@ -46,6 +53,4 @@ app.get('/', (req, res) => {
 })
 
 
-app.listen(PORT, () => {
-    console.log(`API is listening on port ${PORT}`); 
-})
+module.exports = app;

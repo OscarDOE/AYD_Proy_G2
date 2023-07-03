@@ -78,7 +78,7 @@ const LoginAdmin = () => {
         
 
         const resp = await endpoint.json();
-        if (endpoint.status === 400){
+        if (endpoint.status === 400 || endpoint.status === 401 || endpoint.status === 500   ){
             setError(resp.message);
         }
         else{ 

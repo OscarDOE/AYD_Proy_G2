@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.credit-card-form {
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 20px; /* Espaciado interno */
+}
+
+.delivery-address-form{
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 20px; /* Espaciado interno */
+}
