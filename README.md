@@ -273,7 +273,7 @@ ___Release/x.y.z -> Main -> x.y.z (Tag)___
 
 # Diagrama de Despliegue
 
-![1](./img1/mock/admin3.png)
+![1](./img1/diagramas/Despliegue.png)
 
 # User Story Mapping
 
