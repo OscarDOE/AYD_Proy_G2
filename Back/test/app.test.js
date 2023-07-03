@@ -7,20 +7,20 @@ const mysqlConnection = require('../src/database/db')
 
 beforeAll(async () => {
     if (process.env.NODE_ENV === "test") {
-        console.log('Clean data tests');
+        // console.log('Clean data tests');
         
         mysqlConnection.query('CALL borrarycrear();', function (err, result) {
             if (err) console.error( err);
-            console.log("Database cleaned"+result);
+            // console.log("Database cleaned"+result);
         });
     }else{
-        console.log('Test can run only in NODE_ENV=`test` enviroment');
+        // console.log('Test can run only in NODE_ENV=`test` enviroment');
         process.exit(0);
     }
 });
 
 afterAll(async () => {
-    console.log('Closing DB connection');
+    // console.log('Closing DB connection');
     mysqlConnection.destroy();
 });
 
@@ -109,6 +109,12 @@ let respuestahomeadmin = {
 }
 let token_actual = '';
 let token_actual_erroneo = '1';
+let token_admin = ''
+let token_empresa = ''
+let token_cliente = ''
+let token_repartidor_prueba = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbCI6InJlcGFydGlkb3IiLCJpYXQiOjE2ODgyNjE0MDB9.QNmcciHgZpJRUWd1sEYXBzCKg6hN9jxf6RFv_iuXjr0' 
+let token_errornoid = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IiIsInJvbCI6IiIsImlhdCI6MTY4ODI2MTQwMH0.ctC8EHiBz3FD16VE_8JB6KU1iM5k9L5qH8f_cXmwjp0'
+
 
 const solicitudEmp = {
     'token':token.token,
@@ -135,6 +141,10 @@ const loginEmpresamalpass = {
 const tipo_producto = {
     'nombre':'Producto de prueba',
     'id_empresa':'2'
+}
+const tipo_producto_error = {
+    'nombre':'Producto de prueba',
+    'id_empresa':'HOLA'
 }
 const tipo_producto_nonombre = {
     'id_empresa':'2'
@@ -185,11 +195,25 @@ const obtenercomboserror = {
     'id_empresa':'2'
 }
 const obtenercombos = {
-    'menui_id':'2'
+    'menu_id':'2'
 }
 const createUser = {
     'username':'cliente1',
     'password':"123"
+}
+let respuestamenu = {
+    'resp': '444',
+    'token': logeado,
+    'idEmp':'123'
+}
+let respuestadesactivar = {
+    'resp': '444',
+    'token': logeado,
+    'idUser':'123'
+}
+let respuestadesactivar_noUser = {
+    'resp': '444',
+    'token': logeado,
 }
 
 const filePathe = path.resolve(__dirname, './empresa.jpg');
@@ -231,7 +255,7 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .attach('imagenes', filePathe,'empresa.jpg');
         expect(response.statusCode).toBe(200);
     })
-    test('Crear Empresa', async () =>{
+    test('Crear Empresa 2', async () =>{
         // .set('Authorization', `Bearer ${token.token.trim()}`)
         const response = await supertest(app)
         .post('/registroEmpresa')
@@ -245,6 +269,21 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .field('password', crearEmpresa.password)
         .attach('imagenes', filePathe,'empresa.jpg');
         expect(response.statusCode).toBe(200);
+    })
+    test('Crear Empresa ERROR 500', async () =>{
+        // .set('Authorization', `Bearer ${token.token.trim()}`)
+        const response = await supertest(app)
+        .post('/registroEmpresa')
+        .field('nombre', crearEmpresa.nombre)
+        .field('descripcion', crearEmpresa.descripcion)
+        .field('email', 'empsss2@mail.com')
+        .field('departamento', crearEmpresa.departamento)
+        .field('municipio', crearEmpresa.municipio)
+        .field('zona', 'HOLA')
+        .field('tipo', 'JOJOJO')
+        .field('password', crearEmpresa.password)
+        .attach('imagenes', filePathe,'empresa.jpg');
+        expect(response.statusCode).toBe(500);
     })
     test('Crear Empresa sin imagenes', async () =>{
         // .set('Authorization', `Bearer ${token.token.trim()}`)
@@ -475,6 +514,7 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         logeado.token = response.body.token
         logeado.rol = response.body.rol
         token_actual = response.body.token
+        token_admin = response.body.token
         token_actual_erroneo += response.body.token
         expect(response.statusCode).toBe(200);
     })
@@ -483,9 +523,9 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         const response = await supertest(app)
         .post('/loginAdmin')
         .send(loginAdminjsonmaluser)
-        console.log("VERIFICANDO EL CAMBIO DE VARIABLE")
-        console.log(logeado)
-        console.log(token_actual)
+        // console.log("VERIFICANDO EL CAMBIO DE VARIABLE")
+        // console.log(logeado)
+        // console.log(token_actual)
         // console.log(loginAdminjson.password)
         expect(response.statusCode).toBe(401);
         // expect(response.body.message).toBe("SSSS");
@@ -554,8 +594,8 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .post('/respuestaEmp')
         .set('Authorization', `Bearer ${logeado.token.trim()}`)
         .send(respuestahomeadmin);
-        console.log("HHHHHHHHHHHHHHHHHHHHHHH")
-        console.log(respuestahomeadmin)
+        // console.log("HHHHHHHHHHHHHHHHHHHHHHH")
+        // console.log(respuestahomeadmin)
         expect(response.statusCode).toBe(200)
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
@@ -568,8 +608,8 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .post('/respuestaEmp')
         .set('Authorization', `Bearer ${logeado.token.trim()}`)
         .send(respuestahomeadmin);
-        console.log("HHHHHHHHHHHHHHHHHHHHHHH22")
-        console.log(respuestahomeadmin)
+        // console.log("HHHHHHHHHHHHHHHHHHHHHHH22")
+        // console.log(respuestahomeadmin)
         expect(response.statusCode).toBe(200)
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
@@ -582,8 +622,8 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .post('/respuestaRepar')
         .set('Authorization', `Bearer ${logeado.token.trim()}`)
         .send(respuestahomeadmin);
-        console.log("HHHHHHHHHHHHHHHHHHHHHHH22")
-        console.log(respuestahomeadmin)
+        // console.log("HHHHHHHHHHHHHHHHHHHHHHH22")
+        // console.log(respuestahomeadmin)
         expect(response.statusCode).toBe(200)
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
@@ -596,8 +636,8 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .post('/respuestaRepar')
         .set('Authorization', `Bearer ${logeado.token.trim()}`)
         .send(respuestahomeadmin);
-        console.log("HHHHHHHHHHHHHHHHHHHHHHH22")
-        console.log(respuestahomeadmin)
+        // console.log("HHHHHHHHHHHHHHHHHHHHHHH22")
+        // console.log(respuestahomeadmin)
         expect(response.statusCode).toBe(200)
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
@@ -650,8 +690,9 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         logeado.token = response.body.token
         logeado.rol = response.body.rol
         token_actual = response.body.token
+        token_empresa = response.body.token
         token_actual_erroneo += response.body.token
-        console.log(logeado)
+        // console.log(logeado)
         expect(response.statusCode).toBe(200);
     })    
     test('Agregar Tipo Producto', async () =>{
@@ -661,6 +702,15 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         .post('/AgregarTipoProducto')
         .send(tipo_producto)
         expect(response.statusCode).toBe(200);
+        //expect(response.message).toBe("Error al crear producto");
+    })
+    test('Agregar Tipo Producto ERRROR 500', async () =>{
+        // .set('Authorization', `Bearer ${token.token.trim()}`)
+        
+        const response = await supertest(app)
+        .post('/AgregarTipoProducto')
+        .send(tipo_producto_error)
+        expect(response.statusCode).toBe(500);
         //expect(response.message).toBe("Error al crear producto");
     })
     test('Agregar Tipo Producto nombre no existe', async () =>{
@@ -797,11 +847,17 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         expect(response.statusCode).toBe(200);
         // expect(response.body.message).toBe("SSSS");
     })
-    test('Obtener Combos ERROR', async () =>{
-        // .set('Authorization', `Bearer ${token.token.trim()}`)
+    test('Nuevo Combo ERROR 500', async () =>{
         const response = await supertest(app)
-        .post('/ObtenerCombos')
-        .send(obtenercombos)
+        .post('/NuevoCombo')
+        .set('Authorization', `Bearer ${token.token.trim()}`)
+        .field('nombre', NuevoCombo.nombre)
+        .field('precio', NuevoCombo.precio)
+        .field('descripcion', NuevoCombo.descripcion)
+        .field('estado', NuevoCombo.estado)
+        .field('id_empresa', 'hola')
+        .field('id_productos', NuevoCombo.id_productos)
+        .attach('foto', filePathp,'producto.jpg');
         expect(response.statusCode).toBe(500);
         // expect(response.body.message).toBe("SSSS");
     })
@@ -809,8 +865,16 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         // .set('Authorization', `Bearer ${token.token.trim()}`)
         const response = await supertest(app)
         .post('/ObtenerCombos')
-        .send(obtenercombos)
+        .send(obtenercomboserror)
         expect(response.statusCode).toBe(500);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Obtener Combos -- Empresa', async () =>{
+        // .set('Authorization', `Bearer ${token.token.trim()}`)
+        const response = await supertest(app)
+        .post('/ObtenerCombos')
+        .send(obtenercombos)
+        expect(response.statusCode).toBe(200);
         // expect(response.body.message).toBe("SSSS");
     })
     test('Crear User', async () =>{
@@ -835,15 +899,191 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         logeado.token = response.body.token
         logeado.rol = response.body.rol
         token_actual = response.body.token
+        token_cliente = response.body.token
         token_actual_erroneo += response.body.token
         // console.log(createUser.username)
         // console.log(createUser.password)
         expect(response.statusCode).toBe(200);
         // expect(response.body.message).toBe("SSSS");
     })
+    test('Obtener Empresas - Cliente', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_actual
+        const response = await supertest(app)
+        .post('/empresas')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Obtener Empresas No ID - Cliente', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/empresas')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Obtener Empresas NO ES CLIENTE - Cliente', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/empresas')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Obtener MENU - Cliente', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestamenu.token = token_actual
+        respuestamenu.idEmp = '2'
+        const response = await supertest(app)
+        .post('/menu')
+        .send(respuestamenu);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Obtener MENU No ID - Cliente', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestamenu.resp = '1'
+        respuestamenu.token = token_errornoid
+        const response = await supertest(app)
+        .post('/menu')
+        .send(respuestamenu);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Obtener MENU NO ES CLIENTE - Cliente', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestamenu.resp = '1'
+        respuestamenu.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/menu')
+        .send(respuestamenu);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('DEHAKTIVAR usuarios', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestamenu.resp = '1'
+        respuestamenu.token = token_admin
+        const response = await supertest(app)
+        .post('/desactivarUser')
+        .send(respuestamenu);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('DEHAKTIVAR usuarios no trae token ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestamenu.resp = '1'
+        respuestamenu.token = token_errornoid
+        const response = await supertest(app)
+        .post('/desactivarUser')
+        .send(respuestamenu);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('DEHAKTIVAR no es el ROL', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestamenu.resp = '1'
+        respuestamenu.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/desactivarUser')
+        .send(respuestamenu);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('RES DEHAKTIVAR usuarios idUser inválido', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestadesactivar.resp = '1'
+        respuestadesactivar.idUser = 'HOLA'
+        respuestadesactivar.token = token_admin
+        const response = await supertest(app)
+        .post('/resDesactivarU')
+        .send(respuestadesactivar);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('RES DEHAKTIVAR usuarios no trae token ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestadesactivar.resp = '1'
+        respuestadesactivar.idUser = '9'
+        respuestadesactivar.token = token_errornoid
+        const response = await supertest(app)
+        .post('/resDesactivarU')
+        .send(respuestadesactivar);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('RES DEHAKTIVAR no es el ROL', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestadesactivar.resp = '1'
+        respuestadesactivar.idUser = '9'
+        respuestadesactivar.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/resDesactivarU')
+        .send(respuestadesactivar);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('RES DEHAKTIVAR usuarios no trae idUser', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestadesactivar_noUser.resp = '1'
+        respuestadesactivar_noUser.token = token_admin
+        const response = await supertest(app)
+        .post('/resDesactivarU')
+        .send(respuestadesactivar_noUser);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('RES DEHAKTIVAR usuarios', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestadesactivar.resp = '1'
+        respuestadesactivar.idUser = '9'
+        respuestadesactivar.token = token_admin
+        const response = await supertest(app)
+        .post('/resDesactivarU')
+        .send(respuestadesactivar);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+
+
     
-
-
 
 
 

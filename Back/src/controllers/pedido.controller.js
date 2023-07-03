@@ -109,7 +109,8 @@ const pedirProducto = async (req, res) => {
 // SE MUESTRA EMPRESAS
 const getEmpresas = async (req, res) => {
     const { id, rol } = req.token
-
+    console.log("PPPPPPPPPPPPPPPPPPPPPPEMP")
+    console.log(req.token)
     if (!id || !rol) {
         return res.status(400).json({
             status: "FAILED",
@@ -158,7 +159,8 @@ const getEmpresas = async (req, res) => {
 // SE MUESTRA PRODUCTOS
 const getMenu = async (req, res) => {
     const { id, rol } = req.token
-
+    console.log("PPPPPPPPPPPPPPPPPPPPPP")
+    console.log(req.token)
     if (!id || !rol) {
         return res.status(400).json({
             status: "FAILED",
