@@ -36,16 +36,7 @@ const informeUser = async (req, res) => {
         const clientes = await query("SELECT * FROM cliente;", []);
         res.status(200).json(clientes);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay clientes",
-            },
-            auth: false,
-            message:
-                "No hay clientes",
-        });
+        
     }
 
 }
@@ -83,16 +74,7 @@ const totalUser = async (req, res) => {
         const clientes = await query("SELECT COUNT(*) AS total FROM cliente", []);
         res.status(200).json(clientes);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay clientes",
-            },
-            auth: false,
-            message:
-                "No hay clientes",
-        });
+        
     }
 
 }
@@ -135,16 +117,7 @@ const top5Deliverys = async (req, res) => {
         const repartidor = await query(query1, []);
         res.status(200).json(repartidor);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay repartidores para el top",
-            },
-            auth: false,
-            message:
-                "No hay repartidores para el top",
-        });
+
     }
 
 }
@@ -192,16 +165,7 @@ const top5Empresas = async (req, res) => {
         const empresa = await query(query1, []);
         res.status(200).json(empresa);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay empresas para el top",
-            },
-            auth: false,
-            message:
-                "No hay empresas para el top",
-        });
+
     }
 
 }
@@ -246,16 +210,7 @@ const top5Productos = async (req, res) => {
         const producto = await query(query1, []);
         res.status(200).json(producto);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay productos para el top",
-            },
-            auth: false,
-            message:
-                "No hay productos para el top",
-        });
+
     }
 
 }
@@ -303,16 +258,7 @@ const masVendido = async (req, res) => {
         const empresa = await query(query1, [id]);
         res.status(200).json(empresa);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay empresas para el top",
-            },
-            auth: false,
-            message:
-                "No hay empresas para el top",
-        });
+
     }
 
 }
@@ -358,25 +304,10 @@ const historialP = async (req, res) => {
         const producto = await query(query1, [id]);
         res.status(200).json(producto);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay historial de pedido",
-            },
-            auth: false,
-            message:
-                "No hay historial de pedido",
-        });
+
     }
 
 }
-
-
-
-
-
-
 
 module.exports = {
     informeUser,

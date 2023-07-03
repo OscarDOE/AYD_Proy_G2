@@ -485,7 +485,7 @@ const setearMuni = (e) => {
     // Aquí puedes enviar los datos del formulario a través de una solicitud HTTP
     // o realizar cualquier otra acción que desees con los datos del formulario
     //console.log('Datos enviados:', { department, municipality, zone });
-    const ruta_AWS = 'http://localhost:4000/'
+    const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com/'
     
     const DataSend = {
       "dep": department,

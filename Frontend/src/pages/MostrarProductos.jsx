@@ -29,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const MostrarProductos = () => {
 
-    const ruta_AWS = 'http://localhost:4000'
+    const ruta_AWS = 'http://ec2-54-226-103-240.compute-1.amazonaws.com'
     const cookies = new Cookies();
     const usuario_logeado = cookies.get('session');
     const navigate = useNavigate();

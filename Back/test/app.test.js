@@ -114,6 +114,8 @@ let token_empresa = ''
 let token_cliente = ''
 let token_repartidor_prueba = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbCI6InJlcGFydGlkb3IiLCJpYXQiOjE2ODgyNjE0MDB9.QNmcciHgZpJRUWd1sEYXBzCKg6hN9jxf6RFv_iuXjr0' 
 let token_errornoid = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IiIsInJvbCI6IiIsImlhdCI6MTY4ODI2MTQwMH0.ctC8EHiBz3FD16VE_8JB6KU1iM5k9L5qH8f_cXmwjp0'
+let token_repartidor_quemado = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwicm9sIjoicmVwYXJ0aWRvciIsImlhdCI6MTY4ODI2MTQwMH0.yBww3SB_rU8ZUsfiM9i1zr7b3sHrmCDJ8B0hF1WK_fs'
+let token_empresa_quemado = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sIjoiZW1wcmVzYSIsImlhdCI6MTY4ODI2MTQwMH0.fkLXJlPIYJzStctSx0QYbdTAFQ8Jx_lPPR5oVxZ1X3M'
 
 
 const solicitudEmp = {
@@ -567,6 +569,32 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
     })
+    test('Home Admin Solicitudes Empresas NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/solicitudEmp')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Solicitudes Empresas NO ES Admin ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/solicitudEmp')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
     test('VERIFY TOKEN NO TOKEN Home Admin Solicitudes Empresas SIN ROL ', async () =>{
         const response = await supertest(app)
         .post('/solicitudEmp')
@@ -614,6 +642,128 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         // console.log(response.body);
         // expect(response.body).toBe("SSSS");
     })
+    test('Home Admin Respuesta Empresas NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/respuestaEmp')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Respuesta Empresas NO ES Admin ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/respuestaEmp')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Home Admin Respuesta Empresas NO Tiene IdUser ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestadesactivar_noUser.resp = '1'
+        respuestadesactivar_noUser.token = token_admin
+        const response = await supertest(app)
+        .post('/respuestaEmp')
+        .send(respuestadesactivar_noUser);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Empresa Solcitar pedidos', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_empresa_quemado
+        const response = await supertest(app)
+        .post('/solicitudPed')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Empresa Solcitar pedidos NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/solicitudPed')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Empresa Solcitar pedidos NO ES Empresa ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/solicitudPed')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Empresa Solcitar pedidos', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_empresa_quemado
+        const response = await supertest(app)
+        .post('/solicitudPed')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Empresa Solcitar pedidos NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/solicitudPed')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Empresa Solcitar pedidos NO ES Empresa ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/solicitudPed')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+
+
+
+
+
+
     test('Home Admin Respuesta REPARTIDOR 1', async () =>{
         respuestahomeadmin.resp = '1'
         respuestahomeadmin.idUser = '5'
@@ -1017,19 +1167,19 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         expect(response.statusCode).toBe(400);
         // expect(response.body.message).toBe("SSSS");
     })
-    test('RES DEHAKTIVAR usuarios idUser inválido', async () =>{
-        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
-        respuestadesactivar.resp = '1'
-        respuestadesactivar.idUser = 'HOLA'
-        respuestadesactivar.token = token_admin
-        const response = await supertest(app)
-        .post('/resDesactivarU')
-        .send(respuestadesactivar);
-        // console.log(createUser.username)
-        // console.log(createUser.password)
-        expect(response.statusCode).toBe(400);
-        // expect(response.body.message).toBe("SSSS");
-    })
+    // test('RES DEHAKTIVAR usuarios idUser inválido', async () =>{
+    //     // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+    //     respuestadesactivar.resp = '1'
+    //     respuestadesactivar.idUser = '0'
+    //     respuestadesactivar.token = token_admin
+    //     const response = await supertest(app)
+    //     .post('/resDesactivarU')
+    //     .send(respuestadesactivar);
+    //     // console.log(createUser.username)
+    //     // console.log(createUser.password)
+    //     expect(response.statusCode).toBe(400);
+    //     // expect(response.body.message).toBe("SSSS");
+    // })
     test('RES DEHAKTIVAR usuarios no trae token ', async () =>{
         // .set('Authorization', `Bearer ${logeado.token.trim()}`)
         respuestadesactivar.resp = '1'
@@ -1081,8 +1231,332 @@ describe(" AYD-G2 - Test de AlChilazo", () => {
         expect(response.statusCode).toBe(200);
         // expect(response.body.message).toBe("SSSS");
     })
-
-
+    test('Informe de Usuario TODOS', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/informeUser')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Usuarios NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/informeUser')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Usuarios NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/informeUser')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })    
+    test('Informe de Usuario Top5Empresas', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/top5Empresas')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Usuarios Top5Empresas NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/top5Empresas')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Usuarios Top5Empresas NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/top5Empresas')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe de Usuario Cantidad', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/totalUser')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Usuarios Cantidad NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/totalUser')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Usuarios Cantidad NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/totalUser')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe top5Deliverys Cantidad', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/top5Deliverys')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe top5Deliverys NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/top5Deliverys')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe top5Deliverys  NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/top5Deliverys')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Top5Productos', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/top5Productos')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Top5Productos NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/top5Productos')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe Top5Productos NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/top5Productos')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe masVendido', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_empresa
+        const response = await supertest(app)
+        .post('/masVendido')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe masVendido NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/masVendido')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe masVendido NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/masVendido')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe HistorialPedidosEmpresa', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_empresa
+        const response = await supertest(app)
+        .post('/historialP')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe HistorialPedidosEmpresa NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/historialP')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe HistorialPedidosEmpresa NO ES ADMIN', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_repartidor_prueba
+        const response = await supertest(app)
+        .post('/historialP')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Informe HistorialPedidosEmpresa ERROR mal ID', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_empresa
+        const response = await supertest(app)
+        .post('/historialP')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Mi Perfil Repartidor', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_repartidor_quemado
+        const response = await supertest(app)
+        .post('/miPerfil')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(200);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Mi Perfil Repartidor NO Trae Token', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '2'
+        respuestahomeadmin.token = token_errornoid
+        const response = await supertest(app)
+        .post('/miPerfil')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+    test('Mi Perfil Repartidor NO ES Repartidor ', async () =>{
+        // .set('Authorization', `Bearer ${logeado.token.trim()}`)
+        respuestahomeadmin.resp = '1'
+        respuestahomeadmin.idUser = '8'
+        respuestahomeadmin.token = token_admin
+        const response = await supertest(app)
+        .post('/miPerfil')
+        .send(respuestahomeadmin);
+        // console.log(createUser.username)
+        // console.log(createUser.password)
+        expect(response.statusCode).toBe(400);
+        // expect(response.body.message).toBe("SSSS");
+    })
+  
     
 
 

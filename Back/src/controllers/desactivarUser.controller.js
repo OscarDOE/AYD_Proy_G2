@@ -75,8 +75,6 @@ const resDesactivarU = async (req, res) => {
     }
 
     const { idUser} = req.body
-    console.log("NNNNNNNNNNNNNNNNNNNNNN")
-    console.log(idUser)
     if (!idUser) {
         return res.status(400).json({
             status: "FAILED",
