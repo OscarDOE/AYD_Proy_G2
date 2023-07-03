@@ -67,7 +67,7 @@ const PedidosRepartidor = () => {
               return (
                 <Button
                   color="success"
-                  onClick={(e) => onAcceptClickUser(e, params.row)}
+                  onClick={(e) => onAcceptClickAceptar(e, params.row)}
                   //onClick={deleteVuelos}
                   variant="contained"
                 >
@@ -141,6 +141,27 @@ const PedidosRepartidor = () => {
 
 
       //-------------------------------- CAMBIOS ESTADO PEDIDOS ------------
+
+
+      const onAcceptClickAceptar= async (e,row) =>{
+        e.preventDefault();
+        setClickedRow(row);
+
+        const endpoint = await fetch(ruta_AWS+`/selectPedido`, {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },body: JSON.stringify({"token":usuario_logeado.token, "idPed":row.id})
+        });
+
+        if (endpoint.status != 400){
+          alert("¡Pedido " + row.id + " | " + row.precio_total + "  aceptado!")
+        }else{
+            alert("¡Pedido " + row.id + " | " + row.precio_total + " con problemas!")
+        }
+        getDatosRepartidor()
+        getPedidosActuales()
+      };
 
 
       const onAcceptClickUser = async (e,row) =>{
