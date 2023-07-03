@@ -405,3 +405,6 @@ Azure DevOps es una plataforma integral de desarrollo de software basada en la n
 ### ***Tablero***
 Se utilizó el manejador de Azure DevOps para llevar el control del proyecto y todos sus procesos.
 https://dev.azure.com/krenmoraleja/krenmoraleja/_backlogs/backlog/krenmoraleja%20Team/Epics
+
+# Diagrama de Despliegue
+![alt text](img1/diagramas/Despliegue.png)
