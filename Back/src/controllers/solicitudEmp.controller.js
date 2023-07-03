@@ -37,16 +37,7 @@ const solicitudEmp = async (req, res) => {
 
         res.status(200).json(empresa);
     } catch (error) {
-        return res.status(400).json({
-            status: "FAILED",
-            data: {
-                error:
-                    "No hay empresas pendientes",
-            },
-            auth: false,
-            message:
-                "No hay empresas pendientes",
-        });
+
     }
 
 }
